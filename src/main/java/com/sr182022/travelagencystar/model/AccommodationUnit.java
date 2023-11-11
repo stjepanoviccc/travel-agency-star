@@ -5,7 +5,7 @@ public class AccommodationUnit {
     private int id;
     private String name;
     private int capacity;
-    private ArrayList<Review> reviews;
+    private ArrayList<Review> reviews = null;
     private String description;
     private Destination destination;
     private ArrayList<String> services;

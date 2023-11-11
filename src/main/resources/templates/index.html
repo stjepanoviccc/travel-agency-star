@@ -3,60 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Travel Agency Star</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<header>
-    <!-- nav component -->
-    <nav>
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div class="relative flex h-16 items-center justify-between">
-                <div class="flex flex-1 items-center sm:items-stretch sm:justify-start">
-                    <div class="flex items-center">
-                        <img class="h-12 pt-1 w-auto" th:src="@{/images/logo.jpg}" alt="Logo">
-                    </div>
-                    <div class="pt-2 hidden sm:ml-6 sm:block">
-                        <div class="flex space-x-4">
-                            <!-- ADD LATER ACTIVE: bg-red-600 text-white rounded-md px-3 py-2 text-sm font-medium -->
-                            <a href="#" class="hover:text-red-600 rounded-md px-3 py-2 text-sm font-medium transition duration-300">Homepage</a>
-                            <a href="#" class="hover:text-red-600 rounded-md px-3 py-2 text-sm font-medium transition duration-300">NavMenuItem1</a>
-                            <a href="#" class="hover:text-red-600 rounded-md px-3 py-2 text-sm font-medium transition duration-300">NavMenuItem2</a>
-                            <a href="#" class="hover:text-red-600 rounded-md px-3 py-2 text-sm font-medium transition duration-300">NavMenuItem3</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-x-2 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <!-- cart and reg -->
-                    <button class="bg-red-600 text-white hover:text-red-600 rounded-md px-4 py-2 text-sm font-medium border-2 border-red-600 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="24" height="20" viewBox="0 0 24 20"><path d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm1.336-5l1.977-7h-16.813l2.938 7h11.898zm4.969-10l-3.432 12h-12.597l.839 2h13.239l3.474-12h1.929l.743-2h-4.195z"/></svg>
-                    </button>
-                    <button class="hidden sm:block bg-red-600 text-white hover:bg-white hover:text-red-600 rounded-md px-4 py-2 text-sm font-medium border-2 border-red-600 transition duration-300">
-                        Register</button>
-                </div>
-                <div class="flex items-center sm:hidden">
-                    <!-- Mobile menu button-->
-                    <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="absolute -inset-0.5"></span>
-                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                </div>
+
+<!-- nav -->
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<!-- main content for this page -->
+<main class="mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Travel Page</h1>
+    <div>
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+            <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains">
+            <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+                <p class="text-gray-700 text-base">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+                </p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
             </div>
         </div>
+    </div>
+</main>
 
-        <!-- Mobile menu, show/hide based on menu state. -->
-        <div class="sm:hidden" id="mobile-menu">
-            <div class="space-y-1 px-2 pb-3 pt-2">
-                <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Homepage</a>
-                <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">NavMenuItem1</a>
-                <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">NavMenuItem2</a>
-                <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">NavMenuItem3</a>
-                <a href="#" class="bg-red-600 text-white block rounded-md px-3 py-2 text-base font-medium">Register</a>
-            </div>
-        </div>
-    </nav>
+<!-- footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-</header>
+<!-- script -->
+<script th:src="@{/script/script.js}"></script>
 </body>
 </html>
