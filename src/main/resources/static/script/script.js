@@ -1,4 +1,7 @@
-// hamburger menu toggle
-document.querySelector('#menuButton').addEventListener('click', () => {
-    document.querySelector('#mobileMenu').classList.toggle('hidden');
+import * as navFunctions from './nav.js';
+
+$(document).ready(function() {
+    $('#menuButton').on('click', navFunctions.toggleMobileMenu);
+    $('.loginToggleTrigger').on('click', navFunctions.toggleLoginModal);
+    $('.registerToggleTrigger').on('click', navFunctions.toggleRegisterModal);
 });

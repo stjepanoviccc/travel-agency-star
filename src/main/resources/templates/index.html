@@ -14,20 +14,23 @@
 <!-- main content for this page -->
 <main class="mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
     <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Travel Page</h1>
-    <div>
-        <div class="max-w-sm rounded overflow-hidden shadow-lg">
-            <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains">
-            <div class="px-6 py-4">
-                <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
-                <p class="text-gray-700 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                </p>
-            </div>
-            <div class="px-6 pt-4 pb-2">
-                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
-            </div>
+
+    <!-- this will be holder of above card menu -->
+    <div class="pt-6 lg:pt-8 text-center lg:text-left">
+        <label for="travelSelectMenu" class="pr-2">Sort by: </label>
+        <select name="travelSelectMenu" id="travelSelectMenu" class="bg-white border border-gray-300 hover:border-gray-500 px-4 py-1 rounded shadow focus:border-gray-600">
+            <option value="1">Default</option>
+            <option value="2">Text 2</option>
+            <option value="3">Text 3</option>
+            <option value="4">Text 4</option>
+        </select>
+
+        <!-- holder of cards -->
+        <div class="flex flex-col w-full gap-x-8 gap-y-8 pt-6 sm:flex-row lg:pt-8 ">
+            <!-- each card -->
+            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
+            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
+            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
         </div>
     </div>
 </main>
@@ -36,6 +39,7 @@
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 <!-- script -->
-<script th:src="@{/script/script.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" th:src="@{/script/script.js}"></script>
 </body>
 </html>
