@@ -12,10 +12,10 @@
 <div th:replace="~{fragments/nav :: nav}"></div>
 
 <!-- main content for this page -->
-<main class="mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
+<main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
     <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Travel Page</h1>
 
-    <!-- this will be holder of above card menu -->
+    <!-- this will be holder of above card menu and all cards -->
     <div class="pt-6 lg:pt-8 text-center lg:text-left">
         <label for="travelSelectMenu" class="pr-2">Sort by: </label>
         <select name="travelSelectMenu" id="travelSelectMenu" class="bg-white border border-gray-300 hover:border-gray-500 px-4 py-1 rounded shadow focus:border-gray-600">
@@ -26,12 +26,16 @@
         </select>
 
         <!-- holder of cards -->
-        <div class="flex flex-col w-full gap-x-8 gap-y-8 pt-6 sm:flex-row lg:pt-8 ">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-6 lg:pt-8">
             <!-- each card -->
             <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
             <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
             <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
+            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
+            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
+            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
         </div>
+
     </div>
 </main>
 

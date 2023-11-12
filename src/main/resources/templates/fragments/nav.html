@@ -9,7 +9,7 @@
                 <div class="pt-2 hidden sm:ml-6 sm:block">
                     <div class="flex space-x-3">
                         <!-- ADD LATER ACTIVE: bg-red-600 text-white rounded-md px-3 py-2 text-sm font-medium -->
-                        <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300">Travel</a>
+                        <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300">Travel</a>
                         <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300">Reports</a>
                         <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300">Dashboard</a>
                     </div>
@@ -17,9 +17,9 @@
             </div>
             <div class="flex items-center gap-x-2 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <!-- cart and login -->
-                <button class="bg-red-600 text-white hover:text-red-600 rounded-md px-4 py-2 text-sm font-medium border-2 border-red-600 transition duration-300">
+                <a href="/cart" class="bg-red-600 text-white hover:text-red-600 rounded-md px-4 py-2 text-sm font-medium border-2 border-red-600 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="24" height="20" viewBox="0 0 24 20"><path d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm1.336-5l1.977-7h-16.813l2.938 7h11.898zm4.969-10l-3.432 12h-12.597l.839 2h13.239l3.474-12h1.929l.743-2h-4.195z"/></svg>
-                </button>
+                </a>
                 <button id="loginButton" class="loginToggleTrigger hidden sm:block bg-red-600 text-white hover:bg-white hover:text-red-600 rounded-md px-4 py-2 text-sm font-medium border-2 border-red-600 transition duration-300">
                     Login
                 </button>
@@ -37,7 +37,7 @@
 
                 <!-- register modal -->
                 <div id="registerModal" class="z-10 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                    <div class="bg-white p-8 rounded lg:w-[500px]">
+                    <div class="bg-white p-8 rounded lg:w-[600px]">
                         <div class="flex justify-between mb-8">
                             <h2 class="text-2xl font-bold">Register</h2>
                             <button id="registerCloseButton" class="registerToggleTrigger text-gray-700 font-bold">X</button>
@@ -61,7 +61,7 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobileMenu">
         <div class="space-y-1 px-2 pb-3 pt-2">
-            <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Travel</a>
+            <a href="/" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Travel</a>
             <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Reports</a>
             <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Dashboard</a>
             <a href="#" class="loginToggleTrigger bg-red-600 text-white block rounded-md px-3 py-2 text-base font-medium">Login</a>
