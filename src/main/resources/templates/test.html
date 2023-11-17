@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:with="destination=${destination}">
+        <p th:text="${destination.city}"></p>
+        <p th:text="${destination.country}"></p>
+        <p th:text="${destination.continent}"></p>
+    </div>
+</body>
+</html>

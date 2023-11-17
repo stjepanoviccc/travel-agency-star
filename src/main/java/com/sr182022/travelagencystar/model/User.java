@@ -2,7 +2,7 @@ package com.sr182022.travelagencystar.model;
 
 import java.time.LocalDateTime;
 
-public abstract class User {
+public class User {
     private int id;
     private String username;
     private String password;
@@ -14,7 +14,12 @@ public abstract class User {
     private int phone;
     private LocalDateTime registeredDate;
     private Role role;
-    private User(int id, String username, String password, String email, String surname, String name, LocalDateTime birthDate, String address, int phone,
+
+    public User() {
+
+    }
+
+    public User(int id, String username, String password, String email, String surname, String name, LocalDateTime birthDate, String address, int phone,
                  LocalDateTime registeredDate, Role role) {
         this.id = id;
         this.username = username;
