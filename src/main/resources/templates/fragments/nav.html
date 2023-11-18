@@ -4,7 +4,7 @@
         <div class="relative flex h-16 items-center justify-between">
             <div class="flex flex-1 items-center sm:items-stretch sm:justify-start">
                 <div class="flex items-center">
-                    <img class="h-12  w-auto" th:src="@{/images/logo.jpg}" alt="Logo">
+                    <a href="/"><img class="h-12  w-auto" th:src="@{/images/logo.jpg}" alt="Logo"></a>
                 </div>
                 <div class="pt-2 hidden sm:ml-6 sm:block">
                     <div class="flex space-x-3">
@@ -25,26 +25,10 @@
                 </button>
 
                 <!-- login modal -->
-                <div id="loginModal" class="z-10 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                    <div class="bg-white p-8 rounded lg:w-[400px]">
-                        <div class="flex justify-between mb-8">
-                            <h2 class="text-2xl font-bold">Login</h2>
-                            <button id="loginCloseButton" class="loginToggleTrigger text-gray-700 font-bold">X</button>
-                        </div>
-                        <div th:replace="~{fragments/forms/loginForm :: loginForm}"></div>
-                    </div>
-                </div>
+                <div th:replace="~{fragments/modals/loginModal :: loginModal}"></div>
 
                 <!-- register modal -->
-                <div id="registerModal" class="z-10 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                    <div class="bg-white p-8 rounded lg:w-[600px]">
-                        <div class="flex justify-between mb-8">
-                            <h2 class="text-2xl font-bold">Register</h2>
-                            <button id="registerCloseButton" class="registerToggleTrigger text-gray-700 font-bold">X</button>
-                        </div>
-                        <div th:replace="~{fragments/forms/registerForm :: registerForm}"></div>
-                    </div>
-                </div>
+                <div th:replace="~{fragments/modals/registerModal :: registerModal}"></div>
 
             </div>
             <div class="flex items-center sm:hidden">

@@ -15,6 +15,10 @@
 <main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
     <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Dashboard Page</h1>
     <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left">All Users:</h2>
+    <div class="flex justify-center lg:justify-end">
+        <button class="registerToggleTrigger mt-4 lg:mt-6 bg-gray-600 text-white rounded-md px-4 py-2 text-sm font-medium border-2 border-gray-600">Add New User</button>
+    </div>
+
     <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
         <table class="min-w-full text-center font-light">
             <thead class="border-b font-medium dark:border-neutral-500">
@@ -34,6 +38,9 @@
             </tbody>
         </table>
     </div>
+
+    <!-- edit user modal -->
+    <div th:replace="~{fragments/modals/editUserModal :: editUserModal}"></div>
 </main>
 
 <!-- footer -->
@@ -42,5 +49,6 @@
 <!-- script -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="module" th:src="@{/script/script.js}"></script>
+
 </body>
 </html>

@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ import java.util.List;
 public class UserDAO implements IUserDao {
     private final ResourceLoader resourceLoader;
 
-    // Constructor for dependency injection
     public UserDAO(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
@@ -40,10 +40,15 @@ public class UserDAO implements IUserDao {
                 User user = new User();
                 user.setId(Integer.parseInt(data[0]));
                 user.setUsername(data[1]);
-                user.setName(data[5]);
+                user.setPassword(data[2]);
+                user.setEmail(data[3]);
                 user.setSurname(data[4]);
-                user.setRegisteredDate(LocalDateTime.parse(data[8]));
-                user.setRole(Role.valueOf(data[9]));
+                user.setName(data[5]);
+                user.setAddress(data[6]);
+                user.setPhone(Integer.parseInt(data[7]));
+                user.setBirthDate(LocalDate.parse(data[8]));
+                user.setRegisteredDate(LocalDateTime.parse(data[9]));
+                user.setRole(Role.valueOf(data[10]));
                 usersList.add(user);
             }
             return usersList;
@@ -53,6 +58,8 @@ public class UserDAO implements IUserDao {
             throw new RuntimeException("Error parsing id from users.txt", e);
         } catch (DateTimeParseException e) {
             throw new RuntimeException("Error parsing registered date from users.txt", e);
+        } catch (EnumConstantNotPresentException e) {
+            throw new RuntimeException("Enum Role didn't parse well", e);
         }
     };
 

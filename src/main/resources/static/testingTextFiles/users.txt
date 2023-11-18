@@ -1,2 +1,2 @@
-0|andrej|password|andrej123@gmail.com|Stjepanović|Andrej|Gredice BB, Brčko|066513592|2023-11-17T12:25:56.789|Passenger
-1|mirko|password|mirko123@gmail.com|Drvar|Mirko|Gredice BB, Brčko|065523512|2023-11-17T12:32:56.789|Passenger
+0|andrej|password|andrej123@gmail.com|Stjepanović|Andrej|Gredice BB, Brčko|066513592|2000-11-17|2023-11-17T12:25:56.789|Passenger
+1|mirko|password|mirko123@gmail.com|Drvar|Mirko|Gredice BB, Brčko|065523512|2998-11-17|2023-11-17T12:32:56.789|Passenger

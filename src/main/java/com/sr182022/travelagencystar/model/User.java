@@ -1,5 +1,6 @@
 package com.sr182022.travelagencystar.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class User {
@@ -9,7 +10,7 @@ public class User {
     private String email;
     private String surname;
     private String name;
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
     private String address;
     private int phone;
     private LocalDateTime registeredDate;
@@ -19,7 +20,7 @@ public class User {
 
     }
 
-    public User(int id, String username, String password, String email, String surname, String name, LocalDateTime birthDate, String address, int phone,
+    public User(int id, String username, String password, String email, String surname, String name, LocalDate birthDate, String address, int phone,
                  LocalDateTime registeredDate, Role role) {
         this.id = id;
         this.username = username;
@@ -82,11 +83,11 @@ public class User {
         this.name = name;
     }
 
-    public LocalDateTime getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDateTime birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
