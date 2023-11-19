@@ -32,7 +32,15 @@ public class UserService {
     }
 
     public void editUser(User editUser) {
-        // edit user
+        User existingUser = usersList.get(editUser.getId());
+        existingUser.setUsername(editUser.getUsername());
+        existingUser.setPassword(editUser.getPassword());
+        existingUser.setEmail(editUser.getEmail());
+        existingUser.setSurname(editUser.getSurname());
+        existingUser.setName(editUser.getName());
+        existingUser.setAddress(editUser.getAddress());
+        existingUser.setPhone(editUser.getPhone());
+        existingUser.setBirthDate(editUser.getBirthDate());
     }
 
     public void deleteUser(int userId) {
