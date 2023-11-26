@@ -1,7 +1,7 @@
 import * as navFunctions from "./nav.js";
 import * as dashboardFunctions from "./dashboard.js";
 
-$(document).ready(function() {
+$(document).ready(() => {
 
     // navbar
     $('#menuButton').on('click', navFunctions.toggleMobileMenu);
@@ -12,5 +12,5 @@ $(document).ready(function() {
 
     // dashboard
     $('.addNewDestinationToggleTrigger').on('click', dashboardFunctions.toggleAddNewDestinationModal);
-
+    dashboardFunctions.linksInDashboardPageActiveState();
 });

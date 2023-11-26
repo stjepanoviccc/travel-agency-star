@@ -1,0 +1,13 @@
+<tr th:fragment="tableDashboardVehicle" th:each="vehicle : ${dashboardVehiclesContent}" class="border-b dark:border-neutral-500">
+    <td class="whitespace-nowrap px-6 py-4 font-medium" th:text="${vehicle.id}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${vehicle.numberOfSeats}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${vehicle.finalDestination}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${vehicle.description}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${vehicle.vehicleType}"></td>
+    <td class="whitespace-nowrap px-6 py-4">
+        <div th:replace="~{fragments/forms/vehicles/GET_editVehicleForm :: GET_editVehicleForm}"></div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-4">
+        <div th:replace="~{fragments/forms/vehicles/deleteVehicleForm :: deleteVehicleForm}"></div>
+    </td>
+</tr>

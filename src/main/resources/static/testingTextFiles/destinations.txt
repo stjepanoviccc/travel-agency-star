@@ -1,2 +1,5 @@
 1|Barcelona|Spain|Europe|barcelona.jpg
 2|Madrid|Spain|Europe|barcelona.jpg
+3|Belgrade|Serbia|Europe|barcelona.jpg
+4|Paris|France|Europe|barcelona.jpg
+5|Tokyo|Japan|Asia|barcelona.jpg

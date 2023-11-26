@@ -1,20 +1,20 @@
-export function toggleMobileMenu() {
+export const toggleMobileMenu = () => {
     $('#mobileMenu').toggleClass('hidden');
 }
 
-export function toggleLoginModal() {
+export const toggleLoginModal = () => {
     $('#loginModal').toggleClass('hidden');
 }
 
-export function toggleRegisterModal() {
+export const toggleRegisterModal = () => {
     $('#registerModal').toggleClass('hidden');
 }
 
-export function toggleLangDropdown() {
+export const toggleLangDropdown = () => {
     $("#langDropdown").toggleClass("hidden");
 }
 
-export function hideLangDropdownOnClickOutside(event) {
+export const hideLangDropdownOnClickOutside = (event) => {
     if (!$(event.target).closest("#langDropdownButton, #langDropdown").length) {
         $("#langDropdown").addClass("hidden");
     }
