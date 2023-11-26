@@ -7,9 +7,5 @@ import java.util.List;
 
 public interface IUserDao {
     List<User> Load();
-
-    // this will be only while reading from files;
-    // List<User> Load(ResourceLoader resourceLoader);
-
     void Save(List<User> usersList);
 }

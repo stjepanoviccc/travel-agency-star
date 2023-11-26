@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<!-- nav -->
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
+    <div class="w-full text-center lg:text-left">
+        <a href="/dashboard" class="text-red-600">< Go back</a>
+    </div>
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left mb-8 mt-4">Edit User Page</h1>
+    <div th:replace="~{fragments/forms/users/editUserForm :: editUserForm}"></div>
+</main>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" th:src="@{/script/script.js}"></script>
+</body>
+</html>

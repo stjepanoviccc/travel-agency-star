@@ -1,0 +1,2 @@
+In this folder i separated every nested route of page dashboard.
+For index of destination route check templates/dashboard.html where main screen are users.

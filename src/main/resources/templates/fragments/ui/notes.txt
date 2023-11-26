@@ -1,0 +1,1 @@
+in this folder ( "/ui" ) i separated ui things for every page. I decided to pick this name because it will say it's not important to break system if not used.

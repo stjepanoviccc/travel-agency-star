@@ -51,7 +51,9 @@ public class UserDAO implements IUserDao {
                 user.setRole(Role.valueOf(data[10]));
                 usersList.add(user);
             }
+
             return usersList;
+
         } catch (IOException e) {
             throw new RuntimeException("Error reading file from users.txt", e);
         } catch (NumberFormatException e) {

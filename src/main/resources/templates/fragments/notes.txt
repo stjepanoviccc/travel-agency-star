@@ -1,0 +1,7 @@
+In this folder "/fragments" i stored reusable things like form, modals etc..
+I could take this all as 'components' but i wanted to separate concerns.
+
+/cards, /forms, /modals as name says.
+
+/tableItems -> used for reusable components in table for cleaner code
+/ui -> just random ui things for separated pages.

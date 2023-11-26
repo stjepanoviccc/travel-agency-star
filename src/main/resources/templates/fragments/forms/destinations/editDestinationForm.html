@@ -1,0 +1,12 @@
+<form th:fragment="editDestinationForm" id="editDestinationForm" method="post" action="/dashboard/destinations/editDestinationPost">
+    <input type="hidden" id="editUserId" name="id" th:value="${destination?.id}" readonly/>
+    <label for="editDestinationCity" class="block font-medium text-gray-700 mt-4">City</label>
+    <input type="text" id="editDestinationCity" name="city" th:value="${destination?.city}" class="mt-1 p-2 border rounded-md w-full" />
+    <label for="editDestinationCountry" class="block font-medium text-gray-700 mt-4">Country</label>
+    <input type="text" id="editDestinationCountry" name="country" th:value="${destination?.country}" class="mt-1 p-2 border rounded-md w-full" />
+    <label for="editDestinationContinent" class="block font-medium text-gray-700 mt-4">Continent</label>
+    <input type="text" id="editDestinationContinent" name="continent" th:value="${destination?.continent}" class="mt-1 p-2 border rounded-md w-full" />
+    <label for="editDestinationImage" class="block font-medium text-gray-700 mt-4">Image</label>
+    <input type="text" id="editDestinationImage" name="image" th:value="${destination?.image}" class="mt-1 p-2 border rounded-md w-full" />
+    <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Save</button>
+</form>

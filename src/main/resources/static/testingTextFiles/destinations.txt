@@ -1,0 +1,2 @@
+1|Barcelona|Spain|Europe|barcelona.jpg
+2|Madrid|Spain|Europe|barcelona.jpg

@@ -1,0 +1,7 @@
+In /templates i have several different folder to maintain this project easier.
+
+/fragments -> are used for reusable components
+/editPages -> i stored all edit pages here to be more precize because they aren't main pages like cart,dashboard etc.
+
+IMPORTANT:
+dont mix /dashboard and dashboard.html -> in /dashboard folder i store every subroute like /destinations etc... but in pure dashboard.html i store user maintenance.

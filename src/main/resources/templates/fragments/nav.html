@@ -24,6 +24,35 @@
                     Login
                 </button>
 
+                <div class="flex items-center sm:hidden">
+                    <!-- Mobile menu button-->
+                    <button id="menuButton" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="absolute -inset-0.5"></span>
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+
+                <!-- lang drop -->
+                <button id="langDropdownButton" class="text-red-600 bg-white border-2 border-red-600
+                font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center" type="button"> EN
+                    <svg class="w-2.5 h-2.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+
+                <!-- Dropdown menu -->
+                <div id="langDropdown" class="z-10 w-16 hidden bg-white divide-y divide-gray-100 rounded-lg absolute top-14 right-2 sm:right-0 border-2 border-red-600">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                        <li>
+                            <a href="/i18n/changeLanguage?lang=en" class="block font-medium px-4 py-2 text-red-600 hover:bg-red-600 hover:text-white transition duration-300">EN</a>
+                        </li>
+                        <li>
+                            <a href="/i18n/changeLanguage?lang=sr" class="block font-medium px-4 py-2 text-red-600 hover:bg-red-600 hover:text-white transition duration-300">SR</a>
+                        </li>
+                    </ul>
+                </div>
+
                 <!-- login modal -->
                 <div th:replace="~{fragments/modals/loginModal :: loginModal}"></div>
 
@@ -31,14 +60,7 @@
                 <div th:replace="~{fragments/modals/registerModal :: registerModal}"></div>
 
             </div>
-            <div class="flex items-center sm:hidden">
-                <!-- Mobile menu button-->
-                <button id="menuButton" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-white bg-red-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="absolute -inset-0.5"></span>
-                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                    <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
+
         </div>
     </div>
 
