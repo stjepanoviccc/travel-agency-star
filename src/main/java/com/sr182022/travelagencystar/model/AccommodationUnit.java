@@ -11,6 +11,7 @@ public class AccommodationUnit {
     private ArrayList<String> services;
     private AccommodationType accommodationType;
 
+    public AccommodationUnit() {}
     public AccommodationUnit(int id, String name, int capacity, String description, ArrayList<Review> reviews,  Destination destination, ArrayList<String> services,
                              AccommodationType accommodationType) {
         this.id = id;

@@ -7,9 +7,7 @@ public class Vehicle {
     private String description;
     private VehicleType vehicleType;
 
-    public Vehicle() {
-
-    }
+    public Vehicle() {}
 
     public Vehicle(int id, int numberOfSeats, Destination finalDestination, String description, VehicleType vehicleType) {
         this.id = id;

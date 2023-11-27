@@ -7,9 +7,7 @@ public class Destination {
     private String continent;
     private String image;
 
-    public Destination() {
-
-    }
+    public Destination() {}
 
     public Destination(int id, String city, String country, String continent, String image) {
         this.id = id;

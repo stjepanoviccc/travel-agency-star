@@ -20,6 +20,7 @@ public class InitServletContextInitializer implements ServletContextInitializer 
         servletContext.setAttribute(UserService.USERS_LIST_KEY, new ArrayList<>());
         servletContext.setAttribute(DestinationService.DESTINATIONS_LIST_KEY, new ArrayList<>());
         servletContext.setAttribute(VehicleService.VEHICLES_LIST_KEY, new ArrayList<>());
+        // acc unit set attr
 
         System.out.println("Success! ServletContextInitializer");
     }
