@@ -13,13 +13,15 @@ import java.util.Optional;
 @Service
 public class DestinationService implements IDestinationService {
 
-    @Autowired
-    private DestinationDAO destinationDAO;
-
-    @Autowired
+    private final DestinationDAO destinationDAO;
     ServletContext servletContext;
-
     public static final String DESTINATIONS_LIST_KEY = "destinationsList";
+
+    @Autowired
+    public DestinationService(DestinationDAO destinationDAO, ServletContext servletContext) {
+        this.destinationDAO = destinationDAO;
+        this.servletContext = servletContext;
+    }
 
     @PostConstruct
     public void init() {
@@ -27,23 +29,27 @@ public class DestinationService implements IDestinationService {
         destinationsList.addAll(destinationDAO.Load());
     }
 
+    @Override
     public List<Destination> findAllDestinations() {
         List<Destination> destinationsList = (List<Destination>) servletContext.getAttribute(DESTINATIONS_LIST_KEY);
         return destinationsList;
     }
 
+    @Override
     public Destination findDestinationById(int destinationId) {
         List<Destination> destinationsList = (List<Destination>) servletContext.getAttribute(DESTINATIONS_LIST_KEY);
         Optional<Destination> destinationOptional = destinationsList.stream().filter(d -> d.getId() == destinationId).findFirst();
         return destinationOptional.orElse(null);
     }
 
+    @Override
     public void addNewDestination(Destination newDestination) {
         List<Destination> destinationsList = (List<Destination>) servletContext.getAttribute(DESTINATIONS_LIST_KEY);
         newDestination.setId(generateNextId());
         destinationsList.add(newDestination);
     }
 
+    @Override
     public void editDestination(Destination editDestination) {
         Destination existingDestination = findDestinationById(editDestination.getId());
         existingDestination.setCity(editDestination.getCity());
@@ -52,11 +58,13 @@ public class DestinationService implements IDestinationService {
         existingDestination.setImage(editDestination.getImage());
     }
 
+    @Override
     public void deleteDestination(int destinationId) {
         List<Destination> destinationsList = (List<Destination>) servletContext.getAttribute(DESTINATIONS_LIST_KEY);
         destinationsList.remove(findDestinationById(destinationId));
     }
 
+    @Override
     public int generateNextId() {
         List<Destination> destinationsList = (List<Destination>) servletContext.getAttribute(DESTINATIONS_LIST_KEY);
         return destinationsList.stream().mapToInt(Destination::getId).max().orElse(0)+1;

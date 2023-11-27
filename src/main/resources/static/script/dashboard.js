@@ -2,10 +2,13 @@ export const toggleAddNewDestinationModal = () => {
     $('#addNewDestinationModal').toggleClass('hidden');
 }
 
+export const toggleAddNewVehicleModal = () => {
+    $('#addNewVehicleModal').toggleClass('hidden');
+}
+
 // this function is used for styling only
 export const linksInDashboardPageActiveState = () => {
     const url = window.location.pathname;
-    console.log(url);
 
     switch(url) {
         case "/dashboard":

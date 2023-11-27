@@ -45,11 +45,7 @@ public class DestinationDAO implements IDestinationDAO {
         } catch (IOException e) {
             throw new RuntimeException("Error reading file from destinations.txt", e);
         } catch (NumberFormatException e) {
-            throw new RuntimeException("Error parsing id from users.txt", e);
-        } catch (DateTimeParseException e) {
-            throw new RuntimeException("Error parsing registered date from users.txt", e);
-        } catch (EnumConstantNotPresentException e) {
-            throw new RuntimeException("Enum Role didn't parse well", e);
+            throw new RuntimeException("Error parsing id from destinations.txt", e);
         }
     };
 

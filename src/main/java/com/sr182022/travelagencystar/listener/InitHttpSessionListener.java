@@ -15,9 +15,7 @@ public class InitHttpSessionListener implements HttpSessionListener {
         System.out.println("Init session HttpSessionListener...");
 
         HttpSession session  = arg0.getSession();
-        if (session.getAttribute(InternationalizationController.LOCALIZATION_KEY) == null) {
-            session.setAttribute(InternationalizationController.LOCALIZATION_KEY, Locale.ENGLISH);
-        }
+        session.setAttribute(InternationalizationController.LOCALIZATION_KEY, Locale.ENGLISH);
 
         System.out.println("Success! HttpSessionListener.");
     }

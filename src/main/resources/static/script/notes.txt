@@ -1,0 +1,3 @@
+In this folder "/script" i separated files and all are imported into script.js.
+
+In dashboard.js you can find all for next routes: /dashboard, /dashboard/users, /dashboard/destinations, /dashboard/vehicles, /dashboard/accommodation-units

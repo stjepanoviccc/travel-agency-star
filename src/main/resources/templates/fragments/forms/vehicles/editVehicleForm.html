@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<form th:fragment="editVehicleForm" id="editVehicleForm" method="post" action="/dashboard/vehicles/editVehiclePost">
+    <input type="hidden" id="editVehicleId" name="id" th:value="${vehicle?.id}" readonly/>
+    <label for="editVehicleNumberOfSeats" class="block font-medium text-gray-700">Number of seats</label>
+    <input type="number" id="editVehicleNumberOfSeats" name="numberOfSeats" th:value="${vehicle?.numberOfSeats}" class="mt-1 p-2 border rounded-md w-full" />
+    <label for="editVehicleFinalDestination" class="block font-medium text-gray-700 mt-4">Final destination</label>
+    <select id="editVehicleFinalDestination" name="finalDestinationId" class="mt-1 p-2 border rounded-md w-full" th:value="${vehicle?.finalDestination.id}">
+        <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"
+                th:selected="${destination.id == vehicle?.finalDestination.id}"
+        ></option>
+    </select>
+    <label for="editVehicleDescription" class="block font-medium text-gray-700 mt-4">Description</label>
+    <input type="text" id="editVehicleDescription" name="description" th:value="${vehicle?.description}" class="mt-1 p-2 border rounded-md w-full" />
+    <label for="editVehicleVehicleType" class="block font-medium text-gray-700 mt-4">Vehicle Type</label>
+    <select id="editVehicleVehicleType" name="vehicleType" class="mt-1 p-2 border rounded-md w-full" th:value="${vehicle?.vehicleType}">
+        <option th:each="vehicleType : ${vehicleTypesForSelectMenu}" th:value="${vehicleType}" th:text="${vehicleType}"
+                th:selected="${vehicleType == vehicle?.vehicleType.toString()}">
+        </option>
+    </select>
+    <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Save</button>
+</form>

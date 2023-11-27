@@ -33,11 +33,12 @@ public class InternationalizationController {
             response.sendRedirect("/");
             return;
         }
+        System.out.println(lang);
 
-        if(lang.equals("en")) {
-            localization = Locale.ENGLISH;
-        } else if (lang.equals("sr")) {
+        if(lang.equals("sr")) {
             localization = Locale.forLanguageTag("sr");
+        } else if (lang.equals("en")) {
+            localization = Locale.ENGLISH;
         }
 
         session.setAttribute(InternationalizationController.LOCALIZATION_KEY, localization);

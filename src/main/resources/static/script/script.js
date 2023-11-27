@@ -11,6 +11,7 @@ $(document).ready(() => {
     $(document).on("click", navFunctions.hideLangDropdownOnClickOutside);
 
     // dashboard
-    $('.addNewDestinationToggleTrigger').on('click', dashboardFunctions.toggleAddNewDestinationModal);
     dashboardFunctions.linksInDashboardPageActiveState();
+    $('.addNewDestinationToggleTrigger').on('click', dashboardFunctions.toggleAddNewDestinationModal);
+    $('.addNewVehicleToggleTrigger').on('click', dashboardFunctions.toggleAddNewVehicleModal);
 });
