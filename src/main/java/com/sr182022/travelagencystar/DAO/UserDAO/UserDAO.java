@@ -2,6 +2,9 @@ package com.sr182022.travelagencystar.DAO.UserDAO;
 
 import com.sr182022.travelagencystar.model.Role;
 import com.sr182022.travelagencystar.model.User;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.ServletContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Repository;
@@ -15,23 +18,30 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserDAO implements IUserDao {
     private final ResourceLoader resourceLoader;
+    ServletContext servletContext;
+    public static final String USERS_LIST_KEY = "usersList";
 
-    public UserDAO(ResourceLoader resourceLoader) {
+    @Autowired
+    public UserDAO(ResourceLoader resourceLoader, ServletContext servletContext) {
         this.resourceLoader = resourceLoader;
+        this.servletContext = servletContext;
+    }
+
+    @PostConstruct
+    public void init() {
+        List<User> usersList = (List<User>) servletContext.getAttribute(USERS_LIST_KEY);
+        usersList.addAll(Load());
     }
 
     @Override
     public List<User> Load() {
-        // code for load
         try {
             List<User> usersList = new ArrayList<>();
-            // Retrieve the resource using ResourceLoader
-            // Retrieve the File object from the resource
-            // Use BufferedReader to read from the file
             Resource resource = resourceLoader.getResource("classpath:static/testingTextFiles/users.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
             String line;
@@ -54,19 +64,55 @@ public class UserDAO implements IUserDao {
 
             return usersList;
 
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading file from users.txt", e);
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("Error parsing id from users.txt", e);
-        } catch (DateTimeParseException e) {
-            throw new RuntimeException("Error parsing registered date from users.txt", e);
-        } catch (EnumConstantNotPresentException e) {
-            throw new RuntimeException("Enum Role didn't parse well", e);
+        } catch (IOException | NumberFormatException | DateTimeParseException | EnumConstantNotPresentException  e) {
+            throw new RuntimeException("Error processing file users.txt", e);
         }
-    };
+    }
 
     @Override
-    public void Save(List<User> usersList) {
+    public List<User> findAllUsers() {
+        List<User> usersList = (List<User>) servletContext.getAttribute(USERS_LIST_KEY);
+        return usersList;
+    }
 
+    @Override
+    public User findUserById(int userId) {
+        List<User> usersList = (List<User>) servletContext.getAttribute(USERS_LIST_KEY);
+        Optional<User> userOptional = usersList.stream().filter(u -> u.getId() == userId).findFirst();
+        return userOptional.orElse(null);
+    }
+
+    @Override
+    public void addNewUser(User newUser) {
+        List<User> usersList = (List<User>) servletContext.getAttribute(USERS_LIST_KEY);
+        newUser.setId(generateNextId());
+        newUser.setRegisteredDate(LocalDateTime.now());
+        newUser.setRole(Role.Passenger);
+        usersList.add(newUser);
+    }
+
+    @Override
+    public void editUser(User editUser) {
+        User existingUser = findUserById(editUser.getId());
+        existingUser.setUsername(editUser.getUsername());
+        existingUser.setPassword(editUser.getPassword());
+        existingUser.setEmail(editUser.getEmail());
+        existingUser.setSurname(editUser.getSurname());
+        existingUser.setName(editUser.getName());
+        existingUser.setAddress(editUser.getAddress());
+        existingUser.setPhone(editUser.getPhone());
+        existingUser.setBirthDate(editUser.getBirthDate());
+    }
+
+    @Override
+    public void deleteUser(int userId) {
+        List<User> usersList = (List<User>) servletContext.getAttribute(USERS_LIST_KEY);
+        usersList.remove(findUserById(userId));
+    }
+
+    @Override
+    public int generateNextId() {
+        List<User> usersList = (List<User>) servletContext.getAttribute(USERS_LIST_KEY);
+        return usersList.stream().mapToInt(User::getId).max().orElse(0)+1;
     };
 };

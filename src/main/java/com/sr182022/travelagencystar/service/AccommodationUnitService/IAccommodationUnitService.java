@@ -1,11 +1,11 @@
-package com.sr182022.travelagencystar.DAO.AccommodationUnitDAO;
+package com.sr182022.travelagencystar.service.AccommodationUnitService;
 
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 
 import java.util.List;
 
-public interface IAccommodationUnitDAO {
-    List<AccommodationUnit> Load();
+public interface IAccommodationUnitService {
+
     List<AccommodationUnit> findAllAccommodationUnits();
     AccommodationUnit findAccommodationUnitById(int accommodationUnitId);
     void addNewAccommodationUnit(AccommodationUnit newAccommodationUnit);

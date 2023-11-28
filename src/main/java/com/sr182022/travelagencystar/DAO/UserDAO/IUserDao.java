@@ -7,5 +7,11 @@ import java.util.List;
 
 public interface IUserDao {
     List<User> Load();
-    void Save(List<User> usersList);
+    List<User> findAllUsers();
+    User findUserById(int userId);
+    void addNewUser(User newUser);
+    void editUser(User editUser);
+    void deleteUser(int userId);
+    int generateNextId();
+
 }

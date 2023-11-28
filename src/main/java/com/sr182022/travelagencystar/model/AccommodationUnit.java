@@ -5,14 +5,14 @@ public class AccommodationUnit {
     private int id;
     private String name;
     private int capacity;
-    private ArrayList<Review> reviews;
+    private List<Review> reviews;
     private String description;
     private Destination destination;
-    private ArrayList<String> services;
+    private List<Service> services;
     private AccommodationType accommodationType;
 
     public AccommodationUnit() {}
-    public AccommodationUnit(int id, String name, int capacity, String description, ArrayList<Review> reviews,  Destination destination, ArrayList<String> services,
+    public AccommodationUnit(int id, String name, int capacity, String description, List<Review> reviews,  Destination destination, List<Service> services,
                              AccommodationType accommodationType) {
         this.id = id;
         this.name = name;
@@ -56,19 +56,19 @@ public class AccommodationUnit {
         this.description = description;
     }
 
-    public ArrayList<String> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 
-    public void setServices(ArrayList<String> services) {
+    public void setServices(List<Service> services) {
         this.services = services;
     }
 
-    public ArrayList<Review> getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(ArrayList<Review> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 

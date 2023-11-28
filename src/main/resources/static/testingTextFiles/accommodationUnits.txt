@@ -1,0 +1,2 @@
+1|My Accommodation Unit|40|Lorem ipsum dolor sit amet|2|Wifi,Bathroom|Apartment
+2|My2 Accommodation2 Unit2|40|Lorem ipsum dolor sit amet|1|Wifi|Apartment

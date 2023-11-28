@@ -2,23 +2,30 @@ package com.sr182022.travelagencystar.model;
 
 public class Review {
     private int id;
+    private int accommodationUnitId;
     private User creator;
     private String message;
     private int stars;
-    public Review(int id, User creator, String message, int stars) {
+
+    public Review() {}
+
+    public Review(int id, int accommodationUnitId, User creator, String message, int stars) {
         this.id = id;
+        this.accommodationUnitId = accommodationUnitId;
         this.creator = creator;
         this.message = message;
         this.stars = stars;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getAccommodationUnitId() { return accommodationUnitId; }
+
+    public void setAccommodationUnitId(int accommodationUnitId) { this.accommodationUnitId = accommodationUnitId; }
 
     public User getCreator() {
         return creator;

@@ -6,5 +6,11 @@ import java.util.List;
 
 public interface IVehicleDAO {
     List<Vehicle> Load();
-    void Save(List<Vehicle> vehiclesList);
+    List<Vehicle> findAllVehicles();
+    List<String> findAllVehicleTypes();
+    Vehicle findVehicleById(int vehicleId);
+    void addNewVehicle(Vehicle newVehicle, int destinationId);
+    void editVehicle(Vehicle editVehicle, int finalDestinationId);
+    void deleteVehicle(int vehicleId);
+    int generateNextId();
 }
