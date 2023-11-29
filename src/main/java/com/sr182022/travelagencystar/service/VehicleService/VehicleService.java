@@ -12,12 +12,10 @@ import java.util.List;
 public class VehicleService implements IVehicleService {
 
     private final VehicleDAO vehicleDAO;
-    ServletContext servletContext;
 
     @Autowired
-    public VehicleService(VehicleDAO vehicleDAO, ServletContext servletContext) {
+    public VehicleService(VehicleDAO vehicleDAO) {
         this.vehicleDAO = vehicleDAO;
-        this.servletContext = servletContext;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.User;
-import com.sr182022.travelagencystar.service.UserService.UserService;
+import com.sr182022.travelagencystar.service.UserService.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-    private final UserService userService;
+    private final IUserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 

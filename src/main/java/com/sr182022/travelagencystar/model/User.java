@@ -120,4 +120,10 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public String toFileString() {
+        return this.getId() + "|" + this.getUsername() + "|" + this.getPassword() + "|" + this.getEmail() + "|" + this.getSurname() + "|" + this.getName() + "|"
+                + this.getAddress() + "|" + this.getPhone() + "|" + this.getBirthDate() + "|" + this.getRegisteredDate() + "|" + this.getRole().toString();
+    }
+
 }

@@ -1,59 +1,47 @@
 package com.sr182022.travelagencystar.DAO.AccommodationUnitDAO;
 
-import com.sr182022.travelagencystar.model.AccommodationUnit;
-import com.sr182022.travelagencystar.model.AccommodationType;
-import com.sr182022.travelagencystar.model.Service;
+import com.sr182022.travelagencystar.model.*;
 import com.sr182022.travelagencystar.service.DestinationService.DestinationService;
 import com.sr182022.travelagencystar.service.ReviewService.ReviewService;
-import jakarta.annotation.PostConstruct;
-import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
 public class AccommodationUnitDAO implements IAccommodationUnitDAO {
+    @Value("${accommodationUnits.pathToFile}")
+    private String pathToFile;
     private final DestinationService destinationService;
     private final ReviewService reviewService;
-    private final ResourceLoader resourceLoader;
-    ServletContext servletContext;
-    public static final String ACCOMMODATION_UNITS_LIST_KEY = "accommodationUnitsList";
 
     @Autowired
-    public AccommodationUnitDAO(ResourceLoader resourceLoader, DestinationService destinationService, ReviewService reviewService, ServletContext servletContext) {
+    public AccommodationUnitDAO(DestinationService destinationService, ReviewService reviewService) {
         this.destinationService = destinationService;
         this.reviewService = reviewService;
-        this.resourceLoader = resourceLoader;
-        this.servletContext = servletContext;
     }
 
-    @PostConstruct
-    public void init() {
-        List<AccommodationUnit> accommodationUnitsList = (List<AccommodationUnit>) servletContext.getAttribute(ACCOMMODATION_UNITS_LIST_KEY);
-        accommodationUnitsList.addAll(Load());
-    }
-
-    @Override
-    public List<AccommodationUnit> Load() {
+    public Map<Integer, AccommodationUnit> Load() {
         try {
-            List<AccommodationUnit> accommodationUnitsList = new ArrayList<>();
-            Resource resource = resourceLoader.getResource("classpath:static/testingTextFiles/accommodationUnits.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
-            String line;
-            while ((line = reader.readLine()) != null) {
+            Map<Integer, AccommodationUnit> accommodationUnits = new HashMap<>();
+            Path path = Paths.get(pathToFile);
+            List<String> lines = Files.readAllLines(path, Charset.forName("UTF-8"));
+
+            for (String line : lines) {
+                line = line.trim();
+                if (line.equals("") || line.indexOf('#') == 0)
+                    continue;
+
                 String[] data = line.split("\\|");
                 AccommodationUnit accommodationUnit = new AccommodationUnit();
+
                 accommodationUnit.setId(Integer.parseInt(data[0]));
                 // im getting all reviews based on my accommodation unit id
                 accommodationUnit.setReviews(reviewService.findAllReviewsForSpecificAccommodationUnit(Integer.parseInt(data[0])));
@@ -70,27 +58,48 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
 
                 accommodationUnit.setAccommodationType(AccommodationType.valueOf(data[6]));
 
-                accommodationUnitsList.add(accommodationUnit);
+                accommodationUnits.put(accommodationUnit.getId(), accommodationUnit);
             }
 
-            return accommodationUnitsList;
+            return accommodationUnits;
 
         } catch (IOException | NumberFormatException e) {
             throw new RuntimeException("Error processing file accommodationUnits.txt", e);
         }
     }
 
+    public void Save(Map<Integer, AccommodationUnit> accommodationUnits) {
+
+        try {
+            Path path = Paths.get(pathToFile);
+            List<String> lines = new ArrayList<>();
+
+            for (AccommodationUnit au : accommodationUnits.values()) {
+                lines.add(au.toFileString());
+            }
+
+            Files.write(path, lines, Charset.forName("UTF-8"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public List<AccommodationUnit> findAllAccommodationUnits() {
-        List<AccommodationUnit> accommodationUnitsList = (List<AccommodationUnit>) servletContext.getAttribute(ACCOMMODATION_UNITS_LIST_KEY);
-        return accommodationUnitsList;
+        Map<Integer, AccommodationUnit> accommodationUnits = Load();
+        return new ArrayList<>(accommodationUnits.values());
+    }
+
+    @Override
+    public List<AccommodationType> findAllAccommodationTypes() {
+        return null;
     }
 
     @Override
     public AccommodationUnit findAccommodationUnitById(int accommodationUnitId) {
-        List<AccommodationUnit> accommodationUnitsList = (List<AccommodationUnit>) servletContext.getAttribute(ACCOMMODATION_UNITS_LIST_KEY);
-        Optional<AccommodationUnit> accommodationUnitOptional = accommodationUnitsList.stream().filter(au -> au.getId() == accommodationUnitId).findFirst();
-        return accommodationUnitOptional.orElse(null);
+        Map<Integer, AccommodationUnit> accommodationUnits = Load();
+        return accommodationUnits.get(accommodationUnitId);
     }
 
     @Override
@@ -105,13 +114,18 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
 
     @Override
     public void deleteAccommodationUnit(int accommodationUnitId) {
-        List<AccommodationUnit> accommodationUnitsList = (List<AccommodationUnit>) servletContext.getAttribute(ACCOMMODATION_UNITS_LIST_KEY);
-        accommodationUnitsList.remove(findAccommodationUnitById(accommodationUnitId));
+        Map<Integer, AccommodationUnit> accommodationUnits = Load();
+        accommodationUnits.remove(accommodationUnitId);
+        Save(accommodationUnits);
     }
 
-    @Override
     public int generateNextId() {
-        List<AccommodationUnit> accommodationUnitsList = (List<AccommodationUnit>) servletContext.getAttribute(ACCOMMODATION_UNITS_LIST_KEY);
-        return accommodationUnitsList.stream().mapToInt(AccommodationUnit::getId).max().orElse(0)+1;
+        Map<Integer, AccommodationUnit> accommodationUnits = Load();
+        int nextId = 1;
+        for (int id : accommodationUnits.keySet()) {
+            if(nextId<id)
+                nextId=id;
+        }
+        return ++nextId;
     }
 }

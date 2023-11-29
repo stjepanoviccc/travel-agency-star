@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.service.ReviewService.ReviewService;
+import com.sr182022.travelagencystar.service.ReviewService.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ReviewController {
 
-    private final ReviewService reviewService;
+    private final IReviewService reviewService;
 
     @Autowired
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(IReviewService reviewService) {
         this.reviewService = reviewService;
     }
 

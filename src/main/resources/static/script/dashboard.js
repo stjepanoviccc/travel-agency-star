@@ -6,6 +6,10 @@ export const toggleAddNewVehicleModal = () => {
     $('#addNewVehicleModal').toggleClass('hidden');
 }
 
+export const toggleAddNewAccommodationUnitModal = () => {
+    $('#addNewAccommodationUnitModal').toggleClass('hidden');
+}
+
 // this function is used for styling only
 export const linksInDashboardPageActiveState = () => {
     const url = window.location.pathname;
@@ -18,7 +22,7 @@ export const linksInDashboardPageActiveState = () => {
             $("#linkToDestinationsFromDashboard").addClass('bg-gray-600 text-white');
             break;
         case "/dashboard/accommodation-units":
-            $("#linkToAccommodationFromDashboard").addClass('bg-gray-600 text-white');
+            $("#linkToAccommodationUnitsFromDashboard").addClass('bg-gray-600 text-white');
             break;
         case "/dashboard/vehicles":
             $("#linkToVehiclesFromDashboard").addClass('bg-gray-600 text-white');

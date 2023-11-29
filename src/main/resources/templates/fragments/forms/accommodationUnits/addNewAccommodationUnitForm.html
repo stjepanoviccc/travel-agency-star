@@ -1,5 +1,37 @@
 <form th:fragment="addNewAccommodationUnitForm" name="addNewAccommodationUnitForm" method="post"
       action="/dashboard/accommodation-units/addNewAccommodationUnit">
-
+    <label for="addNewAccommodationUnitName" class="block font-medium text-gray-700">Name:</label>
+    <input type="text" id="addNewAccommodationUnitName" name="name" class="mt-1 p-2 border rounded-md w-full">
+    <label for="addNewAccommodationUnitCapacity" class="block font-medium text-gray-700 mt-4">Capacity:</label>
+    <input type="text" id="addNewAccommodationUnitCapacity" name="capacity" class="mt-1 p-2 border rounded-md w-full">
+    <label for="addNewAccommodationUnitDescription" class="block font-medium text-gray-700 mt-4">Description</label>
+    <textarea id="addNewAccommodationUnitDescription" name="description" class="mt-1 p-2 border rounded-md w-full"></textarea>
+    <label for="addNewAccommodationUnitDestination" class="block font-medium text-gray-700 mt-4">Destination</label>
+    <select id="addNewAccommodationUnitDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full">
+        <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"></option>
+    </select>
+    <label for="addNewAccommodationUnitServices" class="block font-medium text-gray-700 mt-4">Services</label>
+    <div id="addNewAccommodationUnitServices" class="flex justify-between items-center mt-1 p-2 rounded-md w-full">
+        <div>
+            <input type="checkbox" id="Wifi" name="Wifi" value="Wifi">
+            <label for="Wifi">Wifi</label>
+        </div>
+        <div>
+            <input type="checkbox" id="TV" name="TV" value="TV">
+            <label for="TV">TV</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Bathroom" name="Bathroom" value="Bathroom">
+            <label for="Bathroom">Bathroom</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Air_Conditioner" name="Air_Conditioner" value="Air_Conditioner">
+            <label for="Air_Conditioner">Air Conditioner</label>
+        </div>
+    </div>
+    <label for="addNewAccommodationUnitAccommodationType" class="block font-medium text-gray-700 mt-4">Accommodation Type</label>
+    <select id="addNewAccommodationUnitAccommodationType" name="accommodationType" class="mt-1 p-2 border rounded-md w-full">
+        <option th:each="accommodationType : ${accommodationTypesForSelectMenu}" th:value="${accommodationType}" th:text="${accommodationType}"></option>
+    </select>
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add</button>
 </form>

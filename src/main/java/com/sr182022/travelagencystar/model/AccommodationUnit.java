@@ -87,4 +87,9 @@ public class AccommodationUnit {
     public void setAccommodationType(AccommodationType accommodationType) {
         this.accommodationType = accommodationType;
     }
+
+    public String toFileString() {
+        return this.getId() + "|" + this.getName() + "|" + this.getCapacity() + "|" + this.getDescription() + "|" + this.getDestination().getId() + "|" + this.getServices() + "|"
+                + this.getAccommodationType().toString();
+    }
 }

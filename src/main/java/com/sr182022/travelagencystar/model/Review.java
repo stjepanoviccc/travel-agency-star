@@ -50,4 +50,9 @@ public class Review {
     public void setStars(int stars) {
         this.stars = stars;
     }
+
+    public String toFileString() {
+        return this.getId() + "|" + this.getAccommodationUnitId() + "|" + this.getCreator().getId() + "|" + this.getMessage() + "|" + this.getStars();
+    }
+
 }

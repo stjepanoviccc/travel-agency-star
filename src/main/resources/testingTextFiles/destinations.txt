@@ -1,0 +1,4 @@
+1|Barcelona|Spain|Europe|barcelona.jpg
+2|Belgrade|Serbia|Europe|belgrade.jpg
+3|Peking|China|Asia|peking.jpg
+4|Tokyo|Japan|Asia|tokyo.jpg

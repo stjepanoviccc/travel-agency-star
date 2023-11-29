@@ -56,4 +56,9 @@ public class Vehicle {
     public void setVehicleType(VehicleType vehicleType) {
         this.vehicleType = vehicleType;
     }
+
+    public String toFileString() {
+        return this.getId() + "|" + this.getNumberOfSeats() + "|" + this.getFinalDestination().getId() + "|" + this.getDescription() + "|" + this.getVehicleType().toString();
+    }
+
 }

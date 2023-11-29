@@ -2,7 +2,6 @@ package com.sr182022.travelagencystar.service.UserService;
 
 import com.sr182022.travelagencystar.DAO.UserDAO.UserDAO;
 import com.sr182022.travelagencystar.model.User;
-import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +11,10 @@ import java.util.List;
 public class UserService implements IUserService {
 
     private final UserDAO userDAO;
-    ServletContext servletContext;
 
     @Autowired
-    public UserService(UserDAO userDAO, ServletContext servletContext) {
+    public UserService(UserDAO userDAO) {
         this.userDAO = userDAO;
-        this.servletContext = servletContext;
     }
 
     @Override

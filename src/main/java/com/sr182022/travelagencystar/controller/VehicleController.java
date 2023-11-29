@@ -1,8 +1,8 @@
 package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.Vehicle;
-import com.sr182022.travelagencystar.service.DestinationService.DestinationService;
-import com.sr182022.travelagencystar.service.VehicleService.VehicleService;
+import com.sr182022.travelagencystar.service.DestinationService.IDestinationService;
+import com.sr182022.travelagencystar.service.VehicleService.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/dashboard/vehicles")
 public class VehicleController {
 
-    private final VehicleService vehicleService;
-    private final DestinationService destinationService;
+    private final IVehicleService vehicleService;
+    private final IDestinationService destinationService;
 
     @Autowired
-    public VehicleController(VehicleService vehicleService, DestinationService destinationService) {
+    public VehicleController(IVehicleService vehicleService, IDestinationService destinationService) {
         this.vehicleService = vehicleService;
         this.destinationService = destinationService;
     }

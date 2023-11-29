@@ -1,6 +1,7 @@
 package com.sr182022.travelagencystar.service.AccommodationUnitService;
 
 import com.sr182022.travelagencystar.DAO.AccommodationUnitDAO.AccommodationUnitDAO;
+import com.sr182022.travelagencystar.model.AccommodationType;
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class AccommodationUnitService implements IAccommodationUnitService
     @Override
     public List<AccommodationUnit> findAllAccommodationUnits() {
         return accommodationUnitDAO.findAllAccommodationUnits();
+    }
+
+    @Override
+    public List<AccommodationType> findAllAccommodationTypes() {
+        return accommodationUnitDAO.findAllAccommodationTypes();
     }
 
     @Override

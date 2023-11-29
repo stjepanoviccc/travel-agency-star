@@ -1,3 +1,0 @@
-1|80|1|Lorem ipsum dolor sit amet1|Bus
-2|80|2|Lorem ipsum dolor sit amet2|Bus
-3|80|3|Lorem ipsum dolor sit amet3|Bus

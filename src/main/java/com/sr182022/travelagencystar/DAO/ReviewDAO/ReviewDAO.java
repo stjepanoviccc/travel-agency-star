@@ -2,55 +2,45 @@ package com.sr182022.travelagencystar.DAO.ReviewDAO;
 
 import com.sr182022.travelagencystar.model.Review;
 import com.sr182022.travelagencystar.service.UserService.UserService;
-import jakarta.annotation.PostConstruct;
-import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
 public class ReviewDAO implements IReviewDAO {
-    private final ResourceLoader resourceLoader;
+    @Value("${reviews.pathToFile}")
+    private String pathToFile;
     private final UserService userService;
-    ServletContext servletContext;
-    public static final String REVIEWS_LIST_KEY = "reviewsList";
 
     @Autowired
-    public ReviewDAO(ResourceLoader resourceLoader, UserService userService, ServletContext servletContext) {
-        this.resourceLoader = resourceLoader;
+    public ReviewDAO(UserService userService) {
         this.userService = userService;
-        this.servletContext = servletContext;
     }
 
-    @PostConstruct
-    public void init() {
-        List<Review> reviewsList = (List<Review>) servletContext.getAttribute(REVIEWS_LIST_KEY);
-        reviewsList.addAll(Load());
-    }
-
-    @Override
-    public List<Review> Load() {
+    public Map<Integer, Review> Load() {
         try {
-            List<Review> reviewsList = new ArrayList<>();
-            Resource resource = resourceLoader.getResource("classpath:static/testingTextFiles/reviews.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
-            String line;
-            while ((line = reader.readLine()) != null) {
+            Map<Integer, Review> reviews = new HashMap<>();
+            Path path = Paths.get(pathToFile);
+            List<String> lines = Files.readAllLines(path, Charset.forName("UTF-8"));
+
+            for (String line : lines) {
+                line = line.trim();
+                if (line.equals("") || line.indexOf('#') == 0)
+                    continue;
+
                 String[] data = line.split("\\|");
                 Review review = new Review();
+
                 review.setId(Integer.parseInt(data[0]));
                 review.setAccommodationUnitId(Integer.parseInt(data[1]));
-            //    review.setAccommodationUnit(accommodationUnitService.findAccommodationUnitById(accommodationUnitId));
 
                 int userId = Integer.parseInt(data[2]);
                 review.setCreator(userService.findUserById(userId));
@@ -58,20 +48,37 @@ public class ReviewDAO implements IReviewDAO {
                 review.setMessage(data[3]);
                 review.setStars(Integer.parseInt(data[4]));
 
-                reviewsList.add(review);
+                reviews.put(review.getId(), review);
             }
 
-            return reviewsList;
+            return reviews;
 
         } catch (IOException | NumberFormatException e) {
             throw new RuntimeException("Error processing file reviews.txt", e);
         }
     }
 
+    public void Save(Map<Integer, Review> reviews) {
+
+        try {
+            Path path = Paths.get(pathToFile);
+            List<String> lines = new ArrayList<>();
+
+            for (Review r : reviews.values()) {
+                lines.add(r.toFileString());
+            }
+
+            Files.write(path, lines, Charset.forName("UTF-8"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public List<Review> findAllReviews() {
-        List<Review> reviewsList = (List<Review>) servletContext.getAttribute(REVIEWS_LIST_KEY);
-        return reviewsList;
+        Map<Integer, Review> reviews = Load();
+        return new ArrayList<>(reviews.values());
     }
 
     @Override
@@ -81,9 +88,8 @@ public class ReviewDAO implements IReviewDAO {
 
     @Override
     public Review findReviewById(int reviewId) {
-        List<Review> reviewsList = (List<Review>) servletContext.getAttribute(REVIEWS_LIST_KEY);
-        Optional<Review> reviewOptional = reviewsList.stream().filter(d -> d.getId() == reviewId).findFirst();
-        return reviewOptional.orElse(null);
+        Map<Integer, Review> reviews = Load();
+        return reviews.get(reviewId);
     }
 
     @Override
@@ -98,13 +104,18 @@ public class ReviewDAO implements IReviewDAO {
 
     @Override
     public void deleteReview(int reviewId) {
-        List<Review> reviewsList = (List<Review>) servletContext.getAttribute(REVIEWS_LIST_KEY);
-        reviewsList.remove(findReviewById(reviewId));
+        Map<Integer, Review> reviews = Load();
+        reviews.remove(reviewId);
+        Save(reviews);
     }
 
-    @Override
     public int generateNextId() {
-        List<Review> reviewsList = (List<Review>) servletContext.getAttribute(REVIEWS_LIST_KEY);
-        return reviewsList.stream().mapToInt(Review::getId).max().orElse(0)+1;
+        Map<Integer, Review> reviews = Load();
+        int nextId = 1;
+        for (int id : reviews.keySet()) {
+            if(nextId<id)
+                nextId=id;
+        }
+        return ++nextId;
     }
 }
