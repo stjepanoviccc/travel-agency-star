@@ -19,20 +19,31 @@ public class AccommodationUnitController {
     }
 
     @PostMapping("addNewAccommodationUnit")
-    public String addNewAccommodationUnit(@ModelAttribute AccommodationUnit newAccommodationUnit) {
-        accommodationUnitService.addNewAccommodationUnit(newAccommodationUnit);
+    public String addNewAccommodationUnit(@ModelAttribute AccommodationUnit newAccommodationUnit,
+                                          @RequestParam int destinationId,
+                                          @RequestParam(required = false, defaultValue = "false") boolean checkWifi,
+                                          @RequestParam(required = false, defaultValue = "false") boolean checkBathroom,
+                                          @RequestParam(required = false, defaultValue = "false") boolean checkTv,
+                                          @RequestParam(required = false, defaultValue = "false") boolean checkConditioner)
+    {
+        newAccommodationUnit.setHasWifi(checkWifi);
+        newAccommodationUnit.setHasBathroom(checkBathroom);
+        newAccommodationUnit.setHasTv(checkTv);
+        newAccommodationUnit.setHasConditioner(checkConditioner);
+        accommodationUnitService.addNewAccommodationUnit(newAccommodationUnit, destinationId);
         return "redirect:/dashboard/accommodation-units";
     }
 
     @GetMapping("editAccommodationUnit")
     public String editDestination(@RequestParam int accommodationUnitId, Model model) {
-        model.addAttribute("destination", accommodationUnitService.findAccommodationUnitById(accommodationUnitId));
-        return "editPages/editDestinationPage";
+        model.addAttribute("accommodationUnit", accommodationUnitService.findAccommodationUnitById(accommodationUnitId));
+        model.addAttribute("accommodationTypesForSelectMenu", accommodationUnitService.findAllAccommodationTypes());
+        return "editPages/editAccommodationUnitPage";
     }
 
     @PostMapping("editAccommodationUnitPost")
-    public String editDestinationPost(@ModelAttribute AccommodationUnit accommodationUnit) {
-        accommodationUnitService.editAccommodationUnit(accommodationUnit);
+    public String editDestinationPost(@ModelAttribute AccommodationUnit accommodationUnit, int destinationId) {
+        accommodationUnitService.editAccommodationUnit(accommodationUnit, destinationId);
         return "redirect:/dashboard/accommodation-units";
     }
 

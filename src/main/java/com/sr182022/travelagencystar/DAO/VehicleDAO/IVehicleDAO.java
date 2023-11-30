@@ -8,7 +8,7 @@ public interface IVehicleDAO {
     List<Vehicle> findAllVehicles();
     List<String> findAllVehicleTypes();
     Vehicle findVehicleById(int vehicleId);
-    void addNewVehicle(Vehicle newVehicle, int destinationId);
+    void addNewVehicle(Vehicle newVehicle, int finalDestinationId);
     void editVehicle(Vehicle editVehicle, int finalDestinationId);
     void deleteVehicle(int vehicleId);
 }

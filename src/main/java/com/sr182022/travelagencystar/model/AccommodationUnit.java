@@ -8,20 +8,26 @@ public class AccommodationUnit {
     private List<Review> reviews;
     private String description;
     private Destination destination;
-    private List<Service> services;
     private AccommodationType accommodationType;
+    private boolean wifi;
+    private boolean bathroom;
+    private boolean tv;
+    private boolean conditioner;
 
     public AccommodationUnit() {}
-    public AccommodationUnit(int id, String name, int capacity, String description, List<Review> reviews,  Destination destination, List<Service> services,
-                             AccommodationType accommodationType) {
+    public AccommodationUnit(int id, String name, int capacity, String description, List<Review> reviews,  Destination destination,
+                             AccommodationType accommodationType, boolean wifi, boolean bathroom, boolean tv, boolean conditioner) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
         this.reviews = reviews;
         this.description = description;
         this.destination = destination;
-        this.services = services;
         this.accommodationType = accommodationType;
+        this.wifi = wifi;
+        this.bathroom = bathroom;
+        this.tv = tv;
+        this.conditioner = conditioner;
     }
 
     public int getId() {
@@ -56,14 +62,6 @@ public class AccommodationUnit {
         this.description = description;
     }
 
-    public List<Service> getServices() {
-        return services;
-    }
-
-    public void setServices(List<Service> services) {
-        this.services = services;
-    }
-
     public List<Review> getReviews() {
         return reviews;
     }
@@ -88,8 +86,40 @@ public class AccommodationUnit {
         this.accommodationType = accommodationType;
     }
 
+    public boolean isWifi() {
+        return bathroom;
+    }
+
+    public void setHasWifi(boolean wifi) {
+        this.wifi = wifi;
+    }
+
+    public boolean isBathroom() {
+        return bathroom;
+    }
+
+    public void setHasBathroom(boolean bathroom) {
+        this.bathroom = bathroom;
+    }
+
+    public boolean isTv() {
+        return tv;
+    }
+
+    public void setHasTv(boolean tv) {
+        this.tv = tv;
+    }
+
+    public boolean isConditioner() {
+        return conditioner;
+    }
+
+    public void setHasConditioner(boolean conditioner) {
+        this.conditioner = conditioner;
+    }
+
     public String toFileString() {
-        return this.getId() + "|" + this.getName() + "|" + this.getCapacity() + "|" + this.getDescription() + "|" + this.getDestination().getId() + "|" + this.getServices() + "|"
-                + this.getAccommodationType().toString();
+        return this.getId() + "|" + this.getName() + "|" + this.getCapacity() + "|" + this.getDescription() + "|" + this.getDestination().getId() + "|"
+                + this.getAccommodationType().toString() + "|" + this.isWifi() + "|" + this.isBathroom() + "|" + this.isTv() + "|" + this.isConditioner();
     }
 }

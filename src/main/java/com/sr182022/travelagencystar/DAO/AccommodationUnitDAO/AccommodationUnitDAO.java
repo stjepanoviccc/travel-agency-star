@@ -53,10 +53,11 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
                 int destinationId = Integer.parseInt(data[4]);
                 accommodationUnit.setDestination(destinationService.findDestinationById(destinationId));
 
-                List<Service> services = Arrays.stream(data[5].split(",")).map(String::trim).map(Service::valueOf).collect(Collectors.toList());
-                accommodationUnit.setServices(services);
-
-                accommodationUnit.setAccommodationType(AccommodationType.valueOf(data[6]));
+                accommodationUnit.setAccommodationType(AccommodationType.valueOf(data[5]));
+                accommodationUnit.setHasWifi(Boolean.parseBoolean(data[6]));
+                accommodationUnit.setHasBathroom(Boolean.parseBoolean(data[7]));
+                accommodationUnit.setHasTv(Boolean.parseBoolean(data[8]));
+                accommodationUnit.setHasConditioner(Boolean.parseBoolean(data[9]));
 
                 accommodationUnits.put(accommodationUnit.getId(), accommodationUnit);
             }
@@ -92,8 +93,8 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
     }
 
     @Override
-    public List<AccommodationType> findAllAccommodationTypes() {
-        return null;
+    public List<String> findAllAccommodationTypes() {
+        return Arrays.stream(AccommodationType.values()).map(Enum::name).collect(Collectors.toList());
     }
 
     @Override
@@ -103,13 +104,32 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
     }
 
     @Override
-    public void addNewAccommodationUnit(AccommodationUnit newAccommodationUnit) {
-        //
+    public void addNewAccommodationUnit(AccommodationUnit newAccommodationUnit, int destinationId) {
+        Map<Integer, AccommodationUnit> accommodationUnits = Load();
+        newAccommodationUnit.setId(generateNextId());
+        newAccommodationUnit.setDestination(destinationService.findDestinationById(destinationId));
+        accommodationUnits.put(newAccommodationUnit.getId(), newAccommodationUnit);
+        Save(accommodationUnits);
     }
 
     @Override
-    public void editAccommodationUnit(AccommodationUnit editAccommodationUnit) {
-        //
+    public void editAccommodationUnit(AccommodationUnit editAccommodationUnit, int destinationId) {
+        Map<Integer, AccommodationUnit> accommodationUnits = Load();
+        AccommodationUnit existingAccommodationUnit = findAccommodationUnitById(editAccommodationUnit.getId());
+
+        existingAccommodationUnit.setName(editAccommodationUnit.getName());
+        existingAccommodationUnit.setCapacity(editAccommodationUnit.getCapacity());
+        existingAccommodationUnit.setReviews(editAccommodationUnit.getReviews());
+        existingAccommodationUnit.setDescription(editAccommodationUnit.getDescription());
+        existingAccommodationUnit.setDestination(destinationService.findDestinationById(destinationId));
+        existingAccommodationUnit.setAccommodationType(editAccommodationUnit.getAccommodationType());
+        existingAccommodationUnit.setHasWifi(editAccommodationUnit.isWifi());
+        existingAccommodationUnit.setHasBathroom(editAccommodationUnit.isBathroom());
+        existingAccommodationUnit.setHasTv(editAccommodationUnit.isTv());
+        existingAccommodationUnit.setHasConditioner(editAccommodationUnit.isConditioner());
+
+        accommodationUnits.put(editAccommodationUnit.getId(), existingAccommodationUnit);
+        Save(accommodationUnits);
     }
 
     @Override

@@ -12,12 +12,10 @@ import java.util.List;
 public class ReviewService implements IReviewService{
 
     private final ReviewDAO reviewDAO;
-    ServletContext servletContext;
 
     @Autowired
-    public ReviewService(ReviewDAO reviewDAO, ServletContext servletContext) {
+    public ReviewService(ReviewDAO reviewDAO) {
         this.reviewDAO = reviewDAO;
-        this.servletContext = servletContext;
     }
 
     @Override

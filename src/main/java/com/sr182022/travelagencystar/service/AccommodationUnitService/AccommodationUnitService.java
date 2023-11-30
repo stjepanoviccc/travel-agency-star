@@ -1,11 +1,10 @@
 package com.sr182022.travelagencystar.service.AccommodationUnitService;
 
 import com.sr182022.travelagencystar.DAO.AccommodationUnitDAO.AccommodationUnitDAO;
-import com.sr182022.travelagencystar.model.AccommodationType;
 import com.sr182022.travelagencystar.model.AccommodationUnit;
-import jakarta.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -13,12 +12,10 @@ import java.util.List;
 public class AccommodationUnitService implements IAccommodationUnitService
 {
     private final AccommodationUnitDAO accommodationUnitDAO;
-    ServletContext servletContext;
 
     @Autowired
-    public AccommodationUnitService(AccommodationUnitDAO accommodationUnitDAO, ServletContext servletContext) {
+    public AccommodationUnitService(AccommodationUnitDAO accommodationUnitDAO) {
         this.accommodationUnitDAO = accommodationUnitDAO;
-        this.servletContext = servletContext;
     }
 
     @Override
@@ -27,7 +24,7 @@ public class AccommodationUnitService implements IAccommodationUnitService
     }
 
     @Override
-    public List<AccommodationType> findAllAccommodationTypes() {
+    public List<String> findAllAccommodationTypes() {
         return accommodationUnitDAO.findAllAccommodationTypes();
     }
 
@@ -37,13 +34,13 @@ public class AccommodationUnitService implements IAccommodationUnitService
     }
 
     @Override
-    public void addNewAccommodationUnit(AccommodationUnit newAccommodationUnit) {
-        accommodationUnitDAO.addNewAccommodationUnit(newAccommodationUnit);
+    public void addNewAccommodationUnit(AccommodationUnit newAccommodationUnit, int destinationId) {
+        accommodationUnitDAO.addNewAccommodationUnit(newAccommodationUnit, destinationId);
     }
 
     @Override
-    public void editAccommodationUnit(AccommodationUnit editAccommodationUnit) {
-        accommodationUnitDAO.editAccommodationUnit(editAccommodationUnit);
+    public void editAccommodationUnit(AccommodationUnit editAccommodationUnit, int destinationId) {
+        accommodationUnitDAO.editAccommodationUnit(editAccommodationUnit, destinationId);
     }
 
     @Override

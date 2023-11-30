@@ -1,2 +1,4 @@
-1|My Accommodation Unit|40|Lorem ipsum dolor sit amet|2|Wifi,Bathroom|Apartment
-2|My2 Accommodation2 Unit2|40|Lorem ipsum dolor sit amet|1|Wifi|Apartment
+1|Andrej Unit|2|Lorem ipsum dolor sit amet|2|Apartment|false|false|false|false
+2|My2 Accommodation2 Unit2|4|Lorem ipsum dolor sit amet|1|Apartment|true|true|false|true
+3|asd|2|qwe|3|Apartment|false|false|false|false
+4|Unit|2|testing this |2|Apartment|false|false|false|false

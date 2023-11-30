@@ -1,5 +1,38 @@
 <form th:fragment="editAccommodationUnitForm" id="editAccommodationUnitForm" method="post"
       action="/dashboard/accommodation-units/editAccommodationUnitPost">
-
+    <input type="hidden" id="editAccommodationUnitId" name="id" th:value="${accommodationUnit?.id}" readonly/>
+    <input type="hidden" name="destinationId" th:value="${accommodationUnit?.destination.id}" readonly/>
+    <label for="editAccommodationUnitName" class="block font-medium text-gray-700 mt-4">Name</label>
+    <input type="text" id="editAccommodationUnitName" name="name" th:value="${accommodationUnit?.name}" class="mt-1 p-2 border rounded-md w-full" />
+    <label for="editAccommodationUnitCapacity" class="block font-medium text-gray-700 mt-4">Capacity</label>
+    <input type="text" id="editAccommodationUnitCapacity" name="capacity" th:value="${accommodationUnit?.capacity}" class="mt-1 p-2 border rounded-md w-full" />
+    <!-- reviews cant be edited here -->
+    <label for="editAccommodationUnitName" class="block font-medium text-gray-700 mt-4">Description</label>
+    <input type="text" id="editAccommodationUnitDescription" name="description" th:value="${accommodationUnit?.description}" class="mt-1 p-2 border rounded-md w-full" />
+    <!-- destinatino cant be edited here -->
+    <label for="editAccommodationUnitAccommodationType" class="block font-medium text-gray-700 mt-4">Accommodation Type</label>
+    <select id="editAccommodationUnitAccommodationType" name="accommodationType" class="mt-1 p-2 border rounded-md w-full" th:value="${accommodationUnit?.accommodationType}">
+        <option th:each="accommodationType : ${accommodationTypesForSelectMenu}" th:value="${accommodationType}" th:text="${accommodationType}"
+                th:selected="${accommodationType == accommodationUnit?.accommodationType.toString()}">
+        </option>
+    </select>
+    <div id="editAccommodationUnitServices" class="flex justify-between items-center mt-4 p-2 rounded-md w-full">
+        <div>
+            <input type="checkbox" id="wifi" name="checkWifi" th:checked="${accommodationUnit?.wifi}" />
+            <label for="wifi">Wifi</label>
+        </div>
+        <div>
+            <input type="checkbox" id="bathroom" name="checkBathroom" th:checked="${accommodationUnit?.bathroom}" />
+            <label for="bathroom">Bathroom</label>
+        </div>
+        <div>
+            <input type="checkbox" id="tv" name="checkTv" th:checked="${accommodationUnit?.tv}" />
+            <label for="tv">TV</label>
+        </div>
+        <div>
+            <input type="checkbox" id="conditioner" name="checkConditioner" th:checked="${accommodationUnit?.conditioner}" />
+            <label for="conditioner">Conditioner</label>
+        </div>
+    </div>
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Save</button>
 </form>

@@ -3,7 +3,7 @@
     <label for="addNewAccommodationUnitName" class="block font-medium text-gray-700">Name:</label>
     <input type="text" id="addNewAccommodationUnitName" name="name" class="mt-1 p-2 border rounded-md w-full">
     <label for="addNewAccommodationUnitCapacity" class="block font-medium text-gray-700 mt-4">Capacity:</label>
-    <input type="text" id="addNewAccommodationUnitCapacity" name="capacity" class="mt-1 p-2 border rounded-md w-full">
+    <input type="number" id="addNewAccommodationUnitCapacity" name="capacity" class="mt-1 p-2 border rounded-md w-full">
     <label for="addNewAccommodationUnitDescription" class="block font-medium text-gray-700 mt-4">Description</label>
     <textarea id="addNewAccommodationUnitDescription" name="description" class="mt-1 p-2 border rounded-md w-full"></textarea>
     <label for="addNewAccommodationUnitDestination" class="block font-medium text-gray-700 mt-4">Destination</label>
@@ -13,20 +13,20 @@
     <label for="addNewAccommodationUnitServices" class="block font-medium text-gray-700 mt-4">Services</label>
     <div id="addNewAccommodationUnitServices" class="flex justify-between items-center mt-1 p-2 rounded-md w-full">
         <div>
-            <input type="checkbox" id="Wifi" name="Wifi" value="Wifi">
-            <label for="Wifi">Wifi</label>
+            <input type="checkbox" id="wifi" name="checkWifi" value="true">
+            <label for="wifi">Wifi</label>
         </div>
         <div>
-            <input type="checkbox" id="TV" name="TV" value="TV">
-            <label for="TV">TV</label>
+            <input type="checkbox" id="bathroom" name="checkBathroom" value="true">
+            <label for="bathroom">Bathroom</label>
         </div>
         <div>
-            <input type="checkbox" id="Bathroom" name="Bathroom" value="Bathroom">
-            <label for="Bathroom">Bathroom</label>
+            <input type="checkbox" id="tv" name="checkTv" value="true">
+            <label for="tv">TV</label>
         </div>
         <div>
-            <input type="checkbox" id="Air_Conditioner" name="Air_Conditioner" value="Air_Conditioner">
-            <label for="Air_Conditioner">Air Conditioner</label>
+            <input type="checkbox" id="conditioner" name="checkConditioner" value="true">
+            <label for="conditioner">Conditioner</label>
         </div>
     </div>
     <label for="addNewAccommodationUnitAccommodationType" class="block font-medium text-gray-700 mt-4">Accommodation Type</label>

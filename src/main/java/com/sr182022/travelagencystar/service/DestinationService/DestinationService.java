@@ -12,12 +12,10 @@ import java.util.List;
 public class DestinationService implements IDestinationService {
 
     private final DestinationDAO destinationDAO;
-    ServletContext servletContext;
 
     @Autowired
-    public DestinationService(DestinationDAO destinationDAO, ServletContext servletContext) {
+    public DestinationService(DestinationDAO destinationDAO) {
         this.destinationDAO = destinationDAO;
-        this.servletContext = servletContext;
     }
 
     @Override
