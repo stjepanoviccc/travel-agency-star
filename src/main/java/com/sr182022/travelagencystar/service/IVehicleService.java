@@ -12,5 +12,4 @@ public interface IVehicleService {
     void save(Vehicle newVehicle, int destinationId);
     void update(Vehicle editVehicle, int finalDestinationId);
     void delete(int vehicleId);
-    int generateNextId();
 }

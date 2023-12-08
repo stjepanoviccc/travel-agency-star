@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.VehicleDAO;
+import com.sr182022.travelagencystar.DAO.impl.DatabaseVehicleDAO;
 import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.service.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,44 +11,39 @@ import java.util.List;
 @Service
 public class VehicleService implements IVehicleService {
 
-    private final VehicleDAO vehicleDAO;
+    private final DatabaseVehicleDAO databaseVehicleDAO;
 
     @Autowired
-    public VehicleService(VehicleDAO vehicleDAO) {
-        this.vehicleDAO = vehicleDAO;
+    public VehicleService(DatabaseVehicleDAO databaseVehicleDAO) {
+        this.databaseVehicleDAO = databaseVehicleDAO;
     }
 
     @Override
     public List<Vehicle> findAll() {
-        return vehicleDAO.findAll();
+        return databaseVehicleDAO.findAll();
     }
 
     @Override
     public Vehicle findOne(int vehicleId) {
-        return vehicleDAO.findOne(vehicleId);
+        return databaseVehicleDAO.findOne(vehicleId);
     }
 
     public List<String> findAllVehicleTypes() {
-        return vehicleDAO.findAllVehicleTypes();
+        return databaseVehicleDAO.findAllVehicleTypes();
     }
 
     @Override
     public void save(Vehicle newVehicle, int finalDestinationId) {
-        vehicleDAO.save(newVehicle, finalDestinationId);
+        databaseVehicleDAO.save(newVehicle, finalDestinationId);
     }
 
     @Override
     public void update(Vehicle editVehicle, int finalDestinationId) {
-        vehicleDAO.update(editVehicle, finalDestinationId);
+        databaseVehicleDAO.update(editVehicle, finalDestinationId);
     }
 
     @Override
     public void delete(int vehicleId) {
-        vehicleDAO.delete(vehicleId);
-    }
-
-    @Override
-    public int generateNextId() {
-        return vehicleDAO.generateNextId();
+        databaseVehicleDAO.delete(vehicleId);
     }
 }

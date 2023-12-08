@@ -10,5 +10,4 @@ public interface IDestinationService {
     void save(Destination newDestination);
     void update(Destination editDestination);
     void delete(int destinationId);
-    int generateNextId();
 }

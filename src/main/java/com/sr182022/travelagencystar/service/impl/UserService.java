@@ -12,42 +12,42 @@ import java.util.List;
 @Service
 public class UserService implements IUserService {
 
-    private final DatabaseUserDAO userDAO;
+    private final DatabaseUserDAO databaseUserDAO;
 
     @Autowired
-    public UserService(DatabaseUserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserService(DatabaseUserDAO databaseUserDAO) {
+        this.databaseUserDAO = databaseUserDAO;
     }
 
     @Override
     public List<User> findAll() {
-        return userDAO.findAll();
+        return databaseUserDAO.findAll();
     }
 
     @Override
-    public List<User> findAll(Role role) { return userDAO.findAll(role); }
+    public List<User> findAll(Role role) { return databaseUserDAO.findAll(role); }
 
     @Override
     public User findOne(int userId) {
-        return userDAO.findOne(userId);
+        return databaseUserDAO.findOne(userId);
     }
 
     @Override
-    public User findOne(String username) { return userDAO.findOne(username); }
+    public User findOne(String username) { return databaseUserDAO.findOne(username); }
 
     @Override
     public void save(User newUser) {
-        userDAO.save(newUser);
+        databaseUserDAO.save(newUser);
     }
 
     @Override
     public void update(User editUser) {
-        userDAO.update(editUser);
+        databaseUserDAO.update(editUser);
     }
 
     @Override
     public void delete(int userId) {
-        userDAO.delete(userId);
+        databaseUserDAO.delete(userId);
     }
 
 }

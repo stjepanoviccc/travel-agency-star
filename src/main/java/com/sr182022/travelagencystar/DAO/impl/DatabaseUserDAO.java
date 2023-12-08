@@ -139,9 +139,9 @@ public class DatabaseUserDAO implements IUserDao {
     public void update(User editUser) {
 
         String sql =
-                "UPDATE user " +
-                        "SET username = ?, email = ?, password = ?, surname = ?, name = ?, birth_date = ?, user_address = ?, user_phone = ? " +
-                        "WHERE user.id_user = ?";
+                "UPDATE user u " +
+                        "SET u.username = ?, u.email = ?, u.password = ?, u.surname = ?, u.name = ?, u.birth_date = ?, u.user_address = ?, u.user_phone = ? " +
+                        "WHERE u.id_user = ?";
 
         jdbcTemplate.update(sql, editUser.getUsername(), editUser.getEmail(), editUser.getPassword(), editUser.getSurname(), editUser.getName(),
                 DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.getId());

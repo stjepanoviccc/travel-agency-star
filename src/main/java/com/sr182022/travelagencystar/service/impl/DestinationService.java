@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.DestinationDAO;
+import com.sr182022.travelagencystar.DAO.impl.DatabaseDestinationDAO;
 import com.sr182022.travelagencystar.model.Destination;
 import com.sr182022.travelagencystar.service.IDestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,40 +11,35 @@ import java.util.List;
 @Service
 public class DestinationService implements IDestinationService {
 
-    private final DestinationDAO destinationDAO;
+    private final DatabaseDestinationDAO databaseDestinationDAO;
 
     @Autowired
-    public DestinationService(DestinationDAO destinationDAO) {
-        this.destinationDAO = destinationDAO;
+    public DestinationService(DatabaseDestinationDAO databaseDestinationDAO) {
+        this.databaseDestinationDAO = databaseDestinationDAO;
     }
 
     @Override
     public List<Destination> findAll() {
-        return destinationDAO.findAll();
+        return databaseDestinationDAO.findAll();
     }
 
     @Override
     public Destination findOne(int destinationId) {
-        return destinationDAO.findOne(destinationId);
+        return databaseDestinationDAO.findOne(destinationId);
     }
 
     @Override
     public void save(Destination newDestination) {
-        destinationDAO.save(newDestination);
+        databaseDestinationDAO.save(newDestination);
     }
 
     @Override
     public void update(Destination editDestination) {
-        destinationDAO.update(editDestination);
+        databaseDestinationDAO.update(editDestination);
     }
 
     @Override
     public void delete(int destinationId) {
-        destinationDAO.delete(destinationId);
-    }
-
-    @Override
-    public int generateNextId() {
-        return destinationDAO.generateNextId();
+        databaseDestinationDAO.delete(destinationId);
     }
 }

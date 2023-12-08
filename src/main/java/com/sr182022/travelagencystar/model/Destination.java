@@ -5,11 +5,11 @@ public class Destination {
     private String city;
     private String country;
     private String continent;
-    private String image;
+    private byte[] image;
 
     public Destination() {}
 
-    public Destination(int id, String city, String country, String continent, String image) {
+    public Destination(int id, String city, String country, String continent, byte[] image) {
         this.id = id;
         this.city = city;
         this.country = country;
@@ -49,11 +49,11 @@ public class Destination {
         this.continent = continent;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

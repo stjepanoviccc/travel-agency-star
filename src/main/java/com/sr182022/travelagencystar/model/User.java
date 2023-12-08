@@ -3,6 +3,8 @@ package com.sr182022.travelagencystar.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private int id;
@@ -17,6 +19,7 @@ public class User {
     private LocalDateTime registeredDate;
     private Role role;
     private LoyaltyCard loyaltyCard = null;
+    private List<Review> reviewsList = new ArrayList<>();
 
     public User() {}
 
@@ -36,6 +39,8 @@ public class User {
     }
 
     public User(LoyaltyCard loyaltyCard) { this.loyaltyCard = loyaltyCard; }
+
+    public User(List<Review> reviewsList) { this.reviewsList = reviewsList; }
 
     public int getId() {
         return id;

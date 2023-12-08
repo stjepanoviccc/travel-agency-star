@@ -5,7 +5,6 @@ public class AccommodationUnit {
     private int id;
     private String name;
     private int capacity;
-    private List<Review> reviews;
     private String description;
     private Destination destination;
     private AccommodationType accommodationType;
@@ -13,14 +12,14 @@ public class AccommodationUnit {
     private boolean bathroom;
     private boolean tv;
     private boolean conditioner;
+    private List<Review> reviews = new ArrayList<>();
 
     public AccommodationUnit() {}
-    public AccommodationUnit(int id, String name, int capacity, String description, List<Review> reviews,  Destination destination,
-                             AccommodationType accommodationType, boolean wifi, boolean bathroom, boolean tv, boolean conditioner) {
+    public AccommodationUnit(int id, String name, int capacity, String description, AccommodationType accommodationType,
+                             boolean wifi, boolean bathroom, boolean tv, boolean conditioner,   Destination destination) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
-        this.reviews = reviews;
         this.description = description;
         this.destination = destination;
         this.accommodationType = accommodationType;
@@ -29,6 +28,8 @@ public class AccommodationUnit {
         this.tv = tv;
         this.conditioner = conditioner;
     }
+
+    public AccommodationUnit(List<Review> reviews) { this.reviews = reviews; }
 
     public int getId() {
         return id;
