@@ -1,5 +1,6 @@
 package com.sr182022.travelagencystar.model;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ public class User {
     private int phone;
     private LocalDateTime registeredDate;
     private Role role;
+    private LoyaltyCard loyaltyCard = null;
 
     public User() {}
 
@@ -32,6 +34,8 @@ public class User {
         this.registeredDate = registeredDate;
         this.role = role;
     }
+
+    public User(LoyaltyCard loyaltyCard) { this.loyaltyCard = loyaltyCard; }
 
     public int getId() {
         return id;
@@ -121,9 +125,12 @@ public class User {
         this.role = role;
     }
 
-    public String toFileString() {
-        return this.getId() + "|" + this.getUsername() + "|" + this.getPassword() + "|" + this.getEmail() + "|" + this.getSurname() + "|" + this.getName() + "|"
-                + this.getAddress() + "|" + this.getPhone() + "|" + this.getBirthDate() + "|" + this.getRegisteredDate() + "|" + this.getRole().toString();
+    public LoyaltyCard getLoyaltyCardId() {
+        return loyaltyCard;
+    }
+
+    public void setLoyaltyCard(LoyaltyCard loyaltyCardId) {
+        this.loyaltyCard = loyaltyCard;
     }
 
 }

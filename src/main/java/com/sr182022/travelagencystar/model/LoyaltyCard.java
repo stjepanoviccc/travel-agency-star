@@ -4,11 +4,13 @@ public class LoyaltyCard {
     private int id;
     private float discount;
     private int points;
+    private int userId;
 
-    public LoyaltyCard(int id, float discount, int points) {
+    public LoyaltyCard(int id, float discount, int points, int userId) {
         this.id = id;
         this.discount = discount;
         this.points = points;
+        this.userId = userId;
     }
 
     public int getId() {
@@ -33,5 +35,13 @@ public class LoyaltyCard {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

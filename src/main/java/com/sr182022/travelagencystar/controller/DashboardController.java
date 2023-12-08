@@ -1,9 +1,9 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.service.AccommodationUnitService.IAccommodationUnitService;
-import com.sr182022.travelagencystar.service.DestinationService.IDestinationService;
-import com.sr182022.travelagencystar.service.UserService.IUserService;
-import com.sr182022.travelagencystar.service.VehicleService.IVehicleService;
+import com.sr182022.travelagencystar.service.IAccommodationUnitService;
+import com.sr182022.travelagencystar.service.IDestinationService;
+import com.sr182022.travelagencystar.service.IUserService;
+import com.sr182022.travelagencystar.service.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,29 +31,29 @@ public class DashboardController {
 
     @GetMapping()
     public String getDashboardPage(Model model) {
-        model.addAttribute("dashboardUsersContent", userService.findAllUsers());
+        model.addAttribute("dashboardUsersContent", userService.findAll());
         return "dashboard";
     }
 
     @GetMapping("destinations")
     public String getDestinationsPage(Model model) {
-        model.addAttribute("dashboardDestinationsContent", destinationService.findAllDestinations());
+        model.addAttribute("dashboardDestinationsContent", destinationService.findAll());
         return "dashboard/destinations";
     }
 
     @GetMapping("vehicles")
     public String getVehiclesPage(Model model) {
-        model.addAttribute("dashboardVehiclesContent", vehicleService.findAllVehicles());
+        model.addAttribute("dashboardVehiclesContent", vehicleService.findAll());
         model.addAttribute("vehicleTypesForSelectMenu", vehicleService.findAllVehicleTypes());
-        model.addAttribute("destinationsForSelectMenu", destinationService.findAllDestinations());
+        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
         return "dashboard/vehicles";
     }
 
     @GetMapping("accommodation-units")
     public String getAccommodationUnitsPage(Model model) {
-        model.addAttribute("dashboardAccommodationUnitsContent", accommodationUnitService.findAllAccommodationUnits());
+        model.addAttribute("dashboardAccommodationUnitsContent", accommodationUnitService.findAll());
         model.addAttribute("accommodationTypesForSelectMenu", accommodationUnitService.findAllAccommodationTypes());
-        model.addAttribute("destinationsForSelectMenu", destinationService.findAllDestinations());
+        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
         return "dashboard/accommodation-units";
     }
 }

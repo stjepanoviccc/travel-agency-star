@@ -1,20 +1,12 @@
-package com.sr182022.travelagencystar.DAO.DestinationDAO;
+package com.sr182022.travelagencystar.DAO.impl;
 
+import com.sr182022.travelagencystar.DAO.IDestinationDAO;
 import com.sr182022.travelagencystar.model.Destination;
-import com.sr182022.travelagencystar.model.User;
-import jakarta.annotation.PostConstruct;
-import jakarta.servlet.ServletContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Repository;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -74,19 +66,19 @@ public class DestinationDAO implements IDestinationDAO {
     }
 
     @Override
-    public List<Destination> findAllDestinations() {
+    public List<Destination> findAll() {
         Map<Integer, Destination> destinations = Load();
         return new ArrayList<>(destinations.values());
     }
 
     @Override
-    public Destination findDestinationById(int destinationId) {
+    public Destination findOne(int destinationId) {
         Map<Integer, Destination> destinations = Load();
         return destinations.get(destinationId);
     }
 
     @Override
-    public void addNewDestination(Destination newDestination) {
+    public void save(Destination newDestination) {
         Map<Integer, Destination> destinations = Load();
         newDestination.setId(generateNextId());
         destinations.put(newDestination.getId(), newDestination);
@@ -94,9 +86,9 @@ public class DestinationDAO implements IDestinationDAO {
     }
 
     @Override
-    public void editDestination(Destination editDestination) {
+    public void update(Destination editDestination) {
         Map<Integer, Destination> destinations = Load();
-        Destination existingDestination = findDestinationById(editDestination.getId());
+        Destination existingDestination = findOne(editDestination.getId());
         existingDestination.setCity(editDestination.getCity());
         existingDestination.setCountry(editDestination.getCountry());
         existingDestination.setContinent(editDestination.getContinent());
@@ -106,7 +98,7 @@ public class DestinationDAO implements IDestinationDAO {
     }
 
     @Override
-    public void deleteDestination(int destinationId) {
+    public void delete(int destinationId) {
         Map<Integer, Destination> destinations = Load();
         destinations.remove(destinationId);
         Save(destinations);

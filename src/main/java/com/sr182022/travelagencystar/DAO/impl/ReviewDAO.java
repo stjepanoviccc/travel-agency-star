@@ -1,7 +1,8 @@
-package com.sr182022.travelagencystar.DAO.ReviewDAO;
+package com.sr182022.travelagencystar.DAO.impl;
 
+import com.sr182022.travelagencystar.DAO.IReviewDAO;
 import com.sr182022.travelagencystar.model.Review;
-import com.sr182022.travelagencystar.service.UserService.UserService;
+import com.sr182022.travelagencystar.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -43,7 +44,7 @@ public class ReviewDAO implements IReviewDAO {
                 review.setAccommodationUnitId(Integer.parseInt(data[1]));
 
                 int userId = Integer.parseInt(data[2]);
-                review.setCreator(userService.findUserById(userId));
+                review.setCreator(userService.findOne(userId));
 
                 review.setMessage(data[3]);
                 review.setStars(Integer.parseInt(data[4]));
@@ -76,34 +77,34 @@ public class ReviewDAO implements IReviewDAO {
     }
 
     @Override
-    public List<Review> findAllReviews() {
+    public List<Review> findAll() {
         Map<Integer, Review> reviews = Load();
         return new ArrayList<>(reviews.values());
     }
 
     @Override
     public List<Review> findAllReviewsForSpecificAccommodationUnit(int accommodationUnitId) {
-        return findAllReviews().stream().filter(review -> review.getId() == accommodationUnitId).collect(Collectors.toList());
+        return findAll().stream().filter(review -> review.getId() == accommodationUnitId).collect(Collectors.toList());
     }
 
     @Override
-    public Review findReviewById(int reviewId) {
+    public Review findOne(int reviewId) {
         Map<Integer, Review> reviews = Load();
         return reviews.get(reviewId);
     }
 
     @Override
-    public void addNewReview(Review newReview) {
+    public void save(Review newReview) {
 //
     }
 
     @Override
-    public void editReview(Review editReview) {
+    public void update(Review editReview) {
 //
     }
 
     @Override
-    public void deleteReview(int reviewId) {
+    public void delete(int reviewId) {
         Map<Integer, Review> reviews = Load();
         reviews.remove(reviewId);
         Save(reviews);

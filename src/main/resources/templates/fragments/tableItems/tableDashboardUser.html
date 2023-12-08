@@ -3,7 +3,7 @@
     <td class="whitespace-nowrap px-6 py-4" th:text="${user.name}"></td>
     <td class="whitespace-nowrap px-6 py-4" th:text="${user.surname}"></td>
     <td class="whitespace-nowrap px-6 py-4" th:text="${user.username}"></td>
-    <td class="whitespace-nowrap px-6 py-4" th:text="${#temporals.format(user.registeredDate, 'dd.MM.yyyy')}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${#temporals.format(user.birthDate, 'dd.MM.yyyy')}"></td>
     <td class="whitespace-nowrap px-6 py-4" th:text="${user.role}"></td>
     <td class="whitespace-nowrap px-6 py-4">
         <div th:replace="~{fragments/forms/users/GET_editUserForm :: GET_editUserForm}"></div>

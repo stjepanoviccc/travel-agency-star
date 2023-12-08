@@ -1,15 +1,15 @@
-package com.sr182022.travelagencystar.service.ReviewService;
+package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.ReviewDAO.ReviewDAO;
+import com.sr182022.travelagencystar.DAO.impl.ReviewDAO;
 import com.sr182022.travelagencystar.model.Review;
-import jakarta.servlet.ServletContext;
+import com.sr182022.travelagencystar.service.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ReviewService implements IReviewService{
+public class ReviewService implements IReviewService {
 
     private final ReviewDAO reviewDAO;
 
@@ -19,8 +19,8 @@ public class ReviewService implements IReviewService{
     }
 
     @Override
-    public List<Review> findAllReviews() {
-        return reviewDAO.findAllReviews();
+    public List<Review> findAll() {
+        return reviewDAO.findAll();
     }
 
     @Override
@@ -29,23 +29,23 @@ public class ReviewService implements IReviewService{
     }
 
     @Override
-    public Review findReviewById(int reviewId) {
-        return reviewDAO.findReviewById(reviewId);
+    public Review findOne(int reviewId) {
+        return reviewDAO.findOne(reviewId);
     }
 
     @Override
-    public void addNewReview(Review newReview) {
-        reviewDAO.addNewReview(newReview);
+    public void save(Review newReview) {
+        reviewDAO.save(newReview);
     }
 
     @Override
-    public void editReview(Review editReview) {
-        reviewDAO.editReview(editReview);
+    public void update(Review editReview) {
+        reviewDAO.update(editReview);
     }
 
     @Override
-    public void deleteReview(int reviewId) {
-        reviewDAO.deleteReview(reviewId);
+    public void delete(int reviewId) {
+        reviewDAO.delete(reviewId);
     }
 
     @Override

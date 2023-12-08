@@ -1,8 +1,9 @@
-package com.sr182022.travelagencystar.DAO.AccommodationUnitDAO;
+package com.sr182022.travelagencystar.DAO.impl;
 
+import com.sr182022.travelagencystar.DAO.IAccommodationUnitDAO;
 import com.sr182022.travelagencystar.model.*;
-import com.sr182022.travelagencystar.service.DestinationService.DestinationService;
-import com.sr182022.travelagencystar.service.ReviewService.ReviewService;
+import com.sr182022.travelagencystar.service.impl.DestinationService;
+import com.sr182022.travelagencystar.service.impl.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -51,7 +52,7 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
                 accommodationUnit.setDescription(data[3]);
 
                 int destinationId = Integer.parseInt(data[4]);
-                accommodationUnit.setDestination(destinationService.findDestinationById(destinationId));
+                accommodationUnit.setDestination(destinationService.findOne(destinationId));
 
                 accommodationUnit.setAccommodationType(AccommodationType.valueOf(data[5]));
                 accommodationUnit.setHasWifi(Boolean.parseBoolean(data[6]));
@@ -87,7 +88,7 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
     }
 
     @Override
-    public List<AccommodationUnit> findAllAccommodationUnits() {
+    public List<AccommodationUnit> findAll() {
         Map<Integer, AccommodationUnit> accommodationUnits = Load();
         return new ArrayList<>(accommodationUnits.values());
     }
@@ -98,30 +99,30 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
     }
 
     @Override
-    public AccommodationUnit findAccommodationUnitById(int accommodationUnitId) {
+    public AccommodationUnit findOne(int accommodationUnitId) {
         Map<Integer, AccommodationUnit> accommodationUnits = Load();
         return accommodationUnits.get(accommodationUnitId);
     }
 
     @Override
-    public void addNewAccommodationUnit(AccommodationUnit newAccommodationUnit, int destinationId) {
+    public void save(AccommodationUnit newAccommodationUnit, int destinationId) {
         Map<Integer, AccommodationUnit> accommodationUnits = Load();
         newAccommodationUnit.setId(generateNextId());
-        newAccommodationUnit.setDestination(destinationService.findDestinationById(destinationId));
+        newAccommodationUnit.setDestination(destinationService.findOne(destinationId));
         accommodationUnits.put(newAccommodationUnit.getId(), newAccommodationUnit);
         Save(accommodationUnits);
     }
 
     @Override
-    public void editAccommodationUnit(AccommodationUnit editAccommodationUnit, int destinationId) {
+    public void update(AccommodationUnit editAccommodationUnit, int destinationId) {
         Map<Integer, AccommodationUnit> accommodationUnits = Load();
-        AccommodationUnit existingAccommodationUnit = findAccommodationUnitById(editAccommodationUnit.getId());
+        AccommodationUnit existingAccommodationUnit = findOne(editAccommodationUnit.getId());
 
         existingAccommodationUnit.setName(editAccommodationUnit.getName());
         existingAccommodationUnit.setCapacity(editAccommodationUnit.getCapacity());
         existingAccommodationUnit.setReviews(editAccommodationUnit.getReviews());
         existingAccommodationUnit.setDescription(editAccommodationUnit.getDescription());
-        existingAccommodationUnit.setDestination(destinationService.findDestinationById(destinationId));
+        existingAccommodationUnit.setDestination(destinationService.findOne(destinationId));
         existingAccommodationUnit.setAccommodationType(editAccommodationUnit.getAccommodationType());
         existingAccommodationUnit.setHasWifi(editAccommodationUnit.isWifi());
         existingAccommodationUnit.setHasBathroom(editAccommodationUnit.isBathroom());
@@ -133,7 +134,7 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
     }
 
     @Override
-    public void deleteAccommodationUnit(int accommodationUnitId) {
+    public void delete(int accommodationUnitId) {
         Map<Integer, AccommodationUnit> accommodationUnits = Load();
         accommodationUnits.remove(accommodationUnitId);
         Save(accommodationUnits);

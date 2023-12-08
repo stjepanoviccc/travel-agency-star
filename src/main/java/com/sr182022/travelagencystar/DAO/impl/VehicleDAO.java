@@ -1,8 +1,9 @@
-package com.sr182022.travelagencystar.DAO.VehicleDAO;
+package com.sr182022.travelagencystar.DAO.impl;
 
+import com.sr182022.travelagencystar.DAO.IVehicleDAO;
 import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.model.VehicleType;
-import com.sr182022.travelagencystar.service.DestinationService.DestinationService;
+import com.sr182022.travelagencystar.service.impl.DestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -45,7 +46,7 @@ public class VehicleDAO implements IVehicleDAO {
                 vehicle.setNumberOfSeats(Integer.parseInt(data[1]));
 
                 int finalDestinationId = Integer.parseInt(data[2]);
-                vehicle.setFinalDestination(destinationService.findDestinationById(finalDestinationId));
+                vehicle.setFinalDestination(destinationService.findOne(finalDestinationId));
 
                 vehicle.setDescription(data[3]);
                 vehicle.setVehicleType(VehicleType.valueOf(data[4]));
@@ -78,13 +79,13 @@ public class VehicleDAO implements IVehicleDAO {
     }
 
     @Override
-    public List<Vehicle> findAllVehicles() {
+    public List<Vehicle> findAll() {
         Map<Integer, Vehicle> vehicles = Load();
         return new ArrayList<>(vehicles.values());
     }
 
     @Override
-    public Vehicle findVehicleById(int vehicleId) {
+    public Vehicle findOne(int vehicleId) {
         Map<Integer, Vehicle> vehicles = Load();
         return vehicles.get(vehicleId);
     }
@@ -95,20 +96,20 @@ public class VehicleDAO implements IVehicleDAO {
     }
 
     @Override
-    public void addNewVehicle(Vehicle newVehicle, int finalDestinationId) {
+    public void save(Vehicle newVehicle, int finalDestinationId) {
         Map<Integer, Vehicle> vehicles = Load();
         newVehicle.setId(generateNextId());
-        newVehicle.setFinalDestination(destinationService.findDestinationById(finalDestinationId));
+        newVehicle.setFinalDestination(destinationService.findOne(finalDestinationId));
         vehicles.put(newVehicle.getId(), newVehicle);
         Save(vehicles);
     }
 
     @Override
-    public void editVehicle(Vehicle editVehicle, int finalDestinationId) {
+    public void update(Vehicle editVehicle, int finalDestinationId) {
         Map<Integer, Vehicle> vehicles = Load();
-        Vehicle existingVehicle = findVehicleById(editVehicle.getId());
+        Vehicle existingVehicle = findOne(editVehicle.getId());
         existingVehicle.setNumberOfSeats(editVehicle.getNumberOfSeats());
-        existingVehicle.setFinalDestination(destinationService.findDestinationById(finalDestinationId));
+        existingVehicle.setFinalDestination(destinationService.findOne(finalDestinationId));
         existingVehicle.setDescription(editVehicle.getDescription());
         existingVehicle.setVehicleType(editVehicle.getVehicleType());
         vehicles.put(editVehicle.getId(), existingVehicle);
@@ -116,7 +117,7 @@ public class VehicleDAO implements IVehicleDAO {
     }
 
     @Override
-    public void deleteVehicle(int vehicleId) {
+    public void delete(int vehicleId) {
         Map<Integer, Vehicle> vehicles = Load();
         vehicles.remove(vehicleId);
         Save(vehicles);
