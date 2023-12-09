@@ -12,10 +12,8 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class DatabaseVehicleDAO implements IVehicleDAO {
@@ -60,7 +58,7 @@ public class DatabaseVehicleDAO implements IVehicleDAO {
     public List<Vehicle> findAll() {
         String sql =
                 "SELECT v.id_vehicle, v.number_of_seats, v.id_destination, v.vehicle_description, v.vehicle_type " +
-                        "FROM Vehicle v ORDER BY v.id_vehicle";
+                        "FROM vehicle v ORDER BY v.id_vehicle";
 
         VehicleRowCallBackHandler rowCallBackHandler = new VehicleRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler);
@@ -68,15 +66,10 @@ public class DatabaseVehicleDAO implements IVehicleDAO {
     }
 
     @Override
-    public List<String> findAllVehicleTypes() {
-        return null;
-    }
-
-    @Override
     public Vehicle findOne(int vehicleId) {
         String sql =
                 "SELECT v.id_vehicle, v.number_of_seats, v.id_destination, v.vehicle_description, v.vehicle_type " +
-                        "FROM Vehicle v WHERE v.id_vehicle = ?";
+                        "FROM vehicle v WHERE v.id_vehicle = ?";
 
         VehicleRowCallBackHandler rowCallBackHandler = new VehicleRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, vehicleId);
@@ -115,7 +108,8 @@ public class DatabaseVehicleDAO implements IVehicleDAO {
                         "SET v.number_of_seats = ?, v.id_destination = ?, v.vehicle_description = ?, v.vehicle_type = ? " +
                         "WHERE v.id_vehicle = ?";
 
-        jdbcTemplate.update(sql, editVehicle.getNumberOfSeats(), finalDestinationId, editVehicle.getDescription(), editVehicle.getVehicleType().name());
+        jdbcTemplate.update(sql, editVehicle.getNumberOfSeats(), finalDestinationId, editVehicle.getDescription(), editVehicle.getVehicleType().name(),
+                editVehicle.getId());
     }
 
     @Transactional

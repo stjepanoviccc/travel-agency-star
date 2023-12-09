@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface IVehicleDAO {
     List<Vehicle> findAll();
-    List<String> findAllVehicleTypes();
     Vehicle findOne(int vehicleId);
     void save(Vehicle newVehicle, int finalDestinationId);
     void update(Vehicle editVehicle, int finalDestinationId);

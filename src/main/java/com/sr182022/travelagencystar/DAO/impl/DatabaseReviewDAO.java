@@ -50,7 +50,7 @@ public class DatabaseReviewDAO implements IReviewDAO {
     public List<Review> findAll() {
         String sql =
                 "SELECT r.id_review, r.review_message, r.review_start, r.id_user, r.id_accommodation_unit " +
-                        "FROM Review r ORDER BY r.id_review";
+                        "FROM review r ORDER BY r.id_review";
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler);
@@ -61,7 +61,7 @@ public class DatabaseReviewDAO implements IReviewDAO {
     public List<Review> findAllReviewsForSpecificAccommodationUnit(int accommodationUnitId) {
         String sql =
                 "SELECT r.id_review, r.review_message, r.review_start, r.id_user, r.id_accommodation_unit " +
-                        "FROM Review r WHERE r.id_accommodation_unit = ? ";
+                        "FROM review r WHERE r.id_accommodation_unit = ? ";
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, accommodationUnitId);
@@ -72,7 +72,7 @@ public class DatabaseReviewDAO implements IReviewDAO {
     public List<Review> findAllReviewsForSpecificUser(int userId) {
         String sql =
                 "SELECT r.id_review, r.review_message, r.review_start, r.id_user, r.id_accommodation_unit " +
-                        "FROM Review r WHERE r.id_user = ? ";
+                        "FROM review r WHERE r.id_user = ? ";
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, userId);
@@ -83,7 +83,7 @@ public class DatabaseReviewDAO implements IReviewDAO {
     public Review findOne(int reviewId) {
         String sql =
                 "SELECT r.id_review, r.review_message, r.review_stars, r.id_user, r.id_accommodation_unit " +
-                        "FROM Review r WHERE r.id_review = ?";
+                        "FROM review r WHERE r.id_review = ?";
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, reviewId);

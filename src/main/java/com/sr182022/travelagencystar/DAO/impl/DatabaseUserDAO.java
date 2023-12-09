@@ -62,7 +62,7 @@ public class DatabaseUserDAO implements IUserDao {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role " +
-                        "FROM User u ORDER BY u.id_user";
+                        "FROM user u ORDER BY u.id_user";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler);
@@ -74,7 +74,7 @@ public class DatabaseUserDAO implements IUserDao {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role " +
-                        "FROM User u WHERE u.user_role = role ORDER BY u.id_user";
+                        "FROM user u WHERE u.user_role = role ORDER BY u.id_user";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, role);
@@ -86,7 +86,7 @@ public class DatabaseUserDAO implements IUserDao {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role " +
-                        "FROM User u WHERE u.id_user = ?";
+                        "FROM user u WHERE u.id_user = ?";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, userId);
@@ -98,7 +98,7 @@ public class DatabaseUserDAO implements IUserDao {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role " +
-                        "FROM User u WHERE u.username = ?";
+                        "FROM user u WHERE u.username = ?";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, username);
@@ -137,7 +137,6 @@ public class DatabaseUserDAO implements IUserDao {
     @Transactional
     @Override
     public void update(User editUser) {
-
         String sql =
                 "UPDATE user u " +
                         "SET u.username = ?, u.email = ?, u.password = ?, u.surname = ?, u.name = ?, u.birth_date = ?, u.user_address = ?, u.user_phone = ? " +

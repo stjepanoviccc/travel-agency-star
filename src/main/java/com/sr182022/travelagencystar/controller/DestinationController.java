@@ -2,6 +2,7 @@ package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.Destination;
 import com.sr182022.travelagencystar.service.IDestinationService;
+import com.sr182022.travelagencystar.utils.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,8 @@ public class DestinationController {
     @GetMapping("editDestination")
     public String editDestination(@RequestParam int destinationId, Model model) {
         model.addAttribute("destination", destinationService.findOne(destinationId));
+        String base64Image = ImageUtil.convertToBase64(destinationService.findOne(destinationId).getImage());
+        model.addAttribute("base64Image", base64Image);
         return "editPages/editDestinationPage";
     }
 

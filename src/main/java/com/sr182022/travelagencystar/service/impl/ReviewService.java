@@ -30,7 +30,7 @@ public class ReviewService implements IReviewService {
 
     @Override
     public List<Review> findAllReviewsForSpecificUser(int userId) {
-        return null;
+        return databaseReviewDAO.findAllReviewsForSpecificUser(userId);
     }
 
     @Override

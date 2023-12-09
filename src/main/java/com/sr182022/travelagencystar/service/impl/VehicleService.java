@@ -2,11 +2,14 @@ package com.sr182022.travelagencystar.service.impl;
 
 import com.sr182022.travelagencystar.DAO.impl.DatabaseVehicleDAO;
 import com.sr182022.travelagencystar.model.Vehicle;
+import com.sr182022.travelagencystar.model.VehicleType;
 import com.sr182022.travelagencystar.service.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VehicleService implements IVehicleService {
@@ -29,7 +32,9 @@ public class VehicleService implements IVehicleService {
     }
 
     public List<String> findAllVehicleTypes() {
-        return databaseVehicleDAO.findAllVehicleTypes();
+        return Arrays.stream(VehicleType.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/*
 @Repository
 public class AccommodationUnitDAO implements IAccommodationUnitDAO {
     @Value("${accommodationUnits.pathToFile}")
@@ -94,11 +95,6 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
     }
 
     @Override
-    public List<String> findAllAccommodationTypes() {
-        return Arrays.stream(AccommodationType.values()).map(Enum::name).collect(Collectors.toList());
-    }
-
-    @Override
     public AccommodationUnit findOne(int accommodationUnitId) {
         Map<Integer, AccommodationUnit> accommodationUnits = Load();
         return accommodationUnits.get(accommodationUnitId);
@@ -150,3 +146,4 @@ public class AccommodationUnitDAO implements IAccommodationUnitDAO {
         return ++nextId;
     }
 }
+*/

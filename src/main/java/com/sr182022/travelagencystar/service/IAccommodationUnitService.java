@@ -12,6 +12,5 @@ public interface IAccommodationUnitService {
     void save(AccommodationUnit newAccommodationUnit, int destinationId);
     void update(AccommodationUnit editAccommodationUnit, int destinationId);
     void delete(int accommodationUnitId);
-    int generateNextId();
     void setServicesChecking(AccommodationUnit newAccommodationUnit, boolean checkWifi, boolean checkBathroom, boolean checkTv, boolean checkConditioner);
 }

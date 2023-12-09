@@ -50,7 +50,7 @@ public class DatabaseDestinationDAO implements IDestinationDAO {
     public List<Destination> findAll() {
         String sql =
                 "SELECT d.id_destination, d.destination_city, d.destination_country, d.destination_continent, d.destination_image " +
-                        "FROM Destination d ORDER BY d.id_destination";
+                        "FROM destination d ORDER BY d.id_destination";
 
         DestinationRowCallBackHandler rowCallBackHandler = new DestinationRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler);
@@ -61,10 +61,10 @@ public class DatabaseDestinationDAO implements IDestinationDAO {
     public Destination findOne(int destinationId) {
         String sql =
                 "SELECT d.id_destination, d.destination_city, d.destination_country, d.destination_continent, d.destination_image " +
-                        "FROM Destination d WHERE d.id_destination = ?";
+                        "FROM destination d WHERE d.id_destination = ?";
 
         DestinationRowCallBackHandler rowCallBackHandler = new DestinationRowCallBackHandler();
-        jdbcTemplate.query(sql, rowCallBackHandler);
+        jdbcTemplate.query(sql, rowCallBackHandler, destinationId);
         return rowCallBackHandler.getDestinations().get(0);
     }
 
@@ -99,7 +99,8 @@ public class DatabaseDestinationDAO implements IDestinationDAO {
                         "SET d.destination_city = ?, d.destination_country = ?, d.destination_continent = ?, d.destination_image = ? " +
                         "WHERE d.id_destination = ?";
 
-        jdbcTemplate.update(sql, editDestination.getCity(), editDestination.getCountry(), editDestination.getContinent(), editDestination.getImage());
+        jdbcTemplate.update(sql, editDestination.getCity(), editDestination.getCountry(), editDestination.getContinent(), editDestination.getImage(),
+                editDestination.getId());
     }
 
     @Transactional

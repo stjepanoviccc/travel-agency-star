@@ -1,56 +1,56 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.AccommodationUnitDAO;
+import com.sr182022.travelagencystar.DAO.impl.DatabaseAccommodationUnitDAO;
+import com.sr182022.travelagencystar.model.AccommodationType;
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.service.IAccommodationUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccommodationUnitService implements IAccommodationUnitService
 {
-    private final AccommodationUnitDAO accommodationUnitDAO;
+    private final DatabaseAccommodationUnitDAO databaseAccommodationUnitDAO;
 
     @Autowired
-    public AccommodationUnitService(AccommodationUnitDAO accommodationUnitDAO) {
-        this.accommodationUnitDAO = accommodationUnitDAO;
+    public AccommodationUnitService(DatabaseAccommodationUnitDAO databaseAccommodationUnitDAO) {
+        this.databaseAccommodationUnitDAO = databaseAccommodationUnitDAO;
     }
 
     @Override
     public List<AccommodationUnit> findAll() {
-        return accommodationUnitDAO.findAll();
+        return databaseAccommodationUnitDAO.findAll();
     }
 
     @Override
     public List<String> findAllAccommodationTypes() {
-        return accommodationUnitDAO.findAllAccommodationTypes();
+        return Arrays.stream(AccommodationType.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
     }
 
     @Override
     public AccommodationUnit findOne(int accommodationUnitId) {
-        return accommodationUnitDAO.findOne(accommodationUnitId);
+        return databaseAccommodationUnitDAO.findOne(accommodationUnitId);
     }
 
     @Override
     public void save(AccommodationUnit newAccommodationUnit, int destinationId) {
-        accommodationUnitDAO.save(newAccommodationUnit, destinationId);
+        databaseAccommodationUnitDAO.save(newAccommodationUnit, destinationId);
     }
 
     @Override
     public void update(AccommodationUnit editAccommodationUnit, int destinationId) {
-        accommodationUnitDAO.update(editAccommodationUnit, destinationId);
+        databaseAccommodationUnitDAO.update(editAccommodationUnit, destinationId);
     }
 
     @Override
     public void delete(int accommodationUnitId) {
-        accommodationUnitDAO.delete(accommodationUnitId);
-    }
-
-    @Override
-    public int generateNextId() {
-        return accommodationUnitDAO.generateNextId();
+        databaseAccommodationUnitDAO.delete(accommodationUnitId);
     }
 
     @Override
