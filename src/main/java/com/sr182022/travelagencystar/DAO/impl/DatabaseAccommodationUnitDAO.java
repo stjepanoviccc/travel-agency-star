@@ -42,18 +42,18 @@ public class DatabaseAccommodationUnitDAO implements IAccommodationUnitDAO {
             int accommodation_unit_capacity = resultSet.getInt(index++);
             String accommodation_type = resultSet.getString(index++);
             AccommodationType accommodationType = AccommodationType.valueOf(accommodation_type);
-            String accommodation_unit_description = resultSet.getString(index++);
             boolean wifi = resultSet.getBoolean(index++);
             boolean bathroom = resultSet.getBoolean(index++);
             boolean tv = resultSet.getBoolean(index++);
             boolean conditioner = resultSet.getBoolean(index++);
             int id_destination = resultSet.getInt(index++);
             Destination destination = destinationService.findOne(id_destination);
+            String accommodation_unit_description = resultSet.getString(index++);
 
             AccommodationUnit accommodationUnit = accommodationUnits.get(id_accommodation_unit);
             if (accommodationUnit == null) {
-                accommodationUnit = new AccommodationUnit(id_accommodation_unit, accommodation_unit_name, accommodation_unit_capacity, accommodation_unit_description,
-                        accommodationType, wifi, bathroom, tv, conditioner, destination);
+                accommodationUnit = new AccommodationUnit(id_accommodation_unit, accommodation_unit_name, accommodation_unit_capacity,
+                        accommodationType, wifi, bathroom, tv, conditioner, destination, accommodation_unit_description);
                 accommodationUnits.put(accommodationUnit.getId(), accommodationUnit);
             }
         }
@@ -95,7 +95,7 @@ public class DatabaseAccommodationUnitDAO implements IAccommodationUnitDAO {
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 String sql = "INSERT INTO accommodation_unit (accommodation_unit_name, accommodation_unit_capacity, accommodation_type, " +
                         "wifi, bathroom, tv, conditioner, id_destination, accommodation_unit_description) " +
-                        "VALUES (?, ?, ?, ?)";
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 int index = 1;
@@ -106,7 +106,7 @@ public class DatabaseAccommodationUnitDAO implements IAccommodationUnitDAO {
                 preparedStatement.setBoolean(index++, newAccommodationUnit.isBathroom());
                 preparedStatement.setBoolean(index++, newAccommodationUnit.isTv());
                 preparedStatement.setBoolean(index++, newAccommodationUnit.isConditioner());
-                preparedStatement.setInt(index++, newAccommodationUnit.getDestination().getId());
+                preparedStatement.setInt(index++, destinationId);
                 preparedStatement.setString(index++, newAccommodationUnit.getDescription());
 
                 return preparedStatement;
@@ -121,13 +121,13 @@ public class DatabaseAccommodationUnitDAO implements IAccommodationUnitDAO {
     public void update(AccommodationUnit editAccommodationUnit, int destinationId) {
         String sql =
                 "UPDATE accommodation_unit au " +
-                        "SET au.accommodation_unit_name, au.accommodation_unit_capacity, au.accommodation_type, wifi, bathroom, tv, conditioner," +
-                        " id_destination, accommodation_unit_description" +
+                        "SET au.accommodation_unit_name = ?, au.accommodation_unit_capacity = ?, au.accommodation_type = ?, wifi = ?, bathroom = ?, tv = ?" +
+                        ", conditioner = ?, id_destination = ?, accommodation_unit_description = ? " +
                         "WHERE au.id_accommodation_unit = ?";
 
         jdbcTemplate.update(sql, editAccommodationUnit.getName(), editAccommodationUnit.getCapacity(), editAccommodationUnit.getAccommodationType().name(),
                 editAccommodationUnit.isWifi(), editAccommodationUnit.isBathroom(), editAccommodationUnit.isTv(), editAccommodationUnit.isConditioner(),
-                editAccommodationUnit.getDestination().getId(), editAccommodationUnit.getDescription(), editAccommodationUnit.getId());
+                destinationId, editAccommodationUnit.getDescription(), editAccommodationUnit.getId());
     }
 
     @Transactional

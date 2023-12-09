@@ -39,7 +39,9 @@ public class AccommodationUnitController {
     }
 
     @PostMapping("editAccommodationUnitPost")
-    public String editDestinationPost(@ModelAttribute AccommodationUnit accommodationUnit, int destinationId) {
+    public String editDestinationPost(@ModelAttribute AccommodationUnit accommodationUnit, int destinationId,
+                                      boolean checkWifi, boolean checkBathroom, boolean checkTv, boolean checkConditioner) {
+        accommodationUnitService.setServicesChecking(accommodationUnit, checkWifi, checkBathroom, checkTv, checkConditioner);
         accommodationUnitService.update(accommodationUnit, destinationId);
         return "redirect:/dashboard/accommodation-units";
     }
