@@ -102,7 +102,14 @@ public class DatabaseUserDAO implements IUserDao {
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, username);
-        return rowCallBackHandler.getUsers().get(0);
+
+        // handle index out of bound
+        List<User> userList = rowCallBackHandler.getUsers();
+        if (!userList.isEmpty()) {
+            return userList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Transactional

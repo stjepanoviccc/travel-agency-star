@@ -9,6 +9,7 @@ $(document).ready(() => {
     $('.registerToggleTrigger').on('click', navFunctions.toggleRegisterModal);
     $("#langDropdownButton").on('click', navFunctions.toggleLangDropdown);
     $(document).on("click", navFunctions.hideLangDropdownOnClickOutside);
+    $('.messageDisplayToggleTrigger').on('click', navFunctions.toggleMessageDisplayModal);
 
     // dashboard
     dashboardFunctions.linksInDashboardPageActiveState();
