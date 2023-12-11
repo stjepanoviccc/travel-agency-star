@@ -7,11 +7,27 @@
                     <a href="/"><img class="h-12  w-auto" th:src="@{/images/logo.jpg}" alt="Logo"></a>
                 </div>
                 <div class="pt-2 hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-3">
-                        <!-- ADD LATER ACTIVE: bg-red-600 text-white rounded-md px-3 py-2 text-sm font-medium -->
-                        <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
-                        <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navReportsLink}"></a>
-                        <a href="/dashboard" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navDashboardLink}"></a>
+                    <div class="flex space-x-3 mt-1">
+                        <div th:if="${session.user != null}">
+                            <div th:switch="${session.user.role.name()}">
+                                <div th:case="'Administrator'">
+                                    <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
+                                    <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navReportsLink}"></a>
+                                    <a href="/dashboard" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navDashboardLink}"></a>
+                                    <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navProfileLink}"></a>
+                                </div>
+                                <div th:case="'Organizer'">
+                                    <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
+                                    <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navReportsLink}"></a>
+                                    <a href="/dashboard" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navDashboardLink}"></a>
+                                    <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navProfileLink}"></a>
+                                </div>
+                                <div th:case="'Passenger'">
+                                    <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
+                                    <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navProfileLink}"></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,10 +88,31 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobileMenu">
         <div class="space-y-1 px-2 pb-3 pt-2">
-            <a href="/" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Travel</a>
-            <a href="#" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Reports</a>
-            <a href="/dashboard" class="text-red-600 block rounded-md px-3 py-2 text-base font-medium">Dashboard</a>
-            <a href="#" class="loginToggleTrigger bg-red-600 text-white block rounded-md px-3 py-2 text-base font-medium">Login</a>
+            <div th:if="${session.user != null}">
+                <div th:switch="${session.user.role.name()}">
+                    <div th:case="'Administrator'" class="flex flex-col">
+                        <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
+                        <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300 mt-2" th:text="#{navReportsLink}"></a>
+                        <a href="/dashboard" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300 mt-2" th:text="#{navDashboardLink}"></a>
+                        <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300 mt-2" th:text="#{navProfileLink}"></a>
+                    </div>
+                    <div th:case="'Organizer'" class="flex flex-col">
+                        <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
+                        <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300 mt-2" th:text="#{navReportsLink}"></a>
+                        <a href="/dashboard" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300 mt-2" th:text="#{navDashboardLink}"></a>
+                        <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300 mt-2" th:text="#{navProfileLink}"></a>
+                    </div>
+                    <div th:case="'Passenger'" class="flex flex-col">
+                        <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
+                        <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300 mt-2" th:text="#{navProfileLink}"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div th:unless="${session.user != null}">
+                <a href="#" class="loginToggleTrigger bg-red-600 text-white block rounded-md px-3 py-2 text-base font-medium" th:text="#{navLogin}"></a>
+            </div>
+
         </div>
     </div>
 </nav>

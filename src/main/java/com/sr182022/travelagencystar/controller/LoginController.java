@@ -5,7 +5,6 @@ import com.sr182022.travelagencystar.service.IUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,57 +19,49 @@ public class LoginController {
         this.userService = userService;
     }
 
-    /*
-    @GetMapping("/login")
-    public void getLogin(@RequestParam(required = false) String usernameLogin, @RequestParam(required = false) String passwordLogin,
-                         HttpSession session, Model model) {
-        postLogin(usernameLogin, passwordLogin, session, model);
-    } */
+    @GetMapping("/login-error")
+    public String getInformationPage() {
+        return "/errorPages/loginErrorPage";
+    }
 
     @PostMapping("/login")
-    public String postLogin(@RequestParam(required = false) String usernameLogin, @RequestParam(required = false) String passwordLogin,
-                          HttpSession session, Model model) {
+    public String postLogin(@RequestParam(required = false) String usernameLogin, @RequestParam(required = false) String passwordLogin, HttpSession session) {
         User user = userService.findOne(usernameLogin);
-        String errorMessage = "";
 
         // validations
-        if(user == null) {
-            errorMessage = "User not found.";
-            model.addAttribute("errorMessage", errorMessage);
+        if(user == null || session.getAttribute(USER_KEY) != null) {
+            return "redirect:/login-error";
         }
 
         if(session.getAttribute(USER_KEY) != null) {
-            errorMessage = "You are already logged in. Please log out.";
-            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:/login-error";
         }
 
-        if(user != null) {
-            if(user.getUsername().equals(usernameLogin) && user.getPassword().equals(passwordLogin)) {
-                session.setAttribute(USER_KEY, user);
-                errorMessage = "Login successful!";
-                model.addAttribute("errorMessage", errorMessage);
-            } else {
-                errorMessage = "Username and password doesn't match!";
-                model.addAttribute("errorMessage", errorMessage);
-            }
+        if(user.getUsername().equals(usernameLogin) && user.getPassword().equals(passwordLogin)) {
+            session.setAttribute(USER_KEY, user);
+            return "redirect:/";
+        } else {
+            // username and password doesn't match
+            return "redirect:/login-error";
         }
 
-        return "redirect:/";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, Model model) {
+    public String logout(HttpSession session) {
         User user = (User) session.getAttribute(USER_KEY);
-        String errorMessage = "";
+        String infoMessage = "";
 
         if(user == null) {
-            errorMessage = "User not logged in.";
-            model.addAttribute("errorMessage", errorMessage);
+            infoMessage = "User not logged in.";
+            session.setAttribute("infoMessage", infoMessage);
         } else {
+            infoMessage = "Logged out.";
+            session.setAttribute("infoMessage", infoMessage);
             session.removeAttribute(USER_KEY);
             session.invalidate();
         }
 
-        return "redirect:/index";
+        return "redirect:/login-information";
     }
 }
