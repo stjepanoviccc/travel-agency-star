@@ -1,0 +1,21 @@
+<form th:fragment="addNewTravelForm" name="addNewTravelForm" method="post" action="/dashboard/travels/addNewTravel">
+    <label for="addNewTravelDestination" class="block font-medium text-gray-700">Destination</label>
+    <select id="addNewTravelDestination" name="destination" class="mt-1 p-2 border rounded-md w-full">
+        <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"></option>
+    </select>
+    <label for="addNewTravelVehicle" class="block font-medium text-gray-700">Vehicle</label>
+    <select id="addNewTravelVehicle" name="vehicle" class="mt-1 p-2 border rounded-md w-full">
+        <option th:each="vehicle : ${vehiclesForSelectMenu}" th:value="${vehicle.id}" th:text="${vehicle}"></option>
+    </select>
+    <label for="addNewTravelAccommodationUnit" class="block font-medium text-gray-700">Accommodation Unit</label>
+    <select id="addNewTravelAccommodationUnit" name="accommodationUnit" class="mt-1 p-2 border rounded-md w-full">
+        <option th:each="accommodationUnit : ${accommodationUnitsForSelectMenu}" th:value="${accommodationUnit.id}" th:text="${accommodationUnit}"></option>
+    </select>
+    <!-- i left work here -->
+    <textarea id="addNewVehicleDescription" name="description" class="mt-1 p-2 border rounded-md w-full"></textarea>
+    <label for="addNewVehicleVehicleType" class="block font-medium text-gray-700 mt-4">Vehicle Type</label>
+    <select id="addNewVehicleVehicleType" name="vehicleType" class="mt-1 p-2 border rounded-md w-full">
+        <option th:each="vehicleType : ${vehicleTypesForSelectMenu}" th:value="${vehicleType}" th:text="${vehicleType}"></option>
+    </select>
+    <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add</button>
+</form>

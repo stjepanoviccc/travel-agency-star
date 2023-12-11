@@ -10,8 +10,8 @@ public class Travel {
     private LocalDateTime endDate;
     private int numberOfNights;
     private TravelCategory travelCategory;
-
     private float price;
+
     public Travel(int id, Destination destination, Vehicle vehicle, AccommodationUnit accommodationUnit, LocalDateTime startDate, LocalDateTime endDate, int numberOfNights,
                   TravelCategory travelCategory) {
         this.id = id;

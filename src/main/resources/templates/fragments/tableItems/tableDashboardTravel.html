@@ -1,0 +1,16 @@
+<tr th:fragment="tableDashboardTravel" th:each="travel : ${dashboardTravelsContent}" class="border-b dark:border-neutral-500">
+    <td class="whitespace-nowrap px-6 py-4 font-medium" th:text="${travel.id}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${travel.destination.city}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${travel.vehicle.vehicleType.name()}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${travel.accommodationUnit.name}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${vehicle.vehicleType}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${vehicle.vehicleType}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${travel.travelCategory.name()}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${travel.price}"></td>
+    <td class="whitespace-nowrap px-6 py-4">
+        <div th:replace="~{fragments/forms/travels/GET_editTravelForm :: GET_editTravelForm}"></div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-4">
+        <div th:replace="~{fragments/forms/travels/deleteTravelForm :: deleteTravelForm}"></div>
+    </td>
+</tr>
