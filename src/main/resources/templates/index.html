@@ -28,12 +28,23 @@
         <!-- holder of cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-6 lg:pt-8">
             <!-- each card -->
-            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
-            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
-            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
-            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
-            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
-            <div th:replace="~{fragments/cards/travelCard :: travelCard}"></div>
+            <div th:each="travel : ${travelsForCards}">
+                <div class="w-full rounded overflow-hidden shadow-lg text-center border-2 transform transition-transform duration-300 hover:scale-105">
+                    <!-- this will probably be form and link will be redirected to exact travel page with details. -->
+                    <a th:href="'/travel?id=' + ${travel.id}"><img class="w-full" th:src="@{/images/barcelona.jpg}" alt="travel-img"></a>
+                    <div class="px-6 py-4">
+                        <a th:href="'/travel?id=' + ${travel.id}" class="font-bold text-xl" th:text="${travel.destination.city}"></a>
+                        <p class="text-gray-700 text-base pt-2" th:text="'Vehicle: ' + ${travel.vehicle.vehicleType}"></p>
+                        <p class="text-gray-700 text-base" th:text="'Category: ' + ${travel.travelCategory.name()}"></p>
+                    </div>
+                    <div class="px-6 py-2">
+                        <span class="inline-block bg-gray-200 rounded-full px-4 py-2 font-semibold text-gray-700 mr-2 mb-2 border-2"
+                              th:text="'Price: ' + ${travel.price} + '$'"></span>
+                        <button type="button" class="bg-red-600 rounded-full px-4 py-2 text-white font-semibold mr-2 mb-2 border-2 border-red-600
+        transition duration-300 hover:text-red-600 hover:bg-white">Add to Wishlist</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

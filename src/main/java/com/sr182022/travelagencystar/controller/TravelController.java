@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/dashboard/travels")
 public class TravelController {
 
     private final ITravelService travelService;
@@ -26,7 +25,17 @@ public class TravelController {
         this.accommodationUnitService = accommodationUnitService;
     }
 
-    @PostMapping("addNewTravel")
+    @GetMapping("/travel")
+    public String travelDetailsPage(@RequestParam int id, Model model) {
+        Travel travel = travelService.findOne(id);
+        /*  if(travel == null) {
+            return "redirect:/errorPages/routeErrorPage.html";
+        } */
+        model.addAttribute("travel", travel);
+        return "/viewPages/travel-details";
+    }
+
+    @PostMapping("/dashboard/travels/addNewTravel")
     public String addNewDestination(@ModelAttribute Travel newTravel,
                                     @RequestParam int destinationId,
                                     @RequestParam int accommodationUnitId,
@@ -36,7 +45,7 @@ public class TravelController {
         return "redirect:/dashboard/travels";
     }
 
-    @GetMapping("editTravel")
+    @GetMapping("/dashboard/travels/editTravel")
     public String editTravel(@RequestParam int travelId, Model model) {
         model.addAttribute("travel", travelService.findOne(travelId));
         model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
@@ -46,14 +55,14 @@ public class TravelController {
         return "editPages/editTravelPage";
     }
 
-    @PostMapping("editTravelPost")
+    @PostMapping("/dashboard/travels/editTravelPost")
     public String editTravelPost(@ModelAttribute Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId) {
         editTravel.setNumberOfNights(travelService.setNumberOfNights(editTravel.getStartDate(), editTravel.getEndDate()));
         travelService.update(editTravel, destinationId, accommodationUnitId, vehicleId);
         return "redirect:/dashboard/travels";
     }
 
-    @PostMapping("deleteTravel")
+    @PostMapping("/dashboard/travels/deleteTravel")
     public String deleteTravel(@RequestParam int travelId) {
         travelService.delete(travelId);
         return "redirect:/dashboard/travels";
