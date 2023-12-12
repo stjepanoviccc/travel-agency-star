@@ -44,8 +44,8 @@ public class TravelService implements ITravelService {
     }
 
     @Override
-    public void update(Travel editTravel) {
-        databaseTravelDAO.update(editTravel);
+    public void update(Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId) {
+        databaseTravelDAO.update(editTravel, destinationId, accommodationUnitId, vehicleId);
     }
 
     @Override

@@ -124,8 +124,15 @@ public class DatabaseTravelDAO implements ITravelDAO {
 
     @Transactional
     @Override
-    public void update(Travel editTravel) {
+    public void update(Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId) {
+        String sql =
+                "UPDATE travel t " +
+                        "SET t.travel_start_date = ?, t.travel_end_date = ?, t.number_of_nights = ?, t.travel_category = ?, t.id_destination = ?, t.id_vehicle = ?, " +
+                        "t.id_accommodation_unit = ?, t.travel_price = ? " +
+                        "WHERE t.id_travel = ?";
 
+        jdbcTemplate.update(sql, editTravel.getStartDate(), editTravel.getEndDate(), editTravel.getNumberOfNights(), editTravel.getTravelCategory().name(),
+                destinationId, vehicleId, accommodationUnitId, editTravel.getPrice(), editTravel.getId());
     }
 
     @Transactional

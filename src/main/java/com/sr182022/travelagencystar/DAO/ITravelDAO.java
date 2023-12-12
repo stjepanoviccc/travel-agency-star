@@ -8,6 +8,6 @@ public interface ITravelDAO {
     List<Travel> findAll();
     Travel findOne(int travelId);
     void save(Travel newTravel, int destinationId, int accommodationUnitId, int vehicleId);
-    void update(Travel editTravel);
+    void update(Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId);
     void delete(int travelId);
 }
