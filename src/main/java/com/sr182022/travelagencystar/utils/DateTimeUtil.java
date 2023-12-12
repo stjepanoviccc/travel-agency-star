@@ -3,6 +3,7 @@ package com.sr182022.travelagencystar.utils;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class DateTimeUtil {
 
@@ -32,5 +33,13 @@ public class DateTimeUtil {
             return null;
         }
         return timestamp.toLocalDateTime();
+    }
+
+    public static long calculateDaysBetween(LocalDate startDate, LocalDate endDate) {
+        if (startDate == null || endDate == null) {
+            // will add custom exception
+            throw new IllegalArgumentException("Both start date and end date must be provided!");
+        }
+        return ChronoUnit.DAYS.between(startDate, endDate);
     }
 }

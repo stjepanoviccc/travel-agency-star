@@ -119,8 +119,8 @@ public class AccommodationUnit {
         this.conditioner = conditioner;
     }
 
-    public String toFileString() {
-        return this.getId() + "|" + this.getName() + "|" + this.getCapacity() + "|" + this.getDescription() + "|" + this.getDestination().getId() + "|"
-                + this.getAccommodationType().toString() + "|" + this.isWifi() + "|" + this.isBathroom() + "|" + this.isTv() + "|" + this.isConditioner();
+    @Override
+    public String toString() {
+        return name + " - " + destination.getCity();
     }
 }

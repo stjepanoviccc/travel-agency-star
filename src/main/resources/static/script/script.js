@@ -9,12 +9,11 @@ $(document).ready(() => {
     $('.registerToggleTrigger').on('click', navFunctions.toggleRegisterModal);
     $("#langDropdownButton").on('click', navFunctions.toggleLangDropdown);
     $(document).on("click", navFunctions.hideLangDropdownOnClickOutside);
-    $('.messageDisplayToggleTrigger').on('click', navFunctions.toggleMessageDisplayModal);
 
     // dashboard
     dashboardFunctions.linksInDashboardPageActiveState();
     $('.addNewDestinationToggleTrigger').on('click', dashboardFunctions.toggleAddNewDestinationModal);
     $('.addNewVehicleToggleTrigger').on('click', dashboardFunctions.toggleAddNewVehicleModal);
     $('.addNewAccommodationUnitToggleTrigger').on('click', dashboardFunctions.toggleAddNewAccommodationUnitModal);
-
+    $('.addNewTravelToggleTrigger').on('click', dashboardFunctions.toggleAddNewTravelModal);
 });

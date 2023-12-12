@@ -10,6 +10,10 @@ export const toggleAddNewAccommodationUnitModal = () => {
     $('#addNewAccommodationUnitModal').toggleClass('hidden');
 }
 
+export const toggleAddNewTravelModal = () => {
+    $('#addNewTravelModal').toggleClass('hidden');
+}
+
 // this function is used for styling only
 export const linksInDashboardPageActiveState = () => {
     const url = window.location.pathname;

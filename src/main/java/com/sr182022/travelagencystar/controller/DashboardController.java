@@ -1,9 +1,6 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.service.IAccommodationUnitService;
-import com.sr182022.travelagencystar.service.IDestinationService;
-import com.sr182022.travelagencystar.service.IUserService;
-import com.sr182022.travelagencystar.service.IVehicleService;
+import com.sr182022.travelagencystar.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,15 +15,17 @@ public class DashboardController {
     private final IDestinationService destinationService;
     private final IVehicleService vehicleService;
     private final IAccommodationUnitService accommodationUnitService;
+    private final ITravelService travelService;
 
     @Autowired
     public DashboardController(IUserService userService, IDestinationService destinationService, IVehicleService vehicleService,
-                               IAccommodationUnitService accommodationUnitService1)
+                               IAccommodationUnitService accommodationUnitService, ITravelService travelService)
     {
         this.userService = userService;
         this.destinationService = destinationService;
         this.vehicleService = vehicleService;
-        this.accommodationUnitService = accommodationUnitService1;
+        this.accommodationUnitService = accommodationUnitService;
+        this.travelService = travelService;
     }
 
     @GetMapping()
@@ -55,5 +54,15 @@ public class DashboardController {
         model.addAttribute("accommodationTypesForSelectMenu", accommodationUnitService.findAllAccommodationTypes());
         model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
         return "dashboard/accommodation-units";
+    }
+
+    @GetMapping("travels")
+    public String getTravelsPage(Model model) {
+        model.addAttribute("dashboardTravelsContent", travelService.findAll());
+        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
+        model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());
+        model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll());
+        model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
+        return "dashboard/travels";
     }
 }

@@ -1,19 +1,19 @@
 package com.sr182022.travelagencystar.model;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Travel {
-    private int id;
+    private Integer id;
     private Destination destination;
     private Vehicle vehicle;
     private AccommodationUnit accommodationUnit;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private int numberOfNights;
     private TravelCategory travelCategory;
     private float price;
 
-    public Travel(int id, Destination destination, Vehicle vehicle, AccommodationUnit accommodationUnit, LocalDateTime startDate, LocalDateTime endDate, int numberOfNights,
-                  TravelCategory travelCategory) {
+    public Travel(Integer id, Destination destination, Vehicle vehicle, AccommodationUnit accommodationUnit, LocalDate startDate, LocalDate endDate, int numberOfNights,
+                  TravelCategory travelCategory, float price) {
         this.id = id;
         this.destination = destination;
         this.vehicle = vehicle;
@@ -22,6 +22,7 @@ public class Travel {
         this.endDate = endDate;
         this.numberOfNights = numberOfNights;
         this.travelCategory = travelCategory;
+        this.price = price;
     }
 
     public int getId() {
@@ -56,19 +57,19 @@ public class Travel {
         this.accommodationUnit = accommodationUnit;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.DatabaseUserDAO;
+import com.sr182022.travelagencystar.DAO.IUserDao;
 import com.sr182022.travelagencystar.model.Role;
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.IUserService;
@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 public class UserService implements IUserService {
 
-    private final DatabaseUserDAO databaseUserDAO;
+    private final IUserDao databaseUserDAO;
 
     @Autowired
-    public UserService(DatabaseUserDAO databaseUserDAO) {
+    public UserService(IUserDao databaseUserDAO) {
         this.databaseUserDAO = databaseUserDAO;
     }
 

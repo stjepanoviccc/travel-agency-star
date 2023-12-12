@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.DatabaseAccommodationUnitDAO;
+import com.sr182022.travelagencystar.DAO.IAccommodationUnitDAO;
 import com.sr182022.travelagencystar.model.AccommodationType;
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.service.IAccommodationUnitService;
@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 @Service
 public class AccommodationUnitService implements IAccommodationUnitService
 {
-    private final DatabaseAccommodationUnitDAO databaseAccommodationUnitDAO;
+    private final IAccommodationUnitDAO databaseAccommodationUnitDAO;
 
     @Autowired
-    public AccommodationUnitService(DatabaseAccommodationUnitDAO databaseAccommodationUnitDAO) {
+    public AccommodationUnitService(IAccommodationUnitDAO databaseAccommodationUnitDAO) {
         this.databaseAccommodationUnitDAO = databaseAccommodationUnitDAO;
     }
 

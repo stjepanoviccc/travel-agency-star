@@ -19,8 +19,3 @@ export const hideLangDropdownOnClickOutside = (event) => {
         $("#langDropdown").addClass("hidden");
     }
 }
-
-// universal modal for all kind of error display messages and other information display messages.
-export const toggleMessageDisplayModal = () => {
-    $('#messageDisplayModal').toggleClass('hidden');
-}

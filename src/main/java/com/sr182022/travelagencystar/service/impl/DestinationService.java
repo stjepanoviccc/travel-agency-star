@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.DatabaseDestinationDAO;
+import com.sr182022.travelagencystar.DAO.IDestinationDAO;
 import com.sr182022.travelagencystar.model.Destination;
 import com.sr182022.travelagencystar.service.IDestinationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public class DestinationService implements IDestinationService {
 
-    private final DatabaseDestinationDAO databaseDestinationDAO;
+    private final IDestinationDAO databaseDestinationDAO;
 
     @Autowired
-    public DestinationService(DatabaseDestinationDAO databaseDestinationDAO) {
+    public DestinationService(IDestinationDAO databaseDestinationDAO) {
         this.databaseDestinationDAO = databaseDestinationDAO;
     }
 

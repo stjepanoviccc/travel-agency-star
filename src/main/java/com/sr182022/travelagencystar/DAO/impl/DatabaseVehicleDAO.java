@@ -3,7 +3,7 @@ package com.sr182022.travelagencystar.DAO.impl;
 import com.sr182022.travelagencystar.DAO.IVehicleDAO;
 import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.model.VehicleType;
-import com.sr182022.travelagencystar.service.impl.DestinationService;
+import com.sr182022.travelagencystar.service.IDestinationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 public class DatabaseVehicleDAO implements IVehicleDAO {
@@ -21,10 +20,10 @@ public class DatabaseVehicleDAO implements IVehicleDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private DestinationService destinationService;
+    private IDestinationService destinationService;
 
     @Autowired
-    public DatabaseVehicleDAO(DestinationService destinationService) {
+    public DatabaseVehicleDAO(IDestinationService destinationService) {
         this.destinationService = destinationService;
     }
 

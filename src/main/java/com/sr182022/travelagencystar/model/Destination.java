@@ -61,9 +61,4 @@ public class Destination {
     public String toString() {
         return city;
     }
-
-    public String toFileString() {
-        return this.getId() + "|" + this.getCity() + "|" + this.getCountry() + "|" + this.getContinent() + "|" + this.getImage();
-    }
-
 }

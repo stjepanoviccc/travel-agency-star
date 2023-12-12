@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.DatabaseVehicleDAO;
+import com.sr182022.travelagencystar.DAO.IVehicleDAO;
 import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.model.VehicleType;
 import com.sr182022.travelagencystar.service.IVehicleService;
@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 @Service
 public class VehicleService implements IVehicleService {
 
-    private final DatabaseVehicleDAO databaseVehicleDAO;
+    private final IVehicleDAO databaseVehicleDAO;
 
     @Autowired
-    public VehicleService(DatabaseVehicleDAO databaseVehicleDAO) {
+    public VehicleService(IVehicleDAO databaseVehicleDAO) {
         this.databaseVehicleDAO = databaseVehicleDAO;
     }
 

@@ -4,7 +4,7 @@ import com.sr182022.travelagencystar.DAO.IAccommodationUnitDAO;
 import com.sr182022.travelagencystar.model.AccommodationType;
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.Destination;
-import com.sr182022.travelagencystar.service.impl.DestinationService;
+import com.sr182022.travelagencystar.service.IDestinationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,9 +24,9 @@ public class DatabaseAccommodationUnitDAO implements IAccommodationUnitDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private final DestinationService destinationService;
+    private final IDestinationService destinationService;
 
-    public DatabaseAccommodationUnitDAO(DestinationService destinationService) {
+    public DatabaseAccommodationUnitDAO(IDestinationService destinationService) {
         this.destinationService = destinationService;
     }
 

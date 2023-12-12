@@ -1,6 +1,6 @@
 package com.sr182022.travelagencystar.service.impl;
 
-import com.sr182022.travelagencystar.DAO.impl.DatabaseReviewDAO;
+import com.sr182022.travelagencystar.DAO.IReviewDAO;
 import com.sr182022.travelagencystar.model.Review;
 import com.sr182022.travelagencystar.service.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public class ReviewService implements IReviewService {
 
-    private final DatabaseReviewDAO databaseReviewDAO;
+    private final IReviewDAO databaseReviewDAO;
 
     @Autowired
-    public ReviewService(DatabaseReviewDAO databaseReviewDAO) {
+    public ReviewService(IReviewDAO databaseReviewDAO) {
         this.databaseReviewDAO = databaseReviewDAO;
     }
 
