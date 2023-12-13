@@ -20,7 +20,7 @@ public class LoginController {
     }
 
     @GetMapping("/login-error")
-    public String getInformationPage() {
+    public String getErrorPage() {
         return "/errorPages/loginErrorPage";
     }
 
@@ -50,18 +50,14 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         User user = (User) session.getAttribute(USER_KEY);
-        String infoMessage = "";
 
         if(user == null) {
-            infoMessage = "User not logged in.";
-            session.setAttribute("infoMessage", infoMessage);
+            return "redirect:/login-error";
         } else {
-            infoMessage = "Logged out.";
-            session.setAttribute("infoMessage", infoMessage);
             session.removeAttribute(USER_KEY);
             session.invalidate();
         }
 
-        return "redirect:/login-information";
+        return "redirect:/";
     }
 }
