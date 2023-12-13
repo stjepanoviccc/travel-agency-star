@@ -7,7 +7,8 @@
     <label for="editDestinationContinent" class="block font-medium text-gray-700 mt-4">Continent</label>
     <input type="text" id="editDestinationContinent" name="continent" th:value="${destination?.continent}" class="mt-1 p-2 border rounded-md w-full" />
     <label for="editDestinationImage" class="block font-medium text-gray-700 mt-4">Image</label>
-    <img th:src="'data:image/jpeg;base64,' + ${base64Image}" alt="img" width="50" height="50"/>
-    <input type="file" id="editDestinationImage" name="image" class="mt-1 p-2 border rounded-md w-full" th:value="${destination?.image}">
+    <img th:src="@{/images/}+${destination?.image}" alt="img" width="300" height="300"/>
+    <input type="hidden" id="editDestinationImage" name="image" th:value="${destination?.image}"/>
+    <input type="file" id="editDestinationImageNew" name="imageValue" class="mt-1 p-2 border rounded-md w-full">
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Save</button>
 </form>

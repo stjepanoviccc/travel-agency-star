@@ -42,6 +42,7 @@ public class InternationalizationController {
         }
 
         session.setAttribute(InternationalizationController.LOCALIZATION_KEY, localization);
+        System.out.println(session.getAttribute(InternationalizationController.LOCALIZATION_KEY));
         response.sendRedirect("/");
     }
 }

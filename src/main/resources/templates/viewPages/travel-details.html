@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Travel Page</title>
+    <title>Travel Agency Star - Travel Details Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <p>Travel Details Page.</p>
+
+<!-- nav -->
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<!-- main content for this page -->
+<main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Travel Details Page</h1>
+
+    <div class="flex flex-col lg:flex-row gap-x-24 mt-12">
+        <div class="border-2 border-red-400 w-full">
+            <p class="block font-medium text-xl" th:text="'Destination: ' + ${travel?.destination}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="'Vehicle(Type,Destination,Desc): ' + ${travel?.vehicle}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="'Accommodation unit name: ' + ${travel?.accommodationUnit.name}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="'Start date: ' + ${travel?.startDate}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="'End date: ' + ${travel?.endDate}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="'Number of nights: ' + ${travel?.numberOfNights}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="'Category: ' + ${travel?.travelCategory}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="'Price: ' + ${travel?.price} + '$'"></p>
+
+            <form></form>
+
+            <input type="hidden" id="id" name="id" th:value="${travel?.id}" readonly/>
+
+            <form th:fragment="addTravelToCartForm" id="addTravelToCartForm" method="post"
+                  action="">
+                <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded">Add To Cart</button>
+                <button type="submit" class="gap-x-4 mt-8 bg-white text-red-700 border-2 border-red-700 font-bold py-2 px-4 rounded">Add To Wishlist</button>
+            </form>
+        </div>
+
+        <div class="border-2 border-red-400 w-full">
+            There will be image
+        </div>
+    </div>
+
+
+</main>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" th:src="@{/script/script.js}"></script>
 </body>
 </html>

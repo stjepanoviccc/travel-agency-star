@@ -32,7 +32,7 @@ public class DatabaseDestinationDAO implements IDestinationDAO {
             String destination_city = resultSet.getString(index++);
             String destination_country = resultSet.getString(index++);
             String destination_continent = resultSet.getString(index++);
-            byte[] destination_image = resultSet.getBytes("destination_image");
+            String destination_image = resultSet.getString("destination_image");
 
             Destination destination = destinations.get(id_destination);
             if (destination == null) {
@@ -82,7 +82,7 @@ public class DatabaseDestinationDAO implements IDestinationDAO {
                 preparedStatement.setString(index++, newDestination.getCity());
                 preparedStatement.setString(index++, newDestination.getCountry());
                 preparedStatement.setString(index++, newDestination.getContinent());
-                preparedStatement.setBytes(index++, newDestination.getImage());
+                preparedStatement.setString(index++, newDestination.getImage());
 
                 return preparedStatement;
             }

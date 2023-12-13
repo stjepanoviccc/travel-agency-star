@@ -42,4 +42,13 @@ public class DestinationService implements IDestinationService {
     public void delete(int destinationId) {
         databaseDestinationDAO.delete(destinationId);
     }
+
+    @Override
+    public String checkImageValueOnChange(Destination destination, String imageValue) {
+        // this will check is image value null or empty(not selected) or image value equal to existing image, if not then it will apply new one, otherwise old one.
+        if(imageValue.isEmpty()) {
+            imageValue = destination.getImage();
+        }
+        return imageValue;
+    }
 }
