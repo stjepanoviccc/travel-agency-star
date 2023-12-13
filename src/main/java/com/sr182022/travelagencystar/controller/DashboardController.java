@@ -1,6 +1,9 @@
 package com.sr182022.travelagencystar.controller;
 
+import com.sr182022.travelagencystar.model.Role;
+import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +32,15 @@ public class DashboardController {
     }
 
     @GetMapping()
-    public String getDashboardPage(Model model) {
+    public String getDashboardPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if(user == null) {
+            return "redirect:/permission-error";
+        } else {
+            if((user.getRole() != Role.Administrator) && (user.getRole() != Role.Organizer)) {
+                return "redirect:/permission-error";
+            }
+        }
         model.addAttribute("dashboardUsersContent", userService.findAll());
         return "dashboard";
     }

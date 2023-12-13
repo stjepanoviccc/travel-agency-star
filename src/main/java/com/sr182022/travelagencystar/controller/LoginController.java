@@ -19,11 +19,6 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/login-error")
-    public String getErrorPage() {
-        return "/errorPages/loginErrorPage";
-    }
-
     @PostMapping("/login")
     public String postLogin(@RequestParam(required = false) String usernameLogin, @RequestParam(required = false) String passwordLogin, HttpSession session) {
         User user = userService.findOne(usernameLogin);
