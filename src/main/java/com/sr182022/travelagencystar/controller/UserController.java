@@ -2,6 +2,8 @@ package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.IUserService;
+import com.sr182022.travelagencystar.utils.CheckRoleUtil;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,27 +20,51 @@ public class UserController {
     }
 
     @PostMapping("/addNewUser")
-    public String addNewUser(@ModelAttribute User newUser) {
+    public String addNewUser(HttpSession session, @ModelAttribute User newUser) {
+        if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
+            return "redirect:/permission-error";
+        }
         userService.save(newUser);
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return "redirect:/";
+        }
         return "redirect:/dashboard";
     }
 
     @GetMapping("/editUser")
-    public String editUser(@RequestParam int userId, Model model) {
-        model.addAttribute("user", userService.findOne(userId));
+    public String editUser(HttpSession session, @RequestParam int userId, Model model) {
+        if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
+            return "redirect:/permission-error";
+        }
+        User user = userService.findOne(userId);
+        if(user == null) {
+            return "redirect:/route-error";
+        }
+        model.addAttribute("user", user);
         return "editPages/editUserPage";
     }
 
     @PostMapping("/editUserPost")
-    public String editUserPost(@ModelAttribute User editUser) {
+    public String editUserPost(HttpSession session, @ModelAttribute User editUser) {
+        if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
+            return "redirect:/permission-error";
+        }
         userService.update(editUser);
-        // will be redirected to dashboard or profile
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return "redirect:/";
+        }
         return "redirect:/dashboard";
     }
 
     @PostMapping("/deleteUser")
-    public String deleteUser(@RequestParam int userId) {
+    public String deleteUser(HttpSession session, @RequestParam int userId) {
+        if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
+            return "redirect:/permission-error";
+        }
         userService.delete(userId);
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return "redirect:/";
+        }
         return "redirect:/dashboard";
     }
 }

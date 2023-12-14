@@ -22,6 +22,6 @@
         <option th:each="travelCategory : ${travelCategoriesForSelectMenu}" th:value="${travelCategory}" th:text="${travelCategory}"></option>
     </select>
     <label for="addNewTravelPrice" class="block font-medium text-gray-700 mt-4">Price</label>
-    <input type="number" id="addNewTravelPrice" name="price" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="number" min="1" value="1" id="addNewTravelPrice" name="price" class="mt-1 p-2 border rounded-md w-full" />
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add</button>
 </form>

@@ -5,7 +5,7 @@
     <label for="editAccommodationUnitName" class="block font-medium text-gray-700 mt-4">Name</label>
     <input type="text" id="editAccommodationUnitName" name="name" th:value="${accommodationUnit?.name}" class="mt-1 p-2 border rounded-md w-full" />
     <label for="editAccommodationUnitCapacity" class="block font-medium text-gray-700 mt-4">Capacity</label>
-    <input type="text" id="editAccommodationUnitCapacity" name="capacity" th:value="${accommodationUnit?.capacity}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editAccommodationUnitCapacity" name="capacity" min="1" th:value="${accommodationUnit?.capacity}" class="mt-1 p-2 border rounded-md w-full" />
     <!-- reviews cant be edited here -->
     <label for="editAccommodationUnitName" class="block font-medium text-gray-700 mt-4">Description</label>
     <input type="text" id="editAccommodationUnitDescription" name="description" th:value="${accommodationUnit?.description}" class="mt-1 p-2 border rounded-md w-full" />

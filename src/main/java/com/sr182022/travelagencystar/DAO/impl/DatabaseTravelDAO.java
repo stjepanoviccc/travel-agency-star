@@ -91,7 +91,12 @@ public class DatabaseTravelDAO implements ITravelDAO {
 
         TravelRowCallBackHandler rowCallBackHandler = new TravelRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, travelId);
-        return rowCallBackHandler.getTravels().get(0);
+        List<Travel> travelsList = rowCallBackHandler.getTravels();
+        if (!travelsList.isEmpty()) {
+            return travelsList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Transactional

@@ -27,7 +27,7 @@ export const updateImageValue = input => {
 
     if (selectedFile) {
         // Display the selected image in the preview
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = function (e) {
             previewImage.src = e.target.result;
         };

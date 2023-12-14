@@ -84,7 +84,12 @@ public class DatabaseAccommodationUnitDAO implements IAccommodationUnitDAO {
 
         AccommodationUnitRowCallBackHandler rowCallBackHandler = new AccommodationUnitRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, accommodationUnitId);
-        return rowCallBackHandler.getAccommodationUnits().get(0);
+        List<AccommodationUnit> accommodationUnitsList = rowCallBackHandler.getAccommodationUnits();
+        if (!accommodationUnitsList.isEmpty()) {
+            return accommodationUnitsList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Transactional

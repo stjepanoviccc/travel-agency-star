@@ -1,6 +1,6 @@
 <form th:fragment="addNewVehicleForm" name="addNewVehicleForm" method="post" action="/dashboard/vehicles/addNewVehicle">
     <label for="addNewVehicleNumberOfSeats" class="block font-medium text-gray-700">Number of seats</label>
-    <input type="number" id="addNewVehicleNumberOfSeats" name="numberOfSeats" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="number" id="addNewVehicleNumberOfSeats" min="1" value="1" name="numberOfSeats" class="mt-1 p-2 border rounded-md w-full" />
     <label for="addNewVehicleFinalDestination" class="block font-medium text-gray-700 mt-4">Final destination</label>
     <select id="addNewVehicleFinalDestination" name="finalDestinationId" class="mt-1 p-2 border rounded-md w-full">
         <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"></option>

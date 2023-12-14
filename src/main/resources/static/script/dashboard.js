@@ -31,6 +31,9 @@ export const linksInDashboardPageActiveState = () => {
         case "/dashboard/vehicles":
             $("#linkToVehiclesFromDashboard").addClass('bg-gray-600 text-white');
             break;
+        case "/dashboard/travels":
+            $("#linkToTravelsFromDashboard").addClass("bg-gray-600 text-white");
+            break;
         default:
             break;
     }

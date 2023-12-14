@@ -1,8 +1,7 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.model.Role;
-import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.*;
+import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,26 +32,27 @@ public class DashboardController {
 
     @GetMapping()
     public String getDashboardPage(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-        if(user == null) {
+        if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
             return "redirect:/permission-error";
-        } else {
-            if((user.getRole() != Role.Administrator) && (user.getRole() != Role.Organizer)) {
-                return "redirect:/permission-error";
-            }
         }
         model.addAttribute("dashboardUsersContent", userService.findAll());
         return "dashboard";
     }
 
     @GetMapping("destinations")
-    public String getDestinationsPage(Model model) {
+    public String getDestinationsPage(HttpSession session, Model model) {
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return "redirect:/permission-error";
+        }
         model.addAttribute("dashboardDestinationsContent", destinationService.findAll());
         return "dashboard/destinations";
     }
 
     @GetMapping("vehicles")
-    public String getVehiclesPage(Model model) {
+    public String getVehiclesPage(HttpSession session, Model model) {
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return "redirect:/permission-error";
+        }
         model.addAttribute("dashboardVehiclesContent", vehicleService.findAll());
         model.addAttribute("vehicleTypesForSelectMenu", vehicleService.findAllVehicleTypes());
         model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
@@ -60,7 +60,10 @@ public class DashboardController {
     }
 
     @GetMapping("accommodation-units")
-    public String getAccommodationUnitsPage(Model model) {
+    public String getAccommodationUnitsPage(HttpSession session, Model model) {
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return "redirect:/permission-error";
+        }
         model.addAttribute("dashboardAccommodationUnitsContent", accommodationUnitService.findAll());
         model.addAttribute("accommodationTypesForSelectMenu", accommodationUnitService.findAllAccommodationTypes());
         model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
@@ -68,7 +71,10 @@ public class DashboardController {
     }
 
     @GetMapping("travels")
-    public String getTravelsPage(Model model) {
+    public String getTravelsPage(HttpSession session, Model model) {
+        if(!CheckRoleUtil.RoleOrganizer(session)) {
+            return "redirect:/permission-error";
+        }
         model.addAttribute("dashboardTravelsContent", travelService.findAll());
         model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
         model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());

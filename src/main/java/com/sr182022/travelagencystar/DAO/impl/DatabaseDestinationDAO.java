@@ -65,7 +65,12 @@ public class DatabaseDestinationDAO implements IDestinationDAO {
 
         DestinationRowCallBackHandler rowCallBackHandler = new DestinationRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, destinationId);
-        return rowCallBackHandler.getDestinations().get(0);
+        List<Destination> destinationsList = rowCallBackHandler.getDestinations();
+        if (!destinationsList.isEmpty()) {
+            return destinationsList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Transactional

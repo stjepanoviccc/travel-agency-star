@@ -1,6 +1,7 @@
 package com.sr182022.travelagencystar.DAO.impl;
 
 import com.sr182022.travelagencystar.DAO.IVehicleDAO;
+import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.model.VehicleType;
 import com.sr182022.travelagencystar.service.IDestinationService;
@@ -72,7 +73,12 @@ public class DatabaseVehicleDAO implements IVehicleDAO {
 
         VehicleRowCallBackHandler rowCallBackHandler = new VehicleRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, vehicleId);
-        return rowCallBackHandler.getVehicles().get(0);
+        List<Vehicle> vehiclesList = rowCallBackHandler.getVehicles();
+        if (!vehiclesList.isEmpty()) {
+            return vehiclesList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Transactional
