@@ -13,4 +13,5 @@ public interface IUserService {
     void save(User newUser);
     void update(User editUser);
     void delete(int userId);
+    void delete(int userId, boolean blocked);
 }

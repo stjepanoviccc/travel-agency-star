@@ -20,11 +20,12 @@ public class User {
     private Role role;
     private LoyaltyCard loyaltyCard = null;
     private List<Review> reviewsList = new ArrayList<>();
+    private boolean blocked = false;
 
     public User() {}
 
     public User(int id, String username, String password, String email, String surname, String name, LocalDate birthDate, String address, int phone,
-                 LocalDateTime registeredDate, Role role) {
+                 LocalDateTime registeredDate, Role role, boolean blocked) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -36,6 +37,7 @@ public class User {
         this.phone = phone;
         this.registeredDate = registeredDate;
         this.role = role;
+        this.blocked = blocked;
     }
 
     public User(LoyaltyCard loyaltyCard) { this.loyaltyCard = loyaltyCard; }
@@ -138,4 +140,11 @@ public class User {
         this.loyaltyCard = loyaltyCard;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 }

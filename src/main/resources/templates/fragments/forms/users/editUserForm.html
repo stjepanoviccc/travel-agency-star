@@ -16,7 +16,6 @@
     <input type="number" id="editUserPhone" name="phone" th:value="${user?.phone}" class="mt-1 p-2 border rounded-md w-full" />
     <label for="editUserBirthDate" class="block font-medium text-gray-700 mt-4" th:text="#{textBirth}"></label>
     <input type="date" id="editUserBirthDate" name="birthDate" th:value="${user?.birthDate}" class="mt-1 p-2 border rounded-md w-full" />
-    <button type="button" id="editUserDeactivate" name="deactivate" class="gap-x-4 mt-8 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-    th:text="#{textDeactivate}"></button>
+    <input type="hidden" id="editUserBlocked" name="blocked" th:value="${user?.blocked}" />
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" th:text="#{textSave}"></button>
 </form>

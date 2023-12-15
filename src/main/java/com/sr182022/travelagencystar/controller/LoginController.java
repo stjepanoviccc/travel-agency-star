@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
+    public static final String USER_KEY = "user";
     private final IUserService userService;
-    private static final String USER_KEY = "user";
 
     @Autowired
     public LoginController(IUserService userService) {
@@ -32,7 +32,7 @@ public class LoginController {
             return "redirect:/login-error";
         }
 
-        if(user.getUsername().equals(usernameLogin) && user.getPassword().equals(passwordLogin)) {
+        if(user.getUsername().equals(usernameLogin) && user.getPassword().equals(passwordLogin) && !user.isBlocked()) {
             session.setAttribute(USER_KEY, user);
             return "redirect:/";
         } else {

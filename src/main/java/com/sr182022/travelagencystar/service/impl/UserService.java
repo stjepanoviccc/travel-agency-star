@@ -49,5 +49,9 @@ public class UserService implements IUserService {
     public void delete(int userId) {
         databaseUserDAO.delete(userId);
     }
+    @Override
+    public void delete(int userId, boolean blocked) {
+        databaseUserDAO.delete(userId, blocked);
+    }
 
 }

@@ -44,10 +44,11 @@ public class DatabaseUserDAO implements IUserDao {
             LocalDateTime user_registered_date = DateTimeUtil.convertTimestampToLocalDateTime(resultSet.getTimestamp(index++));
             String user_role = resultSet.getString(index++);
             Role role = Role.valueOf(user_role);
+            boolean blocked = resultSet.getBoolean(index++);
 
             User user = users.get(id_user);
             if (user == null) {
-                user = new User(id_user, username, password, email, surname, name, birth_date, user_address, user_phone, user_registered_date, role);
+                user = new User(id_user, username, password, email, surname, name, birth_date, user_address, user_phone, user_registered_date, role, blocked);
                 users.put(user.getId(), user);
             }
         }
@@ -61,7 +62,7 @@ public class DatabaseUserDAO implements IUserDao {
     public List<User> findAll() {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role " +
+                        "u.user_role, u.blocked " +
                         "FROM user u ORDER BY u.id_user";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -73,7 +74,7 @@ public class DatabaseUserDAO implements IUserDao {
     public List<User> findAll(Role role) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role " +
+                        "u.user_role, u.blocked " +
                         "FROM user u WHERE u.user_role = role ORDER BY u.id_user";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -85,7 +86,7 @@ public class DatabaseUserDAO implements IUserDao {
     public User findOne(int userId) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role " +
+                        "u.user_role, u.blocked " +
                         "FROM user u WHERE u.id_user = ?";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -103,7 +104,7 @@ public class DatabaseUserDAO implements IUserDao {
     public User findOne(String username) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role " +
+                        "u.user_role, u.blocked " +
                         "FROM user u WHERE u.username = ?";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -122,8 +123,9 @@ public class DatabaseUserDAO implements IUserDao {
         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                String sql = "INSERT INTO user (username, email, password, surname, name, birth_date, user_address, user_phone, user_registered_date, user_role)" +
-                        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO user (username, email, password, surname, name, birth_date, user_address, user_phone, user_registered_date, user_role" +
+                        ",blocked)" +
+                        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 int index = 1;
@@ -137,6 +139,7 @@ public class DatabaseUserDAO implements IUserDao {
                 preparedStatement.setInt(index++, newUser.getPhone());
                 preparedStatement.setTimestamp(index++, DateTimeUtil.convertLocalDateTimeToTimestamp(LocalDateTime.now()));
                 preparedStatement.setString(index++, Role.Passenger.name());
+                preparedStatement.setBoolean(index++, newUser.isBlocked());
 
                 return preparedStatement;
             }
@@ -150,17 +153,27 @@ public class DatabaseUserDAO implements IUserDao {
     public void update(User editUser) {
         String sql =
                 "UPDATE user u " +
-                        "SET u.username = ?, u.email = ?, u.password = ?, u.surname = ?, u.name = ?, u.birth_date = ?, u.user_address = ?, u.user_phone = ? " +
+                        "SET u.username = ?, u.email = ?, u.password = ?, u.surname = ?, u.name = ?, u.birth_date = ?, u.user_address = ?, u.user_phone = ?," +
+                        "u.blocked = ? " +
                         "WHERE u.id_user = ?";
 
         jdbcTemplate.update(sql, editUser.getUsername(), editUser.getEmail(), editUser.getPassword(), editUser.getSurname(), editUser.getName(),
-                DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.getId());
+                DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(), editUser.getId());
     }
 
+    // physical delete
     @Transactional
     @Override
     public void delete(int userId) {
         String sql = "DELETE FROM user u WHERE u.id_user = ?";
+        jdbcTemplate.update(sql, userId);
+    }
+
+    // blocking user
+    @Transactional
+    @Override
+    public void delete(int userId, boolean blocked) {
+        String sql = "UPDATE user u SET u.blocked = 1  WHERE u.id_user = ?";
         jdbcTemplate.update(sql, userId);
     }
 }

@@ -19,6 +19,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/login-info")
+    public String getInfoAfterRegistration() {
+        return "/viewPages/login-info";
+    }
+
     @PostMapping("/addNewUser")
     public String addNewUser(HttpSession session, @ModelAttribute User newUser) {
         if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
@@ -26,11 +31,12 @@ public class UserController {
         }
         userService.save(newUser);
         if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/";
+            return "redirect:/login-info";
         }
         return "redirect:/dashboard";
     }
 
+    // in this /editUser im also adding deactivateUser because thats in details page.
     @GetMapping("/editUser")
     public String editUser(HttpSession session, @RequestParam int userId, Model model) {
         if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
@@ -65,6 +71,16 @@ public class UserController {
         if(!CheckRoleUtil.RoleAdministrator(session)) {
             return "redirect:/";
         }
+        return "redirect:/dashboard";
+    }
+
+    @PostMapping("/deactivateUser")
+    public String deactivateUser(HttpSession session, @RequestParam int userId, @RequestParam boolean userIsBlocked) {
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return "redirect:/permission-error";
+        }
+        userService.delete(userId, userIsBlocked);
+
         return "redirect:/dashboard";
     }
 }
