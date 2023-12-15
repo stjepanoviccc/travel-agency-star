@@ -12,9 +12,9 @@
 
 <main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
     <div class="w-full text-center lg:text-left">
-        <a href="/dashboard/vehicles" class="text-red-600">< Go back</a>
+        <a href="/dashboard/vehicles" class="text-red-600" th:text="#{editPagesGoBack}"></a>
     </div>
-    <h1 class="text-center text-3xl lg:text-4xl lg:text-left mb-8 mt-4">Edit Vehicle Page</h1>
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left mb-8 mt-4" th:text="#{editPagesVehicle}"></h1>
     <div th:replace="~{fragments/forms/vehicles/editVehicleForm :: editVehicleForm}"></div>
 </main>
 

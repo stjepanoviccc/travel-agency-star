@@ -5,20 +5,20 @@
     <td class="whitespace-nowrap px-6 py-4" th:text="${accommodationUnit.capacity}"></td>
     <td class="whitespace-nowrap px-6 py-4" th:text="${accommodationUnit.destination}"></td>
     <td class="whitespace-nowrap px-6 py-4">
-        <span th:if="${accommodationUnit.wifi}">Yes</span>
-        <span th:unless="${accommodationUnit.wifi}">No</span>
+        <span th:if="${accommodationUnit.wifi}" th:text="#{textYes}"></span>
+        <span th:unless="${accommodationUnit.wifi}" th:text="#{textNo}"></span>
     </td>
     <td class="whitespace-nowrap px-6 py-4">
-        <span th:if="${accommodationUnit.bathroom}">Yes</span>
-        <span th:unless="${accommodationUnit.bathroom}">No</span>
+        <span th:if="${accommodationUnit.bathroom}" th:text="#{textYes}"></span>
+        <span th:unless="${accommodationUnit.bathroom}" th:text="#{textNo}"></span>
     </td>
     <td class="whitespace-nowrap px-6 py-4">
-        <span th:if="${accommodationUnit.tv}">Yes</span>
-        <span th:unless="${accommodationUnit.tv}">No</span>
+        <span th:if="${accommodationUnit.tv}" th:text="#{textYes}"></span>
+        <span th:unless="${accommodationUnit.tv}" th:text="#{textNo}"></span>
     </td>
     <td class="whitespace-nowrap px-6 py-4">
-        <span th:if="${accommodationUnit.conditioner}">Yes</span>
-        <span th:unless="${accommodationUnit.conditioner}">No</span>
+        <span th:if="${accommodationUnit.conditioner}" th:text="#{textYes}"></span>
+        <span th:unless="${accommodationUnit.conditioner}" th:text="#{textNo}"></span>
     </td>
     <td class="whitespace-nowrap px-6 py-4">
         <div th:replace="~{fragments/forms/accommodationUnits/GET_editAccommodationUnitForm :: GET_editAccommodationUnitForm}"></div>

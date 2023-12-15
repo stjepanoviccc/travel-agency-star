@@ -13,23 +13,23 @@
 
 <!-- main content for this page -->
 <main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
-    <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Cart Page</h1>
-    <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left">All Cart Items:</h2>
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{cartPageHeading}"></h1>
+    <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left" th:text="#{cartPageSubheading}"></h2>
     <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
         <table class="min-w-full text-center font-light">
             <thead class="border-b font-medium dark:border-neutral-500">
             <tr >
                 <th scope="col" class="px-4 py-4">#</th>
-                <th scope="col" class="px-4 py-4">Destination</th>
-                <th scope="col" class="px-4 py-4">Travel ID</th>
-                <th scope="col" class="px-4 py-4">Date start</th>
-                <th scope="col" class="px-4 py-4">Date end</th>
-                <th scope="col" class="px-4 py-4">Vehicle type</th>
-                <th scope="col" class="px-4 py-4">Accommodation type</th>
-                <th scope="col" class="px-4 py-4">Nights</th>
-                <th scope="col" class="px-4 py-4">Price</th>
-                <th scope="col" class="px-4 py-4">Passengers</th>
-                <th scope="col" class="px-4 py-4">Remove</th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageDestination}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageTravelID}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageDateStart}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageDateEnd}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageVehicleType}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageAccommodationType}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageNights}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPagePrice}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPagePassengers}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{cartPageRemove}"></th>
             </tr>
             </thead>
             <tbody>
@@ -42,8 +42,9 @@
     </div>
 
     <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
-        <h3 class="text-lg lg:text-xl font-bold">Total Price: 45000din</h3>
-        <button class="mt-4 px-4 py-2 text-xl border-2 border-green-600 bg-green-600 text-white rounded transition duration-300 hover:bg-white hover:text-green-600">Confirm Payment</button>
+        <h3 class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice}"></h3>
+        <button class="mt-4 px-4 py-2 text-xl border-2 border-green-600 bg-green-600 text-white rounded transition duration-300 hover:bg-white hover:text-green-600"
+        th:text="#{cartPageConfirmPayment}"></button>
     </div>
 
 </main>

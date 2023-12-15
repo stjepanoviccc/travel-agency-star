@@ -17,12 +17,12 @@
     <!-- fragment for changing page -->
     <div th:replace="~{fragments/ui/dashboard/LinkingAboveHeaderTag :: LinkingAboveHeaderTag}"></div>
 
-    <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Dashboard Page - Accommodation Units</h1>
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{dashboardAccommodationUnitsPageHeading}"></h1>
 
-    <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left">All Accommodation Units:</h2>
+    <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left" th:text="#{dashboardAccommodationUnitsPageAllAccommodationUnits}"></h2>
     <div class="flex justify-center lg:justify-end">
         <button class="addNewAccommodationUnitToggleTrigger mt-4 lg:mt-6 bg-gray-600 text-white rounded-md px-4 py-2 text-sm font-medium border-2
-        border-gray-600">Add New Accommodation Unit</button>
+        border-gray-600" th:text="#{dashboardAccommodationUnitsAddNewAccommodationUnit}"></button>
     </div>
 
     <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
@@ -30,15 +30,15 @@
             <thead class="border-b font-medium dark:border-neutral-500">
             <tr>
                 <th scope="col" class="px-4 py-4">#</th>
-                <th scope="col" class="px-4 py-4">Name</th>
-                <th scope="col" class="px-4 py-4">Capacity</th>
-                <th scope="col" class="px-4 py-4">Destination</th>
-                <th scope="col" class="px-4 py-4">Wifi</th>
-                <th scope="col" class="px-4 py-4">Bathroom</th>
-                <th scope="col" class="px-4 py-4">Tv</th>
-                <th scope="col" class="px-4 py-4">Conditioner</th>
-                <th scope="col" class="px-4 py-4">Edit</th>
-                <th scope="col" class="px-4 py-4">Remove</th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsName}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsCapacity}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsDestination}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsWifi}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsBathroom}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsTv}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsConditioner}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsEdit}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardAccommodationUnitsRemove}"></th>
             </tr>
             </thead>
             <tbody>

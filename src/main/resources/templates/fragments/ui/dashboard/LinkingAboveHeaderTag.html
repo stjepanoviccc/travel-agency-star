@@ -3,17 +3,17 @@
         <div th:switch="${session.user.role.name()}">
             <div th:case="'Administrator'">
                 <a id="linkToUsersFromDashboard" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-                duration-300 cursor-pointer" href="/dashboard">USERS</a>
+                duration-300 cursor-pointer" href="/dashboard" th:text="#{linkingAboveHeaderTagUSERS}"></a>
                 <a id="linkToDestinationsFromDashboard" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-                duration-300 cursor-pointer" href="/dashboard/destinations">DESTINATIONS</a>
+                duration-300 cursor-pointer" href="/dashboard/destinations" th:text="#{linkingAboveHeaderTagDESTINATIONS}"></a>
                 <a id="linkToAccommodationUnitsFromDashboard" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-                duration-300 cursor-pointer" href="/dashboard/accommodation-units">ACCOMMODATION UNITS</a>
+                duration-300 cursor-pointer" href="/dashboard/accommodation-units" th:text="#{linkingAboveHeaderTagACCOMMODATIONUNITS}"></a>
                 <a id="linkToVehiclesFromDashboard" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-                duration-300 cursor-pointer" href="/dashboard/vehicles">VEHICLES</a>
+                duration-300 cursor-pointer" href="/dashboard/vehicles" th:text="#{linkingAboveHeaderTagVEHICLES}"></a>
             </div>
             <div th:case="'Organizer'">
                 <a id="linkToTravelsFromDashboard" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-                duration-300 cursor-pointer" href="/dashboard/travels">TRAVELS</a>
+                duration-300 cursor-pointer" href="/dashboard/travels" th:text="#{linkingAboveHeaderTagTRAVELS}"></a>
             </div>
         </div>
     </div>

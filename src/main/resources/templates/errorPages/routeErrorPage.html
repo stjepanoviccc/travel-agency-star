@@ -14,10 +14,10 @@
 <!-- main content for this page -->
 <main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
     <div class="w-full text-center lg:text-left">
-        <a href="/" class="text-red-600">< Back to homepage</a>
+        <a href="/" class="text-red-600" th:text="#{routeErrorPageBackToHomepage}">< Back to homepage</a>
     </div>
-    <h1 class="text-center text-3xl lg:text-4xl lg:text-left my-6 lg:my-8">Route Error Page</h1>
-    <p class="text-center text-xl lg:text-2xl lg:text-left">Route doesn't exist. Go back to homepage.</p>
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left my-6 lg:my-8" th:text="#{routeErrorPageHeading}">Route Error Page</h1>
+    <p class="text-center text-xl lg:text-2xl lg:text-left" th:text="#{routeErrorPageMessage}">Route doesn't exist. Go back to homepage.</p>
 
 </main>
 

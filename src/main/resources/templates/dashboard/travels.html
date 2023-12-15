@@ -17,26 +17,27 @@
     <!-- fragment for changing page -->
     <div th:replace="~{fragments/ui/dashboard/LinkingAboveHeaderTag :: LinkingAboveHeaderTag}"></div>
 
-    <h1 class="text-center text-3xl lg:text-4xl lg:text-left">Dashboard Page - Travels</h1>
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{dashboardTravelsPageHeading}"></h1>
 
-    <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left">All Travels:</h2>
+    <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left" th:text="#{dashboardTravelsPageAllTravels}"></h2>
     <div class="flex justify-center lg:justify-end">
-        <button class="addNewTravelToggleTrigger mt-4 lg:mt-6 bg-gray-600 text-white rounded-md px-4 py-2 text-sm font-medium border-2 border-gray-600">Add New Travel</button>
+        <button class="addNewTravelToggleTrigger mt-4 lg:mt-6 bg-gray-600 text-white rounded-md px-4 py-2 text-sm font-medium border-2 border-gray-600"
+        th:text="#{dashboardTravelsPageAddNewTravel}"></button>
     </div>
     <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
         <table class="min-w-full text-center font-light">
             <thead class="border-b font-medium dark:border-neutral-500">
             <tr >
                 <th scope="col" class="px-4 py-4">#</th>
-                <th scope="col" class="px-4 py-4">Destination</th>
-                <th scope="col" class="px-4 py-4">Vehicle</th>
-                <th scope="col" class="px-4 py-4">Accommodation Unit</th>
-                <th scope="col" class="px-4 py-4">Start Date</th>
-                <th scope="col" class="px-4 py-4">End Date</th>
-                <th scope="col" class="px-4 py-4">Travel Category</th>
-                <th scope="col" class="px-4 py-4">Price</th>
-                <th scope="col" class="px-4 py-4">Edit</th>
-                <th scope="col" class="px-4 py-4">Remove</th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageDestination}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageVehicle}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageAccommodationUnit}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageStartDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageEndDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageTravelCategory}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPagePrice}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageEdit}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{dashboardTravelsPageRemove}"></th>
             </tr>
             </thead>
             <tbody>

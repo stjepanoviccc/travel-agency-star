@@ -1,7 +1,7 @@
 <div th:fragment="addNewDestinationModal" id="addNewDestinationModal" class="z-10 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white p-8 rounded lg:w-[600px]">
         <div class="flex justify-between mb-8">
-            <h2 class="text-2xl font-bold">Add New Destination</h2>
+            <h2 class="text-2xl font-bold" th:text="#{addNewDestinationModalHeading}"></h2>
             <button id="addNewDestinationCloseButton" class="addNewDestinationToggleTrigger text-gray-700 font-bold">X</button>
         </div>
         <div th:replace="~{fragments/forms/destinations/addNewDestinationForm :: addNewDestinationForm}"></div>
