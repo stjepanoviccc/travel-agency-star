@@ -17,14 +17,14 @@
 
     <div class="flex flex-col lg:flex-row gap-x-24 mt-12">
         <div class="border-2 border-red-400 w-full">
-            <p class="block font-medium text-xl" th:text="#{travelDetailsPageDestination} + ' ' + ${travel?.destination}"></p>
+            <p class="block font-medium text-xl" th:text="#{textDestination} + ': ' + ${travel?.destination}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${travel?.vehicle}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${travel?.accommodationUnit.name}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageStartDate} + ' ' + ${travel?.startDate}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageEndDate} + ' ' + ${travel?.endDate}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageNights} + ' ' + ${travel?.numberOfNights}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageTravelCategory} + ' ' + ${travel?.travelCategory}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPagePrice} + ' ' + ${travel?.price} + '$'"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ': ' + ${travel?.accommodationUnit.name}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textStartDate} + ': ' + ${travel?.startDate}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${travel?.endDate}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${travel?.numberOfNights}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textTravelCategory} + ': ' + ${travel?.travelCategory}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${travel?.price} + '$'"></p>
 
             <form></form>
 
@@ -33,9 +33,9 @@
             <form th:fragment="addTravelToCartForm" id="addTravelToCartForm" method="post"
                   action="">
                 <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
-                        th:text="#{travelDetailsPageAddToCart}"></button>
+                        th:text="#{textAddToCart}"></button>
                 <button type="submit" class="gap-x-4 mt-8 bg-white text-red-700 border-2 border-red-700 font-bold py-2 px-4 rounded"
-                        th:text="#{travelDetailsPageAddToWishlist}"></button>
+                        th:text="#{textAddToWishlist}"></button>
             </form>
         </div>
 

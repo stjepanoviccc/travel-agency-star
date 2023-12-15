@@ -1,11 +1,11 @@
 <!-- need more info in form -->
 <form th:fragment="loginForm" name="loginForm" method="post" action="/login">
-    <label for="usernameLogin" class="block font-medium text-gray-700">Username:</label>
+    <label for="usernameLogin" class="block font-medium text-gray-700" th:text="#{textUsername} + ': '"></label>
     <input type="text" id="usernameLogin" name="usernameLogin" class="mt-1 p-2 border rounded-md w-full">
-    <label for="passwordLogin" class="block font-medium text-gray-700 mt-4">Password:</label>
+    <label for="passwordLogin" class="block font-medium text-gray-700 mt-4" th:text="#{textPassword} + ': '"></label>
     <input type="password" id="passwordLogin" name="passwordLogin" class="mt-1 p-2 border rounded-md w-full">
     <div class="flex justify-between gap-x-4 mt-8">
-        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Login</button>
-        <p class="py-2">No account? <a href="#" class="loginToggleTrigger registerToggleTrigger underline">Register now!</a></p>
+        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" th:text="#{navLogin}"></button>
+        <p class="py-2">No account? <a href="#" class="loginToggleTrigger registerToggleTrigger underline" th:text="#{textRegisterNow} + '!'"></a></p>
     </div>
 </form>
