@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Controller
 public class TravelController {
 
@@ -30,15 +33,17 @@ public class TravelController {
 
     @GetMapping("/travel")
     public String travelDetailsPage(HttpSession session, @RequestParam int id, Model model) {
-        if(!CheckRoleUtil.RoleOrganizer(session)) {
-            return "redirect:/permission-error";
+        Travel travel = travelService.findOne(id);
+        if(travel == null) {
+            return "redirect:/route-error";
         }
 
-        Travel travel = travelService.findOne(id);
-        /*  if(travel == null) {
-            return "redirect:/errorPages/routeErrorPage.html";
-        } */
+        int destinationId = travel.getDestination().getId();
+        List<Travel> travels = travelService.findAll(destinationId);
+        travels = travelService.removeSelectedOne(travel.getId(), travels);
+
         model.addAttribute("travel", travel);
+        model.addAttribute("allTravels", travels);
         return "/viewPages/travel-details";
     }
 

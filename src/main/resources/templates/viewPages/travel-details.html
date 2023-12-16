@@ -13,36 +13,78 @@
 
 <!-- main content for this page -->
 <main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
-    <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{travelDetailsPageHeading}"></h1>
+    <h1 class="text-center text-3xl lg:text-4xl" th:text="#{travelDetailsPageHeading}"></h1>
 
-    <div class="flex flex-col lg:flex-row gap-x-24 mt-12">
-        <div class="border-2 border-red-400 w-full">
+    <div class="flex flex-col lg:flex-row gap-x-24 mt-14 border-4 shadow-2xl p-4">
+        <div class="w-full text-center">
             <p class="block font-medium text-xl" th:text="#{textDestination} + ': ' + ${travel?.destination}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${travel?.vehicle}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ': ' + ${travel?.accommodationUnit.name}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{textStartDate} + ': ' + ${travel?.startDate}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${travel?.endDate}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${travel?.accommodationUnit.name}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textStartDate} + ': ' + ${#temporals.format(travel.startDate, 'dd.MM.yyyy')}"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${#temporals.format(travel.endDate, 'dd.MM.yyyy')}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${travel?.numberOfNights}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textTravelCategory} + ': ' + ${travel?.travelCategory}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${travel?.price} + '$'"></p>
 
-            <form></form>
-
+            <!-- for reservation implementing soon -->
             <input type="hidden" id="id" name="id" th:value="${travel?.id}" readonly/>
-
-            <form th:fragment="addTravelToCartForm" id="addTravelToCartForm" method="post"
-                  action="">
+            <form th:fragment="addTravelToCartForm" id="addTravelToCartForm" method="post" action="">
                 <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
                         th:text="#{textAddToCart}"></button>
-                <button type="submit" class="gap-x-4 mt-8 bg-white text-red-700 border-2 border-red-700 font-bold py-2 px-4 rounded"
+            </form>
+            <form th:fragment="addTravelToWishlistForm" id="addTravelToWishlist" method="post" action="">
+                <button type="submit" class="gap-x-4 mt-2 bg-white text-red-700 border-2 border-red-700 font-bold py-2 px-4 rounded"
                         th:text="#{textAddToWishlist}"></button>
             </form>
+
+            <!-- up to here -->
         </div>
 
-        <div class="border-2 border-red-400 w-full">
-            There will be image
+        <div class="w-full">
+            <img th:src="@{/images/}+${travel?.destination?.image}" class="h-full w-full" alt="destination-img" />
         </div>
     </div>
+
+    <!-- Access the list of all travels -->
+    <h2 class="mt-20 mb-8 text-xl font-bold text-center" th:text="#{travelDetailsPageSubheading}"></h2>
+
+    <!-- Check if the list is not empty -->
+    <th:block th:if="${#lists.size(allTravels) > 0}">
+        <div th:each="t : ${allTravels}">
+            <div class="flex flex-col lg:flex-row gap-x-24 mt-14 border-4 p-4">
+                <div class="w-full text-center">
+                    <p class="block font-medium text-xl" th:text="#{textDestination} + ': ' + ${t.destination}"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${t.vehicle}"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${t.accommodationUnit.name}"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{textStartDate} + ': ' + ${#temporals.format(t.startDate, 'dd.MM.yyyy')}"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${#temporals.format(t.endDate, 'dd.MM.yyyy')}"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${t.numberOfNights}"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{textTravelCategory} + ': ' + ${t.travelCategory}"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${t.price} + '$'"></p>
+
+                    <!-- for reservation implementing soon -->
+                    <input type="hidden" name="id" th:value="${t?.id}" readonly/>
+                    <form th:fragment="addTravelToCartForm" method="post" action="">
+                        <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
+                                th:text="#{textAddToCart}"></button>
+                    </form>
+                    <form th:fragment="addTravelToWishlistForm" method="post" action="">
+                        <button type="submit" class="gap-x-4 mt-2 bg-white text-red-700 border-2 border-red-700 font-bold py-2 px-4 rounded"
+                                th:text="#{textAddToWishlist}"></button>
+                    </form>
+                    <!-- up to here -->
+                </div>
+
+                <div class="w-full">
+                    <img th:src="@{/images/}+${t?.destination?.image}" class="h-full w-full" alt="destination-img" />
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <!-- Show this if the list is empty -->
+    <p th:unless="${#lists.size(allTravels) > 0}" class="text-lg text-center" th:text="#{travelDetailsPageNoContentText}"></p>
+
 
 
 </main>

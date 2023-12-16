@@ -25,6 +25,10 @@ public class Travel {
         this.price = price;
     }
 
+    public Travel() {
+
+    }
+
     public int getId() {
         return id;
     }

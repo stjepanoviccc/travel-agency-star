@@ -27,6 +27,11 @@ public class TravelService implements ITravelService {
     }
 
     @Override
+    public List<Travel> findAll(int destinationId) {
+        return databaseTravelDAO.findAll(destinationId);
+    }
+
+    @Override
     public List<String> findAllTravelCategories() {
         return Arrays.stream(TravelCategory.values())
                 .map(Enum::name)
@@ -56,5 +61,19 @@ public class TravelService implements ITravelService {
     public int setNumberOfNights(LocalDate startDate, LocalDate endDate) {
         long daysDifference = DateTimeUtil.calculateDaysBetween(startDate, endDate);
         return (int) daysDifference;
+    }
+
+    @Override
+    public List<Travel> removeSelectedOne(int selectedTravelId, List<Travel> travels) {
+        Travel travelToRemove = new Travel();
+        for(Travel tr : travels) {
+            if(tr.getId() == selectedTravelId) {
+                travelToRemove = tr;
+                break;
+            }
+        }
+
+        travels.remove(travelToRemove);
+        return travels;
     }
 }

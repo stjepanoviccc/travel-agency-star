@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ITravelDAO {
     List<Travel> findAll();
+    List<Travel> findAll(int destinationId);
     Travel findOne(int travelId);
     void save(Travel newTravel, int destinationId, int accommodationUnitId, int vehicleId);
     void update(Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId);

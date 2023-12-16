@@ -83,6 +83,19 @@ public class DatabaseTravelDAO implements ITravelDAO {
     }
 
     @Override
+    public List<Travel> findAll(int destinationId) {
+        String sql =
+                "SELECT t.id_travel, t.travel_start_date, t.travel_end_date, t.number_of_nights, t.travel_category, t.id_destination, t.id_accommodation_unit," +
+                        "t.id_vehicle, t.travel_price " +
+                        "FROM travel t WHERE t.id_destination = ? ORDER BY t.id_travel";
+
+        TravelRowCallBackHandler rowCallBackHandler = new TravelRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, destinationId);
+        return rowCallBackHandler.getTravels();
+
+    }
+
+    @Override
     public Travel findOne(int travelId) {
         String sql =
                 "SELECT t.id_travel, t.travel_start_date, t.travel_end_date, t.number_of_nights, t.travel_category, t.id_destination, t.id_accommodation_unit," +
