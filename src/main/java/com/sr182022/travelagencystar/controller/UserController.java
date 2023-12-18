@@ -52,12 +52,12 @@ public class UserController {
 
     @PostMapping("/editUserPost")
     public String editUserPost(HttpSession session, @ModelAttribute User editUser) {
-        if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
+        if(!CheckRoleUtil.RoleAdministratorOrPassenger(session)) {
             return "redirect:/permission-error";
         }
         userService.update(editUser);
         if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/";
+            return "redirect:/profile?id=" + editUser.getId();
         }
         return "redirect:/dashboard";
     }

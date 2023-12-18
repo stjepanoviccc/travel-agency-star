@@ -5,6 +5,16 @@ import com.sr182022.travelagencystar.model.User;
 import jakarta.servlet.http.HttpSession;
 
 public class CheckRoleUtil {
+
+    public static boolean UserIsNull(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if(user == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public static boolean RoleAdministrator(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if(user == null) {
@@ -70,4 +80,12 @@ public class CheckRoleUtil {
         return true;
     }
 
+    public static boolean RoleAdministratorOrPassenger(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if(user.getRole() == Role.Administrator || user.getRole() == Role.Passenger) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

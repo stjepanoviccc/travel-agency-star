@@ -14,17 +14,20 @@
                                     <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
                                     <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navReportsLink}"></a>
                                     <a href="/dashboard" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navDashboardLink}"></a>
-                                    <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navProfileLink}"></a>
+                                    <a th:href="'profile?id=' + ${session.user.id}" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300"
+                                       th:text="#{navProfileLink}"></a>
                                 </div>
                                 <div th:case="'Organizer'">
                                     <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
                                     <a href="#" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navReportsLink}"></a>
                                     <a href="/dashboard/travels" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navDashboardLink}"></a>
-                                    <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navProfileLink}"></a>
+                                    <a th:href="'profile?id=' + ${session.user.id}" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300"
+                                       th:text="#{navProfileLink}"></a>
                                 </div>
                                 <div th:case="'Passenger'">
                                     <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
-                                    <a href="/profile" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navProfileLink}"></a>
+                                    <a th:href="'profile?id=' + ${session.user.id}" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300"
+                                       th:text="#{navProfileLink}"></a>
                                 </div>
                             </div>
                         </div>

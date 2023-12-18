@@ -1,5 +1,6 @@
 import * as navFunctions from "./nav.js";
 import * as dashboardFunctions from "./dashboard.js";
+import * as profileFunctions from "./profile.js";
 
 $(document).ready(() => {
 
@@ -16,4 +17,7 @@ $(document).ready(() => {
     $('.addNewVehicleToggleTrigger').on('click', dashboardFunctions.toggleAddNewVehicleModal);
     $('.addNewAccommodationUnitToggleTrigger').on('click', dashboardFunctions.toggleAddNewAccommodationUnitModal);
     $('.addNewTravelToggleTrigger').on('click', dashboardFunctions.toggleAddNewTravelModal);
+
+    // profile
+    profileFunctions.linksInProfilePageActiveState();
 });
