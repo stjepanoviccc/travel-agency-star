@@ -19,8 +19,34 @@
 
     <h2 class="pt-6 pb-4 lg:pt-8 lg:pb-6 text-xl lg:text-2xl text-center lg:text-left" th:text="#{profileSubheadingWishlist}"></h2>
 
-    <p>ovde ce biti wishlist</p>
-
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-6 lg:pt-8">
+        <div th:each="item : ${wishlist}">
+            <div class="w-full rounded overflow-hidden shadow-lg text-center border-2 transform transition-transform duration-300 hover:scale-105">
+                <!-- this will probably be form and link will be redirected to exact travel page with details. -->
+                <a th:href="'/travel?id=' + ${item.travel.id}">
+                    <img class="h-64 w-full" th:src="@{/images/}+${item.travel.destination.image}" alt="travel-img">
+                </a>
+                <div class="px-6 py-4">
+                    <a th:href="'/travel?id=' + ${item.travel.id}" class="font-bold text-xl" th:text="${item.travel.destination.city}"></a>
+                    <p class="text-gray-700 text-base pt-2" th:text="#{textAccommodationUnit} + ': ' + ${item.travel.accommodationUnit.accommodationType}"></p>
+                    <p class="text-gray-700 text-base" th:text="#{textVehicle} + ': ' + ${item.travel.vehicle.vehicleType}"></p>
+                    <p class="text-gray-700 text-base" th:text="#{textCategory} + ': ' + ${item.travel.travelCategory}"></p>
+                    <p class="text-gray-700 text-xl mt-1 font-bold" th:text="${#temporals.format(item.travel.startDate, 'dd.MM.yyyy')} + ' ---> '
+                             + ${#temporals.format(item.travel.endDate, 'dd.MM.yyyy')}"></p>
+                </div>
+                <div class="px-6">
+                            <span class="inline-block bg-gray-200 rounded-full px-4 py-2 font-semibold text-gray-700 mr-2 mb-2 border-2"
+                                  th:text="#{textPrice} + ': ' + ${item.travel.price} + '$'"></span>
+                    <button type="button" class="w-full bg-orange-600 rounded-full px-4 py-2 text-white font-semibold mr-2 mb-2 border-2 border-orange-600
+            transition duration-300 hover:text-orange-600 hover:bg-white" th:text="#{profilePageWishlistRemoveFromWishlist}"></button>
+                </div>
+                <div class="px-6">
+                    <button type="button" class="w-full bg-red-600 rounded-full px-4 py-2 text-white font-semibold mr-2 mb-2 border-2 border-red-600
+            transition duration-300 hover:text-red-600 hover:bg-white" th:text="#{textAddToCart}"></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <!-- footer -->

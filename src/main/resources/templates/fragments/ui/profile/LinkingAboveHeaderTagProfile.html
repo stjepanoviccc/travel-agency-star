@@ -1,11 +1,10 @@
 <div th:fragment="LinkingAboveHeaderTagProfile" class="flex flex-col lg:flex-row justify-end items-center gap-x-2 mb-8 lg:mb-0">
     <div th:if="${session.user != null}">
         <a id="linkToProfileEdit" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-               duration-300 cursor-pointer" th:href="@{/profile(id=${session.user.id})}" th:text="#{linkingAboveHeaderTagProfileEDIT}"></a>
+               duration-300 cursor-pointer" th:href="@{'/profile?id=' + ${session.user.id}}" th:text="#{linkingAboveHeaderTagProfileEDIT}"></a>
         <a id="linkToProfileWishlist" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-               duration-300 cursor-pointer" th:href="@{/profile(id=${session.user.id})}"
-           th:text="#{linkingAboveHeaderTagProfileWISHLIST}"></a>
+               duration-300 cursor-pointer" th:href="@{'/profile/wishlist?id=' + ${session.user.id}}" th:text="#{linkingAboveHeaderTagProfileWISHLIST}"></a>
         <a id="linkToProfileOrders" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
-               duration-300 cursor-pointer" href="/dashboard/accommodation-units" th:text="#{linkingAboveHeaderTagProfileORDERS}"></a>
+               duration-300 cursor-pointer" th:href="@{'/profile/orders?id=' + ${session.user.id}}" th:text="#{linkingAboveHeaderTagProfileORDERS}"></a>
     </div>
 </div>

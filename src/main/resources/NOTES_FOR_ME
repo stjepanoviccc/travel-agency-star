@@ -1,0 +1,3 @@
+http://localhost:8080/profile/profile?id=2
+
+handle route redirecting from wishlist and orders on profile page.
