@@ -22,15 +22,36 @@ public class ProfileController {
 
     @GetMapping
     public String getProfilePage(HttpSession session, Model model, @RequestParam int id) {
+        try {
+            User loggedUser = (User) session.getAttribute("user");
+            if(!CheckRoleUtil.UserIsNull(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            if(loggedUser.getId() != id) {
+                return ErrorController.permissionErrorReturn;
+            }
+            User user = userService.findOne(id);
+            model.addAttribute("user", user);
+            return "profile";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
+    @GetMapping("/wishlist")
+    public String getProfileWishlistPage(HttpSession session, Model model, @RequestParam int id) {
+        try {
         User loggedUser = (User) session.getAttribute("user");
         if(!CheckRoleUtil.UserIsNull(session)) {
-            return "redirect:/permission-error";
+            return ErrorController.permissionErrorReturn;
         }
         if(loggedUser.getId() != id) {
-            return "redirect:/permission-error";
+            return ErrorController.permissionErrorReturn;
         }
-        User user = userService.findOne(id);
-        model.addAttribute("user", user);
-        return "profile";
+        //
+        return "profile/wishlist";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
     }
 }

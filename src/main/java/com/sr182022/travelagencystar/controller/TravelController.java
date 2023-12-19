@@ -1,7 +1,6 @@
 package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.Travel;
-import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.IAccommodationUnitService;
 import com.sr182022.travelagencystar.service.IDestinationService;
 import com.sr182022.travelagencystar.service.ITravelService;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -33,18 +31,22 @@ public class TravelController {
 
     @GetMapping("/travel")
     public String travelDetailsPage(HttpSession session, @RequestParam int id, Model model) {
-        Travel travel = travelService.findOne(id);
-        if(travel == null) {
-            return "redirect:/route-error";
+        try {
+            Travel travel = travelService.findOne(id);
+            if(travel == null) {
+                return ErrorController.routeErrorReturn;
+            }
+
+            int destinationId = travel.getDestination().getId();
+            List<Travel> travels = travelService.findAll(destinationId);
+            travels = travelService.removeSelectedOne(travel.getId(), travels);
+
+            model.addAttribute("travel", travel);
+            model.addAttribute("allTravels", travels);
+            return "/viewPages/travel-details";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-
-        int destinationId = travel.getDestination().getId();
-        List<Travel> travels = travelService.findAll(destinationId);
-        travels = travelService.removeSelectedOne(travel.getId(), travels);
-
-        model.addAttribute("travel", travel);
-        model.addAttribute("allTravels", travels);
-        return "/viewPages/travel-details";
     }
 
     @PostMapping("/dashboard/travels/addNewTravel")
@@ -52,50 +54,67 @@ public class TravelController {
                                     @RequestParam int destinationId,
                                     @RequestParam int accommodationUnitId,
                                     @RequestParam int vehicleId) {
-        if(!CheckRoleUtil.RoleOrganizer(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            if(newTravel.getStartDate() == null || newTravel.getEndDate() == null) {
+                // handle here
+            }
+            newTravel.setNumberOfNights(travelService.setNumberOfNights(newTravel.getStartDate(), newTravel.getEndDate()));
+            travelService.save(newTravel, destinationId, accommodationUnitId, vehicleId);
+            return "redirect:/dashboard/travels";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        if(newTravel.getStartDate() == null || newTravel.getEndDate() == null) {
-            // handle here
-        }
-        newTravel.setNumberOfNights(travelService.setNumberOfNights(newTravel.getStartDate(), newTravel.getEndDate()));
-        travelService.save(newTravel, destinationId, accommodationUnitId, vehicleId);
-        return "redirect:/dashboard/travels";
+
     }
 
     @GetMapping("/dashboard/travels/editTravel")
     public String editTravel(HttpSession session, @RequestParam int travelId, Model model) {
-        if(!CheckRoleUtil.RoleOrganizer(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            Travel travel = travelService.findOne(travelId);
+            if(travel == null) {
+                return ErrorController.routeErrorReturn;
+            }
+            model.addAttribute("travel", travelService.findOne(travelId));
+            model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
+            model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());
+            model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll());
+            model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
+            return "editPages/editTravelPage";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        Travel travel = travelService.findOne(travelId);
-        if(travel == null) {
-            return "redirect:/route-error";
-        }
-        model.addAttribute("travel", travelService.findOne(travelId));
-        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
-        model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());
-        model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll());
-        model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
-        return "editPages/editTravelPage";
     }
 
     @PostMapping("/dashboard/travels/editTravelPost")
     public String editTravelPost(HttpSession session, @ModelAttribute Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId) {
-        if(!CheckRoleUtil.RoleOrganizer(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            editTravel.setNumberOfNights(travelService.setNumberOfNights(editTravel.getStartDate(), editTravel.getEndDate()));
+            travelService.update(editTravel, destinationId, accommodationUnitId, vehicleId);
+            return "redirect:/dashboard/travels";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        editTravel.setNumberOfNights(travelService.setNumberOfNights(editTravel.getStartDate(), editTravel.getEndDate()));
-        travelService.update(editTravel, destinationId, accommodationUnitId, vehicleId);
-        return "redirect:/dashboard/travels";
     }
 
     @PostMapping("/dashboard/travels/deleteTravel")
     public String deleteTravel(HttpSession session, @RequestParam int travelId) {
-        if(!CheckRoleUtil.RoleOrganizer(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            travelService.delete(travelId);
+            return "redirect:/dashboard/travels";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        travelService.delete(travelId);
-        return "redirect:/dashboard/travels";
     }
 }

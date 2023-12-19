@@ -32,54 +32,74 @@ public class DashboardController {
 
     @GetMapping()
     public String getDashboardPage(HttpSession session, Model model) {
-        if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            model.addAttribute("dashboardUsersContent", userService.findAll());
+            return "dashboard";
+        } catch(Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        model.addAttribute("dashboardUsersContent", userService.findAll());
-        return "dashboard";
     }
 
     @GetMapping("destinations")
     public String getDestinationsPage(HttpSession session, Model model) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            model.addAttribute("dashboardDestinationsContent", destinationService.findAll());
+            return "dashboard/destinations";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        model.addAttribute("dashboardDestinationsContent", destinationService.findAll());
-        return "dashboard/destinations";
     }
 
     @GetMapping("vehicles")
     public String getVehiclesPage(HttpSession session, Model model) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            model.addAttribute("dashboardVehiclesContent", vehicleService.findAll());
+            model.addAttribute("vehicleTypesForSelectMenu", vehicleService.findAllVehicleTypes());
+            model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
+            return "dashboard/vehicles";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        model.addAttribute("dashboardVehiclesContent", vehicleService.findAll());
-        model.addAttribute("vehicleTypesForSelectMenu", vehicleService.findAllVehicleTypes());
-        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
-        return "dashboard/vehicles";
     }
 
     @GetMapping("accommodation-units")
     public String getAccommodationUnitsPage(HttpSession session, Model model) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            model.addAttribute("dashboardAccommodationUnitsContent", accommodationUnitService.findAll());
+            model.addAttribute("accommodationTypesForSelectMenu", accommodationUnitService.findAllAccommodationTypes());
+            model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
+            return "dashboard/accommodation-units";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        model.addAttribute("dashboardAccommodationUnitsContent", accommodationUnitService.findAll());
-        model.addAttribute("accommodationTypesForSelectMenu", accommodationUnitService.findAllAccommodationTypes());
-        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
-        return "dashboard/accommodation-units";
     }
 
     @GetMapping("travels")
     public String getTravelsPage(HttpSession session, Model model) {
-        if(!CheckRoleUtil.RoleOrganizer(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            model.addAttribute("dashboardTravelsContent", travelService.findAll());
+            model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
+            model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());
+            model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll());
+            model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
+            return "dashboard/travels";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        model.addAttribute("dashboardTravelsContent", travelService.findAll());
-        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
-        model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());
-        model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll());
-        model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
-        return "dashboard/travels";
     }
 }

@@ -22,15 +22,19 @@ public class InternationalizationController {
 
     @GetMapping("changeLanguage")
     public String changeLanguage(@RequestParam String lang, HttpServletRequest request, HttpServletResponse response) {
-        Locale newLocale = null;
-        if (lang.equals("sr")) {
-            newLocale = Locale.forLanguageTag("sr");
-        } else if (lang.equals("en")) {
-            newLocale = Locale.ENGLISH;
+        try {
+            Locale newLocale = null;
+            if (lang.equals("sr")) {
+                newLocale = Locale.forLanguageTag("sr");
+            } else if (lang.equals("en")) {
+                newLocale = Locale.ENGLISH;
+            }
+
+            localeResolver.setLocale(request, response, newLocale);
+
+            return "redirect:/";
+        } catch(Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-
-        localeResolver.setLocale(request, response, newLocale);
-
-        return "redirect:/";
     }
 }

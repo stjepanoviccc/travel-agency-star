@@ -22,42 +22,58 @@ public class DestinationController {
 
     @PostMapping("addNewDestination")
     public String addNewDestination(HttpSession session, @ModelAttribute Destination newDestination) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            destinationService.save(newDestination);
+            return "redirect:/dashboard/destinations";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        destinationService.save(newDestination);
-        return "redirect:/dashboard/destinations";
     }
 
     @GetMapping("editDestination")
     public String editDestination(HttpSession session, @RequestParam int destinationId, Model model) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            Destination destination = destinationService.findOne(destinationId);
+            if(destination == null) {
+                return ErrorController.routeErrorReturn;
+            }
+            model.addAttribute("destination", destinationService.findOne(destinationId));
+            return "editPages/editDestinationPage";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        Destination destination = destinationService.findOne(destinationId);
-        if(destination == null) {
-            return "redirect:/route-error";
-        }
-        model.addAttribute("destination", destinationService.findOne(destinationId));
-        return "editPages/editDestinationPage";
     }
 
     @PostMapping("editDestinationPost")
     public String editDestinationPost(HttpSession session, @ModelAttribute Destination editDestination, String imageValue) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            editDestination.setImage(destinationService.checkImageValueOnChange(editDestination, imageValue));
+            destinationService.update(editDestination);
+            return "redirect:/dashboard/destinations";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        editDestination.setImage(destinationService.checkImageValueOnChange(editDestination, imageValue));
-        destinationService.update(editDestination);
-        return "redirect:/dashboard/destinations";
     }
 
     @PostMapping("deleteDestination")
     public String deleteDestination(HttpSession session, @RequestParam int destinationId) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            destinationService.delete(destinationId);
+            return "redirect:/dashboard/destinations";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        destinationService.delete(destinationId);
-        return "redirect:/dashboard/destinations";
     }
 }

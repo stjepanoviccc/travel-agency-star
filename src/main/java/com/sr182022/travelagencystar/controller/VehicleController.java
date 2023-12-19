@@ -26,43 +26,59 @@ public class VehicleController {
 
     @PostMapping("addNewVehicle")
     public String addNewVehicle(HttpSession session, @ModelAttribute Vehicle newVehicle, @RequestParam int finalDestinationId) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            vehicleService.save(newVehicle, finalDestinationId);
+            return "redirect:/dashboard/vehicles";
+        } catch (Exception ex) {
+            return ErrorController.internalErrorReturn;
         }
-        vehicleService.save(newVehicle, finalDestinationId);
-        return "redirect:/dashboard/vehicles";
     }
 
     @GetMapping("editVehicle")
     public String editVehicle(HttpSession session, @RequestParam int vehicleId, Model model) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            Vehicle vehicle = vehicleService.findOne(vehicleId);
+            if(vehicle == null) {
+                return ErrorController.routeErrorReturn;
+            }
+            model.addAttribute("vehicle", vehicleService.findOne(vehicleId));
+            model.addAttribute("vehicleTypesForSelectMenu", vehicleService.findAllVehicleTypes());
+            model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
+            return "editPages/editVehiclePage";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        Vehicle vehicle = vehicleService.findOne(vehicleId);
-        if(vehicle == null) {
-            return "redirect:/route-error";
-        }
-        model.addAttribute("vehicle", vehicleService.findOne(vehicleId));
-        model.addAttribute("vehicleTypesForSelectMenu", vehicleService.findAllVehicleTypes());
-        model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
-        return "editPages/editVehiclePage";
     }
 
     @PostMapping("editVehiclePost")
     public String editVehiclePost(HttpSession session, @ModelAttribute Vehicle editVehicle, @RequestParam int finalDestinationId) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            vehicleService.update(editVehicle, finalDestinationId);
+            return "redirect:/dashboard/vehicles";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        vehicleService.update(editVehicle, finalDestinationId);
-        return "redirect:/dashboard/vehicles";
     }
 
     @PostMapping("deleteVehicle")
     public String deleteVehicle(HttpSession session, @RequestParam int vehicleId) {
-        if(!CheckRoleUtil.RoleAdministrator(session)) {
-            return "redirect:/permission-error";
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            vehicleService.delete(vehicleId);
+            return "redirect:/dashboard/vehicles";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-        vehicleService.delete(vehicleId);
-        return "redirect:/dashboard/vehicles";
     }
 }

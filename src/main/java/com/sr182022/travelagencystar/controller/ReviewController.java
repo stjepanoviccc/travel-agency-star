@@ -18,7 +18,11 @@ public class ReviewController {
 
     @PostMapping("deleteReview")
     public String deleteReview(@RequestParam int reviewId) {
-        reviewService.delete(reviewId);
-        return "redirect:/dashboard/vehicles";
+        try {
+            reviewService.delete(reviewId);
+            return "redirect:/dashboard/vehicles";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
     }
 }

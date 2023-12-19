@@ -21,38 +21,46 @@ public class LoginController {
 
     @PostMapping("/login")
     public String postLogin(@RequestParam(required = false) String usernameLogin, @RequestParam(required = false) String passwordLogin, HttpSession session) {
-        User user = userService.findOne(usernameLogin);
+        try {
+            User user = userService.findOne(usernameLogin);
 
-        // validations
-        if(user == null || session.getAttribute(USER_KEY) != null) {
-            return "redirect:/login-error";
-        }
+            // validations
+            if(user == null || session.getAttribute(USER_KEY) != null) {
+                return ErrorController.loginErrorReturn;
+            }
 
-        if(session.getAttribute(USER_KEY) != null) {
-            return "redirect:/login-error";
-        }
+            if(session.getAttribute(USER_KEY) != null) {
+                return ErrorController.loginErrorReturn;
+            }
 
-        if(user.getUsername().equals(usernameLogin) && user.getPassword().equals(passwordLogin) && !user.isBlocked()) {
-            session.setAttribute(USER_KEY, user);
-            return "redirect:/";
-        } else {
-            // username and password doesn't match
-            return "redirect:/login-error";
+            if(user.getUsername().equals(usernameLogin) && user.getPassword().equals(passwordLogin) && !user.isBlocked()) {
+                session.setAttribute(USER_KEY, user);
+                return "redirect:/";
+            } else {
+                // username and password doesn't match
+                return ErrorController.loginErrorReturn;
+            }
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
 
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        User user = (User) session.getAttribute(USER_KEY);
+        try {
+            User user = (User) session.getAttribute(USER_KEY);
 
-        if(user == null) {
-            return "redirect:/login-error";
-        } else {
-            session.removeAttribute(USER_KEY);
-            session.invalidate();
+            if(user == null) {
+                return ErrorController.loginErrorReturn;
+            } else {
+                session.removeAttribute(USER_KEY);
+                session.invalidate();
+            }
+
+            return "redirect:/";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-
-        return "redirect:/";
     }
 }

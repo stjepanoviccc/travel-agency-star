@@ -18,7 +18,11 @@ public class HomeController {
 
     @GetMapping
     public String getHomePage(Model model) {
-        model.addAttribute("travelsForCards", travelService.findAll());
-        return "index";
+        try {
+            model.addAttribute("travelsForCards", travelService.findAll());
+            return "index";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
     }
 }

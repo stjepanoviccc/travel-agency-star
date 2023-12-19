@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit User</title>
+    <title>Travel Agency Star - Login Error Page</title>
     <div th:replace="~{fragments/config/head :: headConfig}"></div>
 </head>
 <body>
+
 <!-- nav -->
 <div th:replace="~{fragments/nav :: nav}"></div>
 
+<!-- main content for this page -->
 <main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
     <div class="w-full text-center lg:text-left">
-        <a href="/dashboard" class="text-red-600" th:text="#{editPagesGoBack}"></a>
+        <a href="/" class="text-red-600" th:text="'< ' + #{textBackToHomepage}"></a>
     </div>
-    <h1 class="text-center text-3xl lg:text-4xl lg:text-left mb-8 mt-4" th:text="#{editPagesUser}"></h1>
-    <div th:replace="~{fragments/forms/users/editUserForm :: editUserForm}"></div>
-    <div th:replace="~{fragments/forms/users/deactivateUserForm :: deactivateUserForm}"></div>
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left my-6 lg:my-8" th:text="#{internalErrorPageHeading}"></h1>
+    <p class="text-center text-xl lg:text-2xl lg:text-left" th:text="#{internalErrorPageMessage}"></p>
+
 </main>
 
 <!-- footer -->
@@ -23,5 +25,6 @@
 <!-- script -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="module" th:src="@{/script/script.js}"></script>
+
 </body>
 </html>

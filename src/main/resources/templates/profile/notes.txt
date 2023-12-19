@@ -1,0 +1,2 @@
+in this folder i separated all subroutes of route /profile
+For index of profile route check templates/profile.html where main screen is showing info and possibility to edit user.
