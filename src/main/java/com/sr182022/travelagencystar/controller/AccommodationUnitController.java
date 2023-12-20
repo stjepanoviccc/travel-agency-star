@@ -38,7 +38,6 @@ public class AccommodationUnitController {
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
         }
-
     }
 
     @GetMapping("editAccommodationUnit")
