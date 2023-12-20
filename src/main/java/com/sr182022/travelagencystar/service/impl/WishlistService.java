@@ -30,4 +30,16 @@ public class WishlistService implements IWishlistService {
     public void delete(int userId, int travelId) {
         wishlistDAO.delete(userId, travelId);
     }
+
+    @Override
+    public boolean checkExistence(int userId, int travelId) {
+        List<WishlistItem> wItems = findAll(userId);
+        for(WishlistItem item : wItems) {
+           if(item.getUser().getId() + item.getTravel().getId() == userId+travelId) {
+               return true;
+           }
+        }
+        // if doesnt exist, return false.
+        return false;
+    }
 }

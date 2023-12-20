@@ -8,4 +8,5 @@ public interface IWishlistService {
     List<WishlistItem> findAll(int userId);
     void save(int userId, int travelId);
     void delete(int userId, int travelId);
+    boolean checkExistence(int userId, int travelId);
 }
