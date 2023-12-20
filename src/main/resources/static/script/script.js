@@ -20,4 +20,5 @@ $(document).ready(() => {
 
     // profile
     profileFunctions.linksInProfilePageActiveState();
+
 });

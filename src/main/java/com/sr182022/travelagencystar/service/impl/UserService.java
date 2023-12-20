@@ -4,6 +4,7 @@ import com.sr182022.travelagencystar.DAO.IUserDao;
 import com.sr182022.travelagencystar.model.Role;
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.IUserService;
+import com.sr182022.travelagencystar.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,41 @@ public class UserService implements IUserService {
     @Override
     public void delete(int userId, boolean blocked) {
         databaseUserDAO.delete(userId, blocked);
+    }
+
+    @Override
+    public boolean tryValidate(User user) {
+        if(user.getUsername().length() <= 2 || user.getUsername().length() >= 20) {
+            return false;
+        }
+        if(user.getPassword().length() <= 2 || user.getPassword().length() >= 20) {
+            return false;
+        }
+        if (!user.getEmail().matches("^.+@.+\\..+$")) {
+            return false;
+        }
+        if(user.getSurname().length() <= 2 || user.getPassword().length() >= 20 || !Character.isUpperCase(user.getSurname().charAt(0))) {
+            return false;
+        }
+        if(user.getName().length() <= 2 || user.getPassword().length() >= 20 || !Character.isUpperCase(user.getSurname().charAt(0))) {
+            return false;
+        }
+        if(user.getAddress().length() <= 2 || user.getAddress().length() >= 100) {
+            return false;
+        }
+        String phone = "0" + String.valueOf(user.getPhone());
+        if (!phone.matches("06\\d{7,8}")) {
+            return false;
+        }
+        if(DateTimeUtil.convertLocalDateToInt(user.getBirthDate()) < 12) {
+            return false;
+        }
+        // now checking does username and email already exist
+        if(databaseUserDAO.doesUsernameExist(user.getUsername()) || databaseUserDAO.doesEmailExist(user.getEmail())) {
+           return false;
+        }
+
+        return true;
     }
 
 }

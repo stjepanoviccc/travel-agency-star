@@ -3,6 +3,7 @@ package com.sr182022.travelagencystar.utils;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
@@ -20,6 +21,12 @@ public class DateTimeUtil {
             return null;
         }
         return timestamp.toLocalDateTime().toLocalDate();
+    }
+
+    public static int convertLocalDateToInt(LocalDate date) {
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(date, currentDate);
+        return period.getYears();
     }
 
     public static Timestamp convertLocalDateTimeToTimestamp(LocalDateTime localDateTime) {

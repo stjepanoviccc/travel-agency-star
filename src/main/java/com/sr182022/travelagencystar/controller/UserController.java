@@ -28,13 +28,28 @@ public class UserController {
         }
     }
 
+    @GetMapping("/user-validation")
+    public String getUserValidationInfo() {
+        try {
+            return "/validationPages/userValidationInfo";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
     @PostMapping("/addNewUser")
     public String addNewUser(HttpSession session, @ModelAttribute User newUser) {
         try {
             if(!CheckRoleUtil.RoleAdministratorOrNull(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+
+            boolean validation = userService.tryValidate(newUser);
+            if(!validation) {
+                return "redirect:/user-validation";
+            }
             userService.save(newUser);
+
             if(!CheckRoleUtil.RoleAdministrator(session)) {
                 return "redirect:/login-info";
             }
