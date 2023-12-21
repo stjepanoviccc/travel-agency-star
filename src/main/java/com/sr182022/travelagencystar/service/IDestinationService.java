@@ -11,4 +11,5 @@ public interface IDestinationService {
     void update(Destination editDestination);
     void delete(int destinationId);
     String checkImageValueOnChange(Destination editDestination, String imageValue);
+    boolean tryValidate(Destination destination);
 }

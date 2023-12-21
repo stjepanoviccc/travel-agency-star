@@ -44,7 +44,7 @@ public class UserController {
                 return ErrorController.permissionErrorReturn;
             }
 
-            boolean validation = userService.tryValidate(newUser);
+            boolean validation = userService.tryValidate(newUser, false);
             if(!validation) {
                 return "redirect:/user-validation";
             }
@@ -83,6 +83,12 @@ public class UserController {
             if(!CheckRoleUtil.RoleAdministratorOrPassenger(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+
+            boolean validation = userService.tryValidate(editUser, true);
+            if(!validation) {
+                return "redirect:/user-validation";
+            }
+
             userService.update(editUser);
             if(!CheckRoleUtil.RoleAdministrator(session)) {
                 return "redirect:/profile?id=" + editUser.getId();

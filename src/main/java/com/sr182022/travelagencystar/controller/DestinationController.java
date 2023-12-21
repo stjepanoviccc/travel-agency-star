@@ -20,13 +20,28 @@ public class DestinationController {
         this.destinationService = destinationService;
     }
 
+    @GetMapping("destination-validation")
+    public String getDestinationValidationInfo() {
+        try {
+            return "/validationPages/destinationValidationInfo";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
     @PostMapping("addNewDestination")
     public String addNewDestination(HttpSession session, @ModelAttribute Destination newDestination) {
         try {
             if(!CheckRoleUtil.RoleAdministrator(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+
+            boolean validation = destinationService.tryValidate(newDestination);
+            if(!validation) {
+                return "redirect:/dashboard/destinations/destination-validation";
+            }
             destinationService.save(newDestination);
+
             return "redirect:/dashboard/destinations";
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
@@ -57,7 +72,13 @@ public class DestinationController {
                 return ErrorController.permissionErrorReturn;
             }
             editDestination.setImage(destinationService.checkImageValueOnChange(editDestination, imageValue));
+
+            boolean validation = destinationService.tryValidate(editDestination);
+            if(!validation) {
+                return "redirect:/dashboard/destinations/destination-validation";
+            }
             destinationService.update(editDestination);
+
             return "redirect:/dashboard/destinations";
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;

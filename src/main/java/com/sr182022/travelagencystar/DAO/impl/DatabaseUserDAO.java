@@ -97,7 +97,23 @@ public class DatabaseUserDAO implements IUserDao {
         } else {
             return null;
         }
+    }
 
+    @Override
+    public User findOne(String username) {
+        String sql =
+                "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
+                        "u.user_role, u.blocked " +
+                        "FROM user u WHERE u.username = ?";
+
+        UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, username);
+        List<User> userList = rowCallBackHandler.getUsers();
+        if (!userList.isEmpty()) {
+            return userList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -131,23 +147,6 @@ public class DatabaseUserDAO implements IUserDao {
             return true;
         } else {
             return false;
-        }
-    }
-
-    @Override
-    public User findOne(String email) {
-        String sql =
-                "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role, u.blocked " +
-                        "FROM user u WHERE u.email = ?";
-
-        UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
-        jdbcTemplate.query(sql, rowCallBackHandler, email);
-        List<User> userList = rowCallBackHandler.getUsers();
-        if (!userList.isEmpty()) {
-            return userList.get(0);
-        } else {
-            return null;
         }
     }
 

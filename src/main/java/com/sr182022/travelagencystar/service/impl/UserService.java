@@ -56,7 +56,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean tryValidate(User user) {
+    public boolean tryValidate(User user, boolean editing) {
         if(user.getUsername().length() <= 2 || user.getUsername().length() >= 20) {
             return false;
         }
@@ -75,17 +75,38 @@ public class UserService implements IUserService {
         if(user.getAddress().length() <= 2 || user.getAddress().length() >= 100) {
             return false;
         }
-        String phone = "0" + String.valueOf(user.getPhone());
-        if (!phone.matches("06\\d{7,8}")) {
+        String phoneStr = String.valueOf(user.getPhone());
+        if (phoneStr.length() < 8 || phoneStr.length() > 10) {
             return false;
         }
         if(DateTimeUtil.convertLocalDateToInt(user.getBirthDate()) < 12) {
             return false;
         }
-        // now checking does username and email already exist
-        if(databaseUserDAO.doesUsernameExist(user.getUsername()) || databaseUserDAO.doesEmailExist(user.getEmail())) {
-           return false;
+
+        // now checking does username and email already exist if not editing
+        if(!editing) {
+            if(databaseUserDAO.doesUsernameExist(user.getUsername()) || databaseUserDAO.doesEmailExist(user.getEmail())) {
+                return false;
+            }
         }
+
+        // if editing i will only check does  username and email exist IF:
+        if(editing) {
+            User userBeforeEdit = databaseUserDAO.findOne(user.getId());
+
+            // if my username before edit isnt same as username now(if its same i wont search does it exist bcuz it will exist, and same for email.
+            if(!userBeforeEdit.getUsername().equals(user.getUsername())) {
+                if(databaseUserDAO.doesUsernameExist(user.getUsername())) {
+                    return false;
+                }
+            }
+            if(!userBeforeEdit.getEmail().equals(user.getEmail())) {
+                if(databaseUserDAO.doesEmailExist(user.getEmail())) {
+                    return false;
+                }
+            }
+        }
+
 
         return true;
     }

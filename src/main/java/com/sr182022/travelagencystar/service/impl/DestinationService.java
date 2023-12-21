@@ -51,4 +51,19 @@ public class DestinationService implements IDestinationService {
         }
         return imageValue;
     }
+
+    @Override
+    public boolean tryValidate(Destination destination) {
+        if(destination.getCity().length() <= 2 || destination.getCity().length() >= 20) {
+            return false;
+        }
+        if(destination.getCountry().length() <= 2 || destination.getCountry().length() >= 20) {
+            return false;
+        }
+        if(destination.getContinent().length() <= 2 || destination.getContinent().length() >= 20) {
+            return false;
+        }
+
+        return true;
+    }
 }

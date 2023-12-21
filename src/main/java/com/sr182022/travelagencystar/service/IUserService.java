@@ -14,5 +14,5 @@ public interface IUserService {
     void update(User editUser);
     void delete(int userId);
     void delete(int userId, boolean blocked);
-    boolean tryValidate(User user);
+    boolean tryValidate(User user, boolean editing);
 }
