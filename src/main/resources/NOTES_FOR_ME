@@ -1,3 +1,5 @@
-http://localhost:8080/profile/profile?id=2
+// for travel form validation handle:
 
-handle route redirecting from wishlist and orders on profile page.
+ vehicle and destination(dont allow vehicle that doesnt have that exact destination);
+ dates can't be in past;
+ price > 0;

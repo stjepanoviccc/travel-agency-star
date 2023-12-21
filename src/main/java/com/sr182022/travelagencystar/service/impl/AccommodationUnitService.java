@@ -60,4 +60,19 @@ public class AccommodationUnitService implements IAccommodationUnitService
         newAccommodationUnit.setHasTv(checkTv);
         newAccommodationUnit.setHasConditioner(checkConditioner);
     }
+
+    @Override
+    public boolean tryValidate(AccommodationUnit aUnit) {
+        if(aUnit.getName().length() < 2 || aUnit.getName().length() > 30) {
+            return false;
+        }
+        if(aUnit.getCapacity() < 0) {
+            return false;
+        }
+        if(aUnit.getDescription().length() < 2 || aUnit.getDescription().length() > 50) {
+            return false;
+        }
+
+        return true;
+    }
 }

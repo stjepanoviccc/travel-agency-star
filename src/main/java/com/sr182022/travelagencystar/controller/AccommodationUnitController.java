@@ -20,6 +20,15 @@ public class AccommodationUnitController {
         this.accommodationUnitService = accommodationUnitService;
     }
 
+    @GetMapping("accommodation-unit-validation")
+    public String getAccommodationUnitValidation() {
+        try {
+            return "/validationPages/accommodationUnitValidationInfo";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
     @PostMapping("addNewAccommodationUnit")
     public String addNewAccommodationUnit(HttpSession session, @ModelAttribute AccommodationUnit newAccommodationUnit,
                                           @RequestParam int destinationId,
@@ -33,8 +42,14 @@ public class AccommodationUnitController {
                 return ErrorController.permissionErrorReturn;
             }
             accommodationUnitService.setServicesChecking(newAccommodationUnit, checkWifi, checkBathroom, checkTv, checkConditioner);
+
+            boolean validation = accommodationUnitService.tryValidate(newAccommodationUnit);
+            if(!validation) {
+                return "redirect:/dashboard/accommodation-units/accommodation-unit-validation";
+            }
             accommodationUnitService.save(newAccommodationUnit, destinationId);
             return "redirect:/dashboard/accommodation-units";
+
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
         }
@@ -67,8 +82,14 @@ public class AccommodationUnitController {
                 return ErrorController.permissionErrorReturn;
             }
             accommodationUnitService.setServicesChecking(accommodationUnit, checkWifi, checkBathroom, checkTv, checkConditioner);
+
+            boolean validation = accommodationUnitService.tryValidate(accommodationUnit);
+            if(!validation) {
+                return "redirect:/dashboard/accommodation-units/accommodation-unit-validation";
+            }
             accommodationUnitService.update(accommodationUnit, destinationId);
             return "redirect:/dashboard/accommodation-units";
+
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
         }

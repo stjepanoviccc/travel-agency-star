@@ -51,4 +51,16 @@ public class VehicleService implements IVehicleService {
     public void delete(int vehicleId) {
         databaseVehicleDAO.delete(vehicleId);
     }
+
+    @Override
+    public boolean tryValidate(Vehicle vehicle) {
+        if(vehicle.getNumberOfSeats() < 0) {
+            return false;
+        }
+        if(vehicle.getDescription().length() < 2 || vehicle.getDescription().length() > 100) {
+            return false;
+        }
+
+        return true;
+    }
 }

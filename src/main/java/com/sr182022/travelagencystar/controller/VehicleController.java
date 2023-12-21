@@ -24,14 +24,29 @@ public class VehicleController {
         this.destinationService = destinationService;
     }
 
+    @GetMapping("vehicle-validation")
+    public String getVehicleValidationInfo() {
+        try {
+            return "/validationPages/vehicleValidationInfo";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
     @PostMapping("addNewVehicle")
     public String addNewVehicle(HttpSession session, @ModelAttribute Vehicle newVehicle, @RequestParam int finalDestinationId) {
         try {
             if(!CheckRoleUtil.RoleAdministrator(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+
+            boolean validation = vehicleService.tryValidate(newVehicle);
+            if(!validation) {
+                return "redirect:/dashboard/vehicles/vehicle-validation";
+            }
             vehicleService.save(newVehicle, finalDestinationId);
             return "redirect:/dashboard/vehicles";
+
         } catch (Exception ex) {
             return ErrorController.internalErrorReturn;
         }
@@ -62,8 +77,14 @@ public class VehicleController {
             if(!CheckRoleUtil.RoleAdministrator(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+
+            boolean validation = vehicleService.tryValidate(editVehicle);
+            if(!validation) {
+                return "redirect:/dashboard/vehicles/vehicle-validation";
+            }
             vehicleService.update(editVehicle, finalDestinationId);
             return "redirect:/dashboard/vehicles";
+
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
         }
