@@ -1,9 +1,13 @@
 package com.sr182022.travelagencystar.service.impl;
 
 import com.sr182022.travelagencystar.DAO.ITravelDAO;
+import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.Travel;
 import com.sr182022.travelagencystar.model.TravelCategory;
+import com.sr182022.travelagencystar.model.Vehicle;
+import com.sr182022.travelagencystar.service.IAccommodationUnitService;
 import com.sr182022.travelagencystar.service.ITravelService;
+import com.sr182022.travelagencystar.service.IVehicleService;
 import com.sr182022.travelagencystar.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +21,15 @@ import java.util.stream.Collectors;
 public class TravelService implements ITravelService {
 
     private final ITravelDAO databaseTravelDAO;
+    private final IVehicleService vehicleService;
+    private final IAccommodationUnitService accommodationUnitService;
 
     @Autowired
-    public TravelService(ITravelDAO databaseTravelDAO) { this.databaseTravelDAO = databaseTravelDAO; }
+    public TravelService(ITravelDAO databaseTravelDAO, IVehicleService vehicleService, IAccommodationUnitService accommodationUnitService) {
+        this.databaseTravelDAO = databaseTravelDAO;
+        this.vehicleService = vehicleService;
+        this.accommodationUnitService = accommodationUnitService;
+    }
 
     @Override
     public List<Travel> findAll() {
@@ -75,5 +85,28 @@ public class TravelService implements ITravelService {
 
         travels.remove(travelToRemove);
         return travels;
+    }
+
+    @Override
+    public boolean tryValidate(Travel travel, int destinationId, int vehicleId, int accUnitId) {
+        if(travel.getPrice() < 0) {
+            return false;
+        }
+
+        int daysBetween = (int) DateTimeUtil.calculateDaysBetween(travel.getStartDate(), travel.getEndDate());
+        if(daysBetween < 0) {
+            return false;
+        }
+
+        if(DateTimeUtil.isDateInPast(travel.getStartDate()) || DateTimeUtil.isDateInPast(travel.getEndDate())) {
+           return false;
+        }
+
+        Vehicle vehicle = vehicleService.findOne(vehicleId);
+        AccommodationUnit accUnit = accommodationUnitService.findOne(accUnitId);
+        if(destinationId != vehicle.getFinalDestination().getId() || destinationId != accUnit.getDestination().getId()) {
+            return false;
+        }
+        return true;
     }
 }

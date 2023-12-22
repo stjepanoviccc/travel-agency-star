@@ -1,5 +1,7 @@
 package com.sr182022.travelagencystar.controller;
 
+import com.sr182022.travelagencystar.model.AccommodationUnit;
+import com.sr182022.travelagencystar.model.Destination;
 import com.sr182022.travelagencystar.service.*;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -94,8 +98,10 @@ public class DashboardController {
             }
             model.addAttribute("dashboardTravelsContent", travelService.findAll());
             model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
-            model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());
-            model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll());
+            // because im working with MODAL i must provide only first so i can filter out later.... same for acc units
+            List<Destination> destinations = destinationService.findAll();
+            model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll(destinations.get(0).getId()));
+            model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll(destinations.get(0).getId()));
             model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
             return "dashboard/travels";
         } catch (Exception e) {

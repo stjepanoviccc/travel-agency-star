@@ -1,6 +1,7 @@
 import * as navFunctions from "./nav.js";
 import * as dashboardFunctions from "./dashboard.js";
 import * as profileFunctions from "./profile.js";
+import * as travelFunctions from "./travel.js";
 
 $(document).ready(() => {
 
@@ -20,5 +21,22 @@ $(document).ready(() => {
 
     // profile
     profileFunctions.linksInProfilePageActiveState();
+
+    // vehicles filtering
+    $('#editTravelDestination').on('change', () => {
+        setTimeout(() => {
+            const id = $('#editTravelDestination').val();
+            travelFunctions.filterVehicles(id, 'edit');
+            travelFunctions.filterUnits(id, 'edit');
+        }, 50)
+    });
+
+    $('#addNewTravelDestination').on('change', () => {
+        setTimeout(() => {
+            const id = $('#addNewTravelDestination').val();
+            travelFunctions.filterVehicles(id, 'add');
+            travelFunctions.filterUnits(id, 'add');
+        }, 150);
+    })
 
 });

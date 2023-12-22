@@ -1,16 +1,20 @@
 package com.sr182022.travelagencystar.controller;
 
+import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.Travel;
+import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.service.IAccommodationUnitService;
 import com.sr182022.travelagencystar.service.IDestinationService;
 import com.sr182022.travelagencystar.service.ITravelService;
 import com.sr182022.travelagencystar.service.IVehicleService;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,6 +31,15 @@ public class TravelController {
         this.destinationService = destinationService;
         this.vehicleService = vehicleService;
         this.accommodationUnitService = accommodationUnitService;
+    }
+
+    @GetMapping("/dashboard/travels/travel-validation")
+    public String getTravelValidationInfo() {
+        try {
+            return "/validationPages/travelValidationInfo";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
     }
 
     @GetMapping("/travel")
@@ -49,6 +62,20 @@ public class TravelController {
         }
     }
 
+    @GetMapping(value = "/dashboard/travels/filterVehiclesByDestination", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Vehicle> filterVehiclesByDestination(@RequestParam int destinationId) {
+        List<Vehicle> filteredVehicles = vehicleService.findAll(destinationId);
+        return filteredVehicles;
+    }
+
+    @GetMapping(value = "/dashboard/travels/filterAccommodationUnitsByDestination", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<AccommodationUnit> filterAccommodationUnitsByDestination(@RequestParam int destinationId) {
+        List<AccommodationUnit> filteredUnits = accommodationUnitService.findAll(destinationId);
+        return filteredUnits;
+    }
+
     @PostMapping("/dashboard/travels/addNewTravel")
     public String addNewDestination(HttpSession session, @ModelAttribute Travel newTravel,
                                     @RequestParam int destinationId,
@@ -58,8 +85,10 @@ public class TravelController {
             if(!CheckRoleUtil.RoleOrganizer(session)) {
                 return ErrorController.permissionErrorReturn;
             }
-            if(newTravel.getStartDate() == null || newTravel.getEndDate() == null) {
-                // handle here
+
+            boolean validation = travelService.tryValidate(newTravel, destinationId, vehicleId, accommodationUnitId);
+            if(!validation) {
+                return "redirect:/dashboard/travels/travel-validation";
             }
             newTravel.setNumberOfNights(travelService.setNumberOfNights(newTravel.getStartDate(), newTravel.getEndDate()));
             travelService.save(newTravel, destinationId, accommodationUnitId, vehicleId);
@@ -76,14 +105,16 @@ public class TravelController {
             if(!CheckRoleUtil.RoleOrganizer(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+
             Travel travel = travelService.findOne(travelId);
             if(travel == null) {
                 return ErrorController.routeErrorReturn;
             }
-            model.addAttribute("travel", travelService.findOne(travelId));
+
+            model.addAttribute("travel", travelService.findOne(travel.getId()));
             model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
-            model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll());
-            model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll());
+            model.addAttribute("vehiclesForSelectMenu", vehicleService.findAll(travel.getDestination().getId()));
+            model.addAttribute("accommodationUnitsForSelectMenu", accommodationUnitService.findAll(travel.getDestination().getId()));
             model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
             return "editPages/editTravelPage";
         } catch (Exception e) {
@@ -97,9 +128,15 @@ public class TravelController {
             if(!CheckRoleUtil.RoleOrganizer(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+
+            boolean validation = travelService.tryValidate(editTravel, destinationId, vehicleId, accommodationUnitId);
+            if(!validation) {
+                return "redirect:/dashboard/travels/travel-validation";
+            }
             editTravel.setNumberOfNights(travelService.setNumberOfNights(editTravel.getStartDate(), editTravel.getEndDate()));
             travelService.update(editTravel, destinationId, accommodationUnitId, vehicleId);
             return "redirect:/dashboard/travels";
+
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
         }

@@ -7,6 +7,7 @@ import java.util.List;
 public interface IAccommodationUnitService {
 
     List<AccommodationUnit> findAll();
+    List<AccommodationUnit> findAll(int destinationId);
     List<String> findAllAccommodationTypes();
     AccommodationUnit findOne(int accommodationUnitId);
     void save(AccommodationUnit newAccommodationUnit, int destinationId);

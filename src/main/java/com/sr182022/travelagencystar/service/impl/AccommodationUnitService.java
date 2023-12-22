@@ -27,6 +27,11 @@ public class AccommodationUnitService implements IAccommodationUnitService
     }
 
     @Override
+    public List<AccommodationUnit> findAll(int destinationId) {
+        return databaseAccommodationUnitDAO.findAll(destinationId);
+    }
+
+    @Override
     public List<String> findAllAccommodationTypes() {
         return Arrays.stream(AccommodationType.values())
                 .map(Enum::name)

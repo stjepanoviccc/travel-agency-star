@@ -16,4 +16,6 @@ public interface ITravelService {
     int setNumberOfNights(LocalDate startDate, LocalDate endDate);
     // removeSelectedOne is used when i get all travels in details page to remove already existing one which i showed on top of page.
     List<Travel> removeSelectedOne(int selectedTravelId, List<Travel> travels);
+    boolean tryValidate(Travel travel, int destinationId, int vehicleId, int accUnitId);
+
 }

@@ -46,8 +46,17 @@ public class DateTimeUtil {
     public static long calculateDaysBetween(LocalDate startDate, LocalDate endDate) {
         if (startDate == null || endDate == null) {
             // will add custom exception
-            throw new IllegalArgumentException("Both start date and end date must be provided!");
+            return -1;
         }
         return ChronoUnit.DAYS.between(startDate, endDate);
+    }
+
+    public static boolean isDateInPast(LocalDate date) {
+        if (date == null) {
+            return false;
+        }
+
+        LocalDate currentDate = LocalDate.now();
+        return date.isBefore(currentDate);
     }
 }

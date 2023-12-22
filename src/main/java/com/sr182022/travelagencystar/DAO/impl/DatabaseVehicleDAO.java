@@ -1,7 +1,6 @@
 package com.sr182022.travelagencystar.DAO.impl;
 
 import com.sr182022.travelagencystar.DAO.IVehicleDAO;
-import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.model.VehicleType;
 import com.sr182022.travelagencystar.service.IDestinationService;
@@ -63,6 +62,22 @@ public class DatabaseVehicleDAO implements IVehicleDAO {
         VehicleRowCallBackHandler rowCallBackHandler = new VehicleRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler);
         return rowCallBackHandler.getVehicles();
+    }
+
+    @Override
+    public List<Vehicle> findAll(int destinationId) {
+        String sql =
+                "SELECT v.id_vehicle, v.number_of_seats, v.id_destination, v.vehicle_description, v.vehicle_type " +
+                        "FROM vehicle v WHERE v.id_destination = ? ORDER BY v.id_vehicle";
+
+        VehicleRowCallBackHandler rowCallBackHandler = new VehicleRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, destinationId);
+        List<Vehicle> vehiclesList = rowCallBackHandler.getVehicles();
+        if (!vehiclesList.isEmpty()) {
+            return rowCallBackHandler.getVehicles();
+        } else {
+            return null;
+        }
     }
 
     @Override

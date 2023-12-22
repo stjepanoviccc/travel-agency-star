@@ -4,6 +4,7 @@ import com.sr182022.travelagencystar.DAO.IAccommodationUnitDAO;
 import com.sr182022.travelagencystar.model.AccommodationType;
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.Destination;
+import com.sr182022.travelagencystar.model.Vehicle;
 import com.sr182022.travelagencystar.service.IDestinationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,23 @@ public class DatabaseAccommodationUnitDAO implements IAccommodationUnitDAO {
         AccommodationUnitRowCallBackHandler rowCallBackHandler = new AccommodationUnitRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler);
         return rowCallBackHandler.getAccommodationUnits();
+    }
+
+    @Override
+    public List<AccommodationUnit> findAll(int idDestination) {
+        String sql =
+                "SELECT au.id_accommodation_unit, au.accommodation_unit_name, au.accommodation_unit_capacity, au.accommodation_type, " +
+                        "au.wifi, au.bathroom, au.tv, au.conditioner, au.id_destination, au.accommodation_unit_description " +
+                        "FROM accommodation_unit au WHERE au.id_destination = ? ORDER BY au.id_accommodation_unit";
+
+        AccommodationUnitRowCallBackHandler rowCallBackHandler = new AccommodationUnitRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, idDestination);
+        List<AccommodationUnit> accUnitsList = rowCallBackHandler.getAccommodationUnits();
+        if (!accUnitsList.isEmpty()) {
+            return rowCallBackHandler.getAccommodationUnits();
+        } else {
+            return null;
+        }
     }
 
     @Override

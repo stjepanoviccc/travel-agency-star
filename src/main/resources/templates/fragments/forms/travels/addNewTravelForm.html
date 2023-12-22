@@ -1,4 +1,4 @@
-<form th:fragment="addNewTravelForm" name="addNewTravelForm" method="post" action="/dashboard/travels/addNewTravel">
+<form th:fragment="addNewTravelForm" id="addNewTravelForm" name="addNewTravelForm" method="post" action="/dashboard/travels/addNewTravel">
     <label for="addNewTravelDestination" class="block font-medium text-gray-700" th:text="#{textDestination}"></label>
     <select id="addNewTravelDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full">
         <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"></option>

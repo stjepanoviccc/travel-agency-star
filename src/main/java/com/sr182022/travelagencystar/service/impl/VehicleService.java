@@ -27,6 +27,11 @@ public class VehicleService implements IVehicleService {
     }
 
     @Override
+    public List<Vehicle> findAll(int destinationId) {
+        return databaseVehicleDAO.findAll(destinationId);
+    }
+
+    @Override
     public Vehicle findOne(int vehicleId) {
         return databaseVehicleDAO.findOne(vehicleId);
     }

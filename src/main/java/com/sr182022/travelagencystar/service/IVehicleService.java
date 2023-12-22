@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IVehicleService {
     List<Vehicle> findAll();
+    List<Vehicle> findAll(int destinationId);
     Vehicle findOne(int vehicleId);
     List<String> findAllVehicleTypes();
     void save(Vehicle newVehicle, int destinationId);
