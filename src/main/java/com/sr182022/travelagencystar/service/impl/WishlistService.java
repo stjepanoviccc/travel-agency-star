@@ -34,8 +34,11 @@ public class WishlistService implements IWishlistService {
     @Override
     public boolean checkExistence(int userId, int travelId) {
         List<WishlistItem> wItems = findAll(userId);
+        if(wItems == null) {
+            return false;
+        }
         for(WishlistItem item : wItems) {
-           if(item.getUser().getId() + item.getTravel().getId() == userId+travelId) {
+           if(item.getUser().getId() == userId && item.getTravel().getId() == travelId) {
                return true;
            }
         }

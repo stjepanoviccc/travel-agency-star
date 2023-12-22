@@ -40,12 +40,11 @@ public class DatabaseWishlistDAO implements IWishlistDAO {
             int index = 1;
             int id_user = resultSet.getInt(index++);
             int id_travel = resultSet.getInt(index++);
-
-            int key = id_user + id_travel;
-            WishlistItem wishlistItem = wishlist.get(key);
+            int id_wishlist = resultSet.getInt(index++);
+            WishlistItem wishlistItem = wishlist.get(id_wishlist);
             if(wishlistItem == null) {
-                wishlistItem = new WishlistItem(userService.findOne(id_user), travelService.findOne(id_travel));
-                wishlist.put(key, wishlistItem);
+                wishlistItem = new WishlistItem(userService.findOne(id_user), travelService.findOne(id_travel), id_wishlist);
+                wishlist.put(id_wishlist, wishlistItem);
             }
         }
 
@@ -58,8 +57,8 @@ public class DatabaseWishlistDAO implements IWishlistDAO {
     @Override
     public List<WishlistItem> findAll(int userId) {
         String sql =
-                "SELECT w.id_user, w.id_travel FROM wishlist_user_travel w " +
-                        "WHERE w.id_user = ? ORDER BY w.id_user, w.id_travel" ;
+                "SELECT w.id_user, w.id_travel, w.id_wishlist FROM wishlist_user_travel w " +
+                        "WHERE w.id_user = ? ORDER BY w.id_user, w.id_travel, w.id_wishlist" ;
 
         WishlistRowCallBackHandler rowCallBackHandler = new WishlistRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, userId);
