@@ -8,17 +8,28 @@
         ></option>
     </select>
     <label for="editTravelVehicle" class="block font-medium text-gray-700 mt-4" th:text="#{textVehicle}"></label>
+    <!--
     <select id="editTravelVehicle" name="vehicleId" class="mt-1 p-2 border rounded-md w-full" th:value="${travel?.vehicle.id}">
         <option th:each="vehicle : ${vehiclesForSelectMenu}" th:value="${vehicle.id}" th:text="${vehicle}"
                 th:selected="${vehicle.id == travel?.vehicle.id}"
         ></option>
+    </select> -->
+
+    <select id="editTravelVehicle" name="vehicleId" class="mt-1 p-2 border rounded-md w-full"
+            th:value="${travel?.vehicle != null} ? ${travel.vehicle.id} : ''">
+        <option th:each="vehicle : ${vehiclesForSelectMenu}" th:value="${vehicle.id}" th:text="${vehicle}"
+                th:selected="${travel?.vehicle != null} ? ${vehicle.id == travel.vehicle.id} : false">
+        </option>
     </select>
     <label for="editTravelAccommodationUnit" class="block font-medium text-gray-700 mt-4" th:text="#{textAccommodationUnit}"></label>
-    <select id="editTravelAccommodationUnit" name="accommodationUnitId" class="mt-1 p-2 border rounded-md w-full" th:value="${travel?.accommodationUnit.id}">
-        <option th:each="accommodationUnit : ${accommodationUnitsForSelectMenu}" th:value="${accommodationUnit.id}" th:text="${accommodationUnit}"
-                th:selected="${accommodationUnit.id == travel?.accommodationUnit.id}"
-        ></option>
+    <select id="editTravelAccommodationUnit" name="accommodationUnitId" class="mt-1 p-2 border rounded-md w-full"
+            th:value="${travel?.accommodationUnit != null} ? ${travel.accommodationUnit.id} : ''">
+        <option th:each="accommodationUnit : ${accommodationUnitsForSelectMenu}"
+                th:value="${accommodationUnit.id}" th:text="${accommodationUnit}"
+                th:selected="${travel?.accommodationUnit != null} ? ${accommodationUnit.id == travel.accommodationUnit.id} : false">
+        </option>
     </select>
+
     <label for="editTravelStartDate" class="block font-medium text-gray-700 mt-4" th:text="#{textStartDate}"></label>
     <input type="date" id="editTravelStartDate" name="startDate" th:value="${travel?.startDate}" class="mt-1 p-2 border rounded-md w-full" />
     <label for="editTravelEndDate" class="block font-medium text-gray-700 mt-4" th:text="#{textEndDate}"></label>

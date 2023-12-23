@@ -85,7 +85,6 @@ public class TravelController {
             if(!CheckRoleUtil.RoleOrganizer(session)) {
                 return ErrorController.permissionErrorReturn;
             }
-
             boolean validation = travelService.tryValidate(newTravel, destinationId, vehicleId, accommodationUnitId);
             if(!validation) {
                 return "redirect:/dashboard/travels/travel-validation";
@@ -123,16 +122,21 @@ public class TravelController {
     }
 
     @PostMapping("/dashboard/travels/editTravelPost")
-    public String editTravelPost(HttpSession session, @ModelAttribute Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId) {
+    public String editTravelPost(HttpSession session, @ModelAttribute Travel editTravel, int destinationId, Integer accommodationUnitId, Integer vehicleId) {
         try {
             if(!CheckRoleUtil.RoleOrganizer(session)) {
                 return ErrorController.permissionErrorReturn;
+            }
+
+            if(accommodationUnitId == null || vehicleId == null) {
+                return "redirect:/dashboard/travels/travel-validation";
             }
 
             boolean validation = travelService.tryValidate(editTravel, destinationId, vehicleId, accommodationUnitId);
             if(!validation) {
                 return "redirect:/dashboard/travels/travel-validation";
             }
+
             editTravel.setNumberOfNights(travelService.setNumberOfNights(editTravel.getStartDate(), editTravel.getEndDate()));
             travelService.update(editTravel, destinationId, accommodationUnitId, vehicleId);
             return "redirect:/dashboard/travels";

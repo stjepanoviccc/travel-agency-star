@@ -34,8 +34,13 @@
                     </a>
                     <div class="px-6 py-4">
                         <a th:href="'/travel?id=' + ${travel.id}" class="font-bold text-xl" th:text="${travel.destination.city}"></a>
-                        <p class="text-gray-700 text-base pt-2" th:text="#{textAccommodationUnit} + ': ' + ${travel.accommodationUnit.accommodationType}"></p>
-                        <p class="text-gray-700 text-base" th:text="#{textVehicle} + ': ' + ${travel.vehicle.vehicleType}"></p>
+                        <p class="text-gray-700 text-base pt-2" th:if="${travel.accommodationUnit != null}"
+                           th:text="#{textAccommodationUnit} + ': ' + ${travel.accommodationUnit.accommodationType}"></p>
+                        <p class="text-gray-700 text-base pt-2" th:if="${travel.accommodationUnit == null}"
+                           th:text="#{textAccommodationUnit} + ': ' + #{textNotChosenYet}"></p>
+                        <p class="text-gray-">
+                        <p class="text-gray-700 text-base" th:if="${travel.vehicle != null}" th:text="#{textVehicle} + ': ' + ${travel.vehicle.vehicleType}"></p>
+                        <p class="text-gray-700 text-base" th:if="${travel.vehicle == null}" th:text="#{textVehicle} + ': ' + #{textNotChosenYet}"></p>
                         <p class="text-gray-700 text-base" th:text="#{textCategory} + ': ' + ${travel.travelCategory}"></p>
                         <p class="text-gray-700 text-xl mt-1 font-bold" th:text="${#temporals.format(travel.startDate, 'dd.MM.yyyy')} + ' ---> '
                          + ${#temporals.format(travel.endDate, 'dd.MM.yyyy')}"></p>

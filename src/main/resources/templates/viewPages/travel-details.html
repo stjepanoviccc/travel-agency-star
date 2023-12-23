@@ -16,8 +16,14 @@
     <div class="flex flex-col lg:flex-row gap-x-24 mt-14 border-4 shadow-2xl p-4">
         <div class="w-full text-center">
             <p class="block font-medium text-xl" th:text="#{textDestination} + ': ' + ${travel?.destination}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${travel?.vehicle}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${travel?.accommodationUnit.name}"></p>
+            <p th:if="${travel.vehicle != null}"
+                    class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${travel?.vehicle}"></p>
+            <p th:if="${travel.vehicle == null}"
+                class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + #{textNotChosenYet}"></p>
+            <p th:if="${travel.accommodationUnit == null}"
+                    class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + #{textNotChosenYet}"></p>
+            <p th:if="${travel.accommodationUnit != null}"
+                    class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${travel?.accommodationUnit.name}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textStartDate} + ': ' + ${#temporals.format(travel.startDate, 'dd.MM.yyyy')}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${#temporals.format(travel.endDate, 'dd.MM.yyyy')}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${travel?.numberOfNights}"></p>

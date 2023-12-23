@@ -1,5 +1,5 @@
 <tr th:fragment="tableDashboardUser" th:each="user : ${dashboardUsersContent}" class="border-b dark:border-neutral-500">
-    <td class="whitespace-nowrap px-6 py-4 font-medium" th:text="${user.id}"></td>
+    <td class="whitespace-nowrap px-6 py-4 font-medium" th:text="${userStat.count}"></td>
     <td class="whitespace-nowrap px-6 py-4" th:text="${user.name}"></td>
     <td class="whitespace-nowrap px-6 py-4" th:text="${user.surname}"></td>
     <td class="whitespace-nowrap px-6 py-4" th:text="${user.username}"></td>

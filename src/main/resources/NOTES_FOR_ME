@@ -1,5 +1,0 @@
-// for travel form validation handle:
-
- vehicle and destination(dont allow vehicle that doesnt have that exact destination);
- dates can't be in past;
- price > 0;
