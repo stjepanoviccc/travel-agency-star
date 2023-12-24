@@ -121,6 +121,22 @@ public class UserController {
             if(!CheckRoleUtil.RoleAdministrator(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+            // deactivating
+            userService.delete(userId, userIsBlocked);
+
+            return "redirect:/dashboard";
+        } catch (Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
+    @PostMapping("/reactivateUser")
+    public String reactivateUser(HttpSession session, @RequestParam int userId, @RequestParam boolean userIsBlocked) {
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            // reactivating
             userService.delete(userId, userIsBlocked);
 
             return "redirect:/dashboard";

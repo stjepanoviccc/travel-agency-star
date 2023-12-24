@@ -202,11 +202,11 @@ public class DatabaseUserDAO implements IUserDao {
         jdbcTemplate.update(sql, userId);
     }
 
-    // blocking user
+    // blocking / reactivating user
     @Transactional
     @Override
     public void delete(int userId, boolean blocked) {
-        String sql = "UPDATE user u SET u.blocked = 1  WHERE u.id_user = ?";
-        jdbcTemplate.update(sql, userId);
+        String sql = "UPDATE user u SET u.blocked = ? WHERE u.id_user = ?";
+        jdbcTemplate.update(sql, !blocked, userId);
     }
 }

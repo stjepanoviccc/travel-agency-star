@@ -15,8 +15,9 @@ public interface IUserDao {
     void update(User editUser);
     // physical delete
     void delete(int userId);
-    // block
+    // block and reactivate
     void delete(int userId, boolean blocked);
     boolean doesEmailExist(String email);
     boolean doesUsernameExist(String username);
+
 }

@@ -22,7 +22,7 @@ public class WishlistController {
     public String addToWishlist(HttpSession session, @RequestParam int idUser, @RequestParam int idTravel) {
         try {
             // I WILL FIX THIS, I CANT RETURN PERMISSION ERROR ON THIS ALSO I MUST FIX THAT CANT BE 2 OF SAME USER TRAVEL KEYS
-            if(!CheckRoleUtil.UserIsNull(session)) {
+            if(!CheckRoleUtil.RolePassenger(session)) {
                 return ErrorController.permissionErrorReturn;
             }
             boolean doesExist = wishlistService.checkExistence(idUser, idTravel);
