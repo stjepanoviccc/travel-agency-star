@@ -8,7 +8,9 @@ import com.sr182022.travelagencystar.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
@@ -35,6 +37,28 @@ public class UserService implements IUserService {
 
     @Override
     public User findOne(String username) { return databaseUserDAO.findOne(username); }
+
+    @Override
+    public List<User> findByUsername(String username) {
+        return databaseUserDAO.findByUsername(username);
+    }
+
+    @Override
+    public List<User> findByRole(String role) {
+        return databaseUserDAO.findByRole(role);
+    }
+
+    @Override
+    public List<User> findByUsernameAndRole(String username, String role) {
+        return databaseUserDAO.findByUsernameAndRole(username, role);
+    }
+
+    @Override
+    public List<String> findAllRoles() {
+        return Arrays.stream(Role.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void save(User newUser) {

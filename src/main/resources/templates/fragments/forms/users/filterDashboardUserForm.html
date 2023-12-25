@@ -1,0 +1,18 @@
+<form th:fragment="filterDashboardUserForm" id="filterDashboardUserForm" method="get" action="/filterDashboardUser">
+    <label for="filterDashboardUsersByUsername" class="block font-medium text-gray-700 mt-4" th:text="#{textUsername} + ': '"></label>
+    <input class="mt-1 p-2 border rounded-md w-64" type="text" id="filterDashboardUsersByUsername" name="username"/>
+    <label for="filterDashboardUsersByRole" class="block font-medium text-gray-700 mt-4" th:text="#{textRole} + ': '"></label>
+    <select id="filterDashboardUsersByRole" name="role" class="border-2 p-2 rounded-md">
+        <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role}"></option>
+    </select>
+    <br>
+    <button type="submit" class="gap-x-4 mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="filterDashboardUserSubmitButton"
+            th:text="#{textApplyFilters}"></button>
+</form>
+
+<form th:fragment="clearFilterForm" id="clearFilterForm" method="get" action="/filterDashboardUser">
+    <input type="hidden" name="clearFilter" value="true"/>
+    <br>
+    <button type="submit" class="gap-x-4 mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" id="clearFilterButton"
+            th:text="#{textClearFilters}"></button>
+</form>

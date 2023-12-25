@@ -1,13 +1,19 @@
 package com.sr182022.travelagencystar.controller;
 
+import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.IUserService;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -143,5 +149,27 @@ public class UserController {
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
         }
+    }
+
+    @GetMapping(value = "/filterDashboardUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<User> filterDashboardUsers(@RequestParam(required = false) String username, @RequestParam(required = false) String role,
+                                           @RequestParam(required = false) boolean clearFilter) {
+
+        if((clearFilter == true) || (StringUtils.isEmpty(username) && StringUtils.isEmpty(role))) {
+            return userService.findAll();
+        }
+        if(StringUtils.isEmpty(username) && role.trim().length() > 0) {
+            return userService.findByRole(role);
+        }
+        if(username.trim().length() > 0 && StringUtils.isEmpty(role)) {
+            return userService.findByUsername(username);
+        }
+        if(username.trim().length() > 0 && role.trim().length() > 0) {
+            return userService.findByUsernameAndRole(username, role);
+        }
+
+        // just to cancel error show(one of things from up must happen).
+        return userService.findAll();
     }
 }

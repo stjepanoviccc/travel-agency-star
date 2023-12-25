@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -40,6 +41,10 @@ public class DashboardController {
             if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+            // ask this
+            List<String> allRoles = userService.findAllRoles();
+            allRoles.add(0, "");
+            model.addAttribute("allRoles", allRoles);
             model.addAttribute("dashboardUsersContent", userService.findAll());
             return "dashboard";
         } catch(Exception e) {

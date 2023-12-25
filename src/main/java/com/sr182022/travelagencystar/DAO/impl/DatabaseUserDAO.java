@@ -117,6 +117,42 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
+    public List<User> findByUsername(String username) {
+        String sql =
+                "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
+                        "u.user_role, u.blocked " +
+                        "FROM user u WHERE u.username = ? ORDER BY u.id_user";
+
+        UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, username);
+        return rowCallBackHandler.getUsers();
+    }
+
+    @Override
+    public List<User> findByRole(String role) {
+        String sql =
+                "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
+                        "u.user_role, u.blocked " +
+                        "FROM user u WHERE u.user_role = ? ORDER BY u.id_user";
+
+        UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, role);
+        return rowCallBackHandler.getUsers();
+    }
+
+    @Override
+    public List<User> findByUsernameAndRole(String username, String role) {
+        String sql =
+                "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
+                        "u.user_role, u.blocked " +
+                        "FROM user u WHERE u.username = ? and u.user_role = ? ORDER BY u.id_user";
+
+        UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, username, role);
+        return rowCallBackHandler.getUsers();
+    }
+
+    @Override
     public boolean doesUsernameExist(String username) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
