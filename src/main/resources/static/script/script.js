@@ -42,20 +42,40 @@ $(document).ready(() => {
 
     // users filtering
     $('#applyDashboardUserFilterSubmitButton').on('click', event => {
+        event.preventDefault();
+
         const username = $('#filterDashboardUsersByUsername').val();
         const role = $('#filterDashboardUsersByRole').val();
+        const sortOrder = $('#userDashboardSortOrder').val();
 
+        usersFunctions.filterDashboardUser(username, role, sortOrder);
+    });
+
+    $('#sortDashboardUserButton').on('click', event => {
         event.preventDefault();
-        usersFunctions.filterDashboardUser(username, role);
+
+        const username = $('#filterDashboardUsersByUsername').val();
+        const role = $('#filterDashboardUsersByRole').val();
+        let sortOrder = $('#userDashboardSortOrder').val();
+
+        if(sortOrder == "asc") {
+            sortOrder="desc";
+        } else {
+            sortOrder = "asc";
+        }
+
+        $('#userDashboardSortOrder').val(sortOrder);
+        usersFunctions.filterDashboardUser(username, role, sortOrder);
     });
 
     $('#clearDashboardUserFilterButton').on('click', event => {
+        event.preventDefault();
+
         const clearValues = "";
         $('#filterDashboardUsersByUsername').val(clearValues);
         $('#filterDashboardUsersByRole').prop('selectedIndex', 0);
 
-        event.preventDefault();
-        usersFunctions.filterDashboardUser(clearValues, clearValues);
+        usersFunctions.filterDashboardUser(clearValues, clearValues, "asc");
     })
 
 });

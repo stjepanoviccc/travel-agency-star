@@ -7,12 +7,13 @@ import java.util.List;
 
 public interface IUserService {
     List<User> findAll();
-    List<User> findAll(Role role);
+    List<User> findAll(String sortOrder);
+    // List<User> findAll(Role role);
     User findOne(int userId);
     User findOne(String username);
-    List<User> findByUsername(String username);
-    List<User> findByRole(String role);
-    List<User> findByUsernameAndRole(String username, String role);
+    List<User> findByUsername(String username, String sortOrder);
+    List<User> findByRole(String role, String sortOrder);
+    List<User> findByUsernameAndRole(String username, String role, String sortOrder);
     List<String> findAllRoles();
     void save(User newUser);
     void update(User editUser);

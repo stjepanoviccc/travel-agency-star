@@ -71,6 +71,19 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
+    public List<User> findAll(String sortOrder) {
+        String sql =
+                "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
+                        "u.user_role, u.blocked " +
+                        "FROM user u ORDER BY u.id_user " + sortOrder;
+
+        UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler);
+        return rowCallBackHandler.getUsers();
+    }
+
+    /*
+    @Override
     public List<User> findAll(Role role) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
@@ -80,7 +93,7 @@ public class DatabaseUserDAO implements IUserDao {
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, role);
         return rowCallBackHandler.getUsers();
-    }
+    } */
 
     @Override
     public User findOne(int userId) {
@@ -117,11 +130,11 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
-    public List<User> findByUsername(String username) {
+    public List<User> findByUsername(String username, String sortOrder) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role, u.blocked " +
-                        "FROM user u WHERE u.username = ? ORDER BY u.id_user";
+                        "FROM user u WHERE LOWER(u.username) LIKE LOWER(CONCAT(?, '%')) ORDER BY u.id_user " + sortOrder;
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, username);
@@ -129,11 +142,11 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
-    public List<User> findByRole(String role) {
+    public List<User> findByRole(String role, String sortOrder) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role, u.blocked " +
-                        "FROM user u WHERE u.user_role = ? ORDER BY u.id_user";
+                        "FROM user u WHERE u.user_role = ? ORDER BY u.id_user " + sortOrder;
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, role);
@@ -141,11 +154,11 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
-    public List<User> findByUsernameAndRole(String username, String role) {
+    public List<User> findByUsernameAndRole(String username, String role, String sortOrder) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role, u.blocked " +
-                        "FROM user u WHERE u.username = ? and u.user_role = ? ORDER BY u.id_user";
+                        "FROM user u WHERE LOWER(u.username) LIKE LOWER(CONCAT(?, '%')) and u.user_role = ? ORDER BY u.id_user " + sortOrder;
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, username, role);

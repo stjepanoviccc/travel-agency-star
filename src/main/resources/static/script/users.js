@@ -1,10 +1,10 @@
 import {formatDate} from "./date.js";
 
-export const filterDashboardUser = (username, role)  => {
+export const filterDashboardUser = (username, role, sortOrder)  => {
     $.ajax({
         url: '/filterDashboardUser',
         method: 'GET',
-        data: { username: username, role: role },
+        data: { username: username, role: role, sortOrder: sortOrder },
         dataType: 'json',
         success: data => {
             updateUsersOnFilter(data);

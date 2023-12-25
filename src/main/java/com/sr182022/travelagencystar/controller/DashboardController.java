@@ -46,6 +46,7 @@ public class DashboardController {
             allRoles.add(0, "");
             model.addAttribute("allRoles", allRoles);
             model.addAttribute("dashboardUsersContent", userService.findAll());
+            model.addAttribute("sortOrder", "asc");
             return "dashboard";
         } catch(Exception e) {
             return ErrorController.internalErrorReturn;

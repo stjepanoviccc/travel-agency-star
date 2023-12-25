@@ -28,7 +28,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> findAll(Role role) { return databaseUserDAO.findAll(role); }
+    public List<User> findAll(String sortOrder) {
+        return databaseUserDAO.findAll(sortOrder);
+    }
+
+  /*  @Override
+    public List<User> findAll(Role role) { return databaseUserDAO.findAll(role); } */
 
     @Override
     public User findOne(int userId) {
@@ -39,18 +44,18 @@ public class UserService implements IUserService {
     public User findOne(String username) { return databaseUserDAO.findOne(username); }
 
     @Override
-    public List<User> findByUsername(String username) {
-        return databaseUserDAO.findByUsername(username);
+    public List<User> findByUsername(String username, String sortOrder) {
+        return databaseUserDAO.findByUsername(username, sortOrder);
     }
 
     @Override
-    public List<User> findByRole(String role) {
-        return databaseUserDAO.findByRole(role);
+    public List<User> findByRole(String role, String sortOrder) {
+        return databaseUserDAO.findByRole(role, sortOrder);
     }
 
     @Override
-    public List<User> findByUsernameAndRole(String username, String role) {
-        return databaseUserDAO.findByUsernameAndRole(username, role);
+    public List<User> findByUsernameAndRole(String username, String role, String sortOrder) {
+        return databaseUserDAO.findByUsernameAndRole(username, role, sortOrder);
     }
 
     @Override
