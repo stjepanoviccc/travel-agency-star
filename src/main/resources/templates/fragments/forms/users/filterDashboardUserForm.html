@@ -6,13 +6,13 @@
         <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role}"></option>
     </select>
     <br>
-    <button type="submit" class="gap-x-4 mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="filterDashboardUserSubmitButton"
+    <button type="submit" class="gap-x-4 mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="applyDashboardUserFilterSubmitButton"
             th:text="#{textApplyFilters}"></button>
 </form>
 
 <form th:fragment="clearFilterForm" id="clearFilterForm" method="get" action="/filterDashboardUser">
     <input type="hidden" name="clearFilter" value="true"/>
     <br>
-    <button type="submit" class="gap-x-4 mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" id="clearFilterButton"
+    <button type="submit" class="gap-x-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" id="clearDashboardUserFilterButton"
             th:text="#{textClearFilters}"></button>
 </form>

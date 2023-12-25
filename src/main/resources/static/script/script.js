@@ -2,6 +2,7 @@ import * as navFunctions from "./nav.js";
 import * as dashboardFunctions from "./dashboard.js";
 import * as profileFunctions from "./profile.js";
 import * as travelFunctions from "./travel.js";
+import * as usersFunctions from "./users.js";
 
 $(document).ready(() => {
 
@@ -22,7 +23,7 @@ $(document).ready(() => {
     // profile
     profileFunctions.linksInProfilePageActiveState();
 
-    // vehicles filtering
+    // vehicles and accc units filtering
     $('#editTravelDestination').on('change', () => {
         setTimeout(() => {
             const id = $('#editTravelDestination').val();
@@ -37,6 +38,24 @@ $(document).ready(() => {
             travelFunctions.filterVehicles(id, 'add');
             travelFunctions.filterUnits(id, 'add');
         }, 150);
+    })
+
+    // users filtering
+    $('#applyDashboardUserFilterSubmitButton').on('click', event => {
+        const username = $('#filterDashboardUsersByUsername').val();
+        const role = $('#filterDashboardUsersByRole').val();
+
+        event.preventDefault();
+        usersFunctions.filterDashboardUser(username, role);
+    });
+
+    $('#clearDashboardUserFilterButton').on('click', event => {
+        const clearValues = "";
+        $('#filterDashboardUsersByUsername').val(clearValues);
+        $('#filterDashboardUsersByRole').prop('selectedIndex', 0);
+
+        event.preventDefault();
+        usersFunctions.filterDashboardUser(clearValues, clearValues);
     })
 
 });
