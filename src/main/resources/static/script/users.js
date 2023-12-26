@@ -1,5 +1,12 @@
 import {formatDate} from "./date.js";
 
+export const getFilterValues = () => {
+    return {
+        username : $('#filterDashboardUsersByUsername').val(),
+        role : $('#filterDashboardUsersByRole').val()
+    };
+}
+
 export const filterDashboardUser = (username, role, sortOrder)  => {
     $.ajax({
         url: '/filterDashboardUser',
@@ -10,7 +17,7 @@ export const filterDashboardUser = (username, role, sortOrder)  => {
             updateUsersOnFilter(data);
         },
         error: error => {
-            console.error('Fetching vehicles error: ', error);
+            console.error('Fetching users error: ', error);
         }
     });
 }

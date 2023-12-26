@@ -23,6 +23,47 @@ $(document).ready(() => {
     // profile
     profileFunctions.linksInProfilePageActiveState();
 
+    // travel filtering
+    $('#applyTravelFilterSubmitButton').on('click', event => {
+        event.preventDefault();
+
+        travelFunctions.filterTravel(travelFunctions.getFilterValues().destination, travelFunctions.getFilterValues().travelCategory,
+            travelFunctions.getFilterValues().travelVehicleType, travelFunctions.getFilterValues().travelAccUnitType, travelFunctions.getFilterValues().minPrice,
+            travelFunctions.getFilterValues().maxPrice, travelFunctions.getFilterValues().startDate, travelFunctions.getFilterValues().endDate);
+    });
+
+    $('#sortTravelButton').on('click', event => {
+        event.preventDefault();
+
+        let sortOrder = $('#travelSortOrder').val();
+        if(sortOrder == "asc") {
+            sortOrder="desc";
+        } else {
+            sortOrder = "asc";
+        }
+        $('#travelSortOrder').val(sortOrder);
+
+        travelFunctions.filterTravel(travelFunctions.getFilterValues().destination, travelFunctions.getFilterValues().travelCategory,
+            travelFunctions.getFilterValues().travelVehicleType, travelFunctions.getFilterValues().travelAccUnitType, travelFunctions.getFilterValues().minPrice,
+            travelFunctions.getFilterValues().maxPrice, travelFunctions.getFilterValues().startDate, travelFunctions.getFilterValues().endDate);
+    });
+
+    $('#clearTravelFilterButton').on('click', event => {
+        event.preventDefault();
+
+        const clearValues = "";
+        $('#filterTravelByDestination').val(clearValues);
+        $('#filterTravelByTravelCategory').prop('selectedIndex', 0);
+        $('#travelVehicleTypeSelect').prop('selectedIndex', 0);
+        $('#travelAccUnitTypeSelect').prop('selectedIndex', 0);
+        $('#filterTravelByMinPrice').val(clearValues);
+        $('#filterTravelByMaxPrice').val(clearValues);
+        $('#filterTravelByStartDate').val(clearValues);
+        $('#filterTravelByEndDate').val(clearValues);
+
+        travelFunctions.filterTravel(clearValues, clearValues, clearValues, clearValues, clearValues, clearValues ,clearValues, clearValues, "asc");
+    })
+
     // vehicles and accc units filtering
     $('#editTravelDestination').on('change', () => {
         setTimeout(() => {
@@ -43,29 +84,22 @@ $(document).ready(() => {
     // users filtering
     $('#applyDashboardUserFilterSubmitButton').on('click', event => {
         event.preventDefault();
-
-        const username = $('#filterDashboardUsersByUsername').val();
-        const role = $('#filterDashboardUsersByRole').val();
         const sortOrder = $('#userDashboardSortOrder').val();
-
-        usersFunctions.filterDashboardUser(username, role, sortOrder);
+        usersFunctions.filterDashboardUser(usersFunctions.getFilterValues().username, usersFunctions.getFilterValues().role, sortOrder);
     });
 
     $('#sortDashboardUserButton').on('click', event => {
         event.preventDefault();
 
-        const username = $('#filterDashboardUsersByUsername').val();
-        const role = $('#filterDashboardUsersByRole').val();
         let sortOrder = $('#userDashboardSortOrder').val();
-
         if(sortOrder == "asc") {
             sortOrder="desc";
         } else {
             sortOrder = "asc";
         }
-
         $('#userDashboardSortOrder').val(sortOrder);
-        usersFunctions.filterDashboardUser(username, role, sortOrder);
+
+        usersFunctions.filterDashboardUser(usersFunctions.getFilterValues().username, usersFunctions.getFilterValues().role, sortOrder);
     });
 
     $('#clearDashboardUserFilterButton').on('click', event => {

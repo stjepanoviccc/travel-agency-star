@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -60,6 +60,34 @@ public class TravelController {
         } catch (Exception e) {
             return ErrorController.internalErrorReturn;
         }
+    }
+
+    @GetMapping(value = "/travel/filterTravel", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Travel> filterTravels(@RequestParam(required = false) String destination, @RequestParam(required = false) String travelCategory,
+                                    @RequestParam(required = false) String travelVehicleType, @RequestParam(required = false) String travelAccUnitType,
+                                    @RequestParam(required = false) Float minPrice, @RequestParam(required = false) Float maxPrice,
+                                    @RequestParam(required = false) LocalDate startDate, @RequestParam(required = false) LocalDate endDate
+                                    ) {
+/*
+        if(clearFilter == true) {
+            return userService.findAll();
+        }
+        if(StringUtils.isEmpty(username) && StringUtils.isEmpty(role)) {
+            return userService.findAll(sortOrder);
+        }
+        if(StringUtils.isEmpty(username) && role.trim().length() > 0) {
+            return userService.findByRole(role, sortOrder);
+        }
+        if(username.trim().length() > 0 && StringUtils.isEmpty(role)) {
+            return userService.findByUsername(username, sortOrder);
+        }
+        if(username.trim().length() > 0 && role.trim().length() > 0) {
+            return userService.findByUsernameAndRole(username, role, sortOrder);
+        }
+
+        // just to cancel error show(one of things from up must happen). */
+        return travelService.findAll();
     }
 
     @GetMapping(value = "/dashboard/travels/filterVehiclesByDestination", produces = MediaType.APPLICATION_JSON_VALUE)

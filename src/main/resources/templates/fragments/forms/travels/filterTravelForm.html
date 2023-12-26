@@ -1,0 +1,64 @@
+<form th:fragment="filterTravelForm" id="filterTravelForm" method="get" action="/travel/filterTravel">
+    <label for="filterTravelByDestination" class="block font-medium text-gray-700 mt-4" th:text="#{textDestination} + ': '"></label>
+    <input class="mt-1 p-2 border rounded-md w-64" type="text" id="filterTravelByDestination" name="destination"/>
+
+    <div class="flex flex-col justify-center items-center lg:justify-start lg:flex-row gap-x-12">
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByTravelCategory" class="block font-medium text-gray-700 mt-4" th:text="#{textTravelCategory} + ': '"></label>
+            <select id="filterTravelByTravelCategory" name="travelCategorySelect" class="border-2 p-2 rounded-md">
+                <option th:each="category : ${allTravelCategories}" th:value="${category}" th:text="${category}"></option>
+            </select>
+        </div>
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByVehicleType" class="block font-medium text-gray-700 mt-4" th:text="#{textVehicleType} + ': '"></label>
+            <select id="filterTravelByVehicleType" name="travelVehicleTypeSelect" class="border-2 p-2 rounded-md">
+                <option th:each="vType : ${allVehicleTypes}" th:value="${vType}" th:text="${vType}"></option>
+            </select>
+        </div>
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByAccUnitType" class="block font-medium text-gray-700 mt-4" th:text="#{textAccommodationType} + ': '"></label>
+            <select id="filterTravelByAccUnitType" name="travelAccUnitTypeSelect" class="border-2 p-2 rounded-md">
+                <option th:each="accUnitType : ${allAccUnitTypes}" th:value="${accUnitType}" th:text="${accUnitType}"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start lg:flex-row gap-x-12">
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByMinPrice" class="block font-medium text-gray-700 mt-4" th:text="#{textMin} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="number" min="0" id="filterTravelByMinPrice" name="minPrice"/>
+        </div>
+
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByMaxPrice" class="block font-medium text-gray-700 mt-4" th:text="#{textMax} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="number" min="0" id="filterTravelByMaxPrice" name="maxPrice"/><br>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start lg:flex-row gap-x-12">
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByStartDate" class="block font-medium text-gray-700" th:text="#{textStartDate} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="date" id="filterTravelByStartDate" name="startDate"/>
+        </div>
+
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByEndDate" class="block font-medium text-gray-700" th:text="#{textEndDate} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="date" id="filterTravelByEndDate" name="endDate"/><br>
+        </div>
+    </div>
+
+    <input type="hidden" name="sortOrder" id="travelSortOrder" th:value="${sortOrder}"/>
+    <button class="border-2 p-2 mt-4" type="submit" id="sortTravelButton">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="18" viewBox="0 0 320 512"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>
+    </button>
+    <br>
+    <button type="submit" class="gap-x-4 mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="applyTravelFilterSubmitButton"
+            th:text="#{textApplyFilters}"></button>
+</form>
+
+<form th:fragment="clearFilterForm" id="clearTravelFilterForm" method="get" action="/filterTravel">
+    <input type="hidden" name="clearFilter" value="true"/>
+    <br>
+    <button type="submit" class="gap-x-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" id="clearTravelFilterButton"
+            th:text="#{textClearFilters}"></button>
+</form>

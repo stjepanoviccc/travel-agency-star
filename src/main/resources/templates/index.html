@@ -15,18 +15,14 @@
 
     <!-- this will be holder of above card menu and all cards -->
     <div class="pt-6 lg:pt-8 text-center lg:text-left">
-        <label for="travelSelectMenu" class="pr-2" th:text="#{travelPageSortBy}"></label>
-        <select name="travelSelectMenu" id="travelSelectMenu" class="bg-white border border-gray-300 hover:border-gray-500 px-4 py-1 rounded shadow focus:border-gray-600">
-            <option value="1">Default</option>
-            <option value="2">Text 2</option>
-            <option value="3">Text 3</option>
-            <option value="4">Text 4</option>
-        </select>
+        <p class="pr-2 font-bold text-lg mb-12" th:text="#{textFilterBy}"></p>
+        <div th:replace="~{fragments/forms/travels/filterTravelForm :: filterTravelForm}"></div>
+        <div th:replace="~{fragments/forms/travels/filterTravelForm :: #clearTravelFilterForm}"></div>
 
         <!-- holder of cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-6 lg:pt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-8 lg:pt-16" id="indexTravels">
             <!-- each card -->
-            <div th:each="travel : ${travelsForCards}">
+            <div th:each="travel : ${travelsForCards}" class="indexTravelCard">
                 <div class="w-full rounded overflow-hidden shadow-lg text-center border-2 transform transition-transform duration-300 hover:scale-105">
                     <!-- this will probably be form and link will be redirected to exact travel page with details. -->
                     <a th:href="'/travel?id=' + ${travel.id}">
