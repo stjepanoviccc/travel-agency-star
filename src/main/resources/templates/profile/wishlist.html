@@ -47,7 +47,7 @@
                           th:text="#{textPrice} + ': ' + ${item.travel.price} + '$'"></span>
 
                     <!-- delete/remove wishlist item -->
-                    <form action="/profile/wishlist/deleteFromWishlist" method="post" name="deleteFromWishlist">
+                    <form action="/deleteFromWishlist" method="post" name="deleteFromWishlist">
                         <input type="hidden" name="idUser" th:value="${item.user.id}" readonly />
                         <input type="hidden" name="idTravel" th:value="${item.travel.id}" readonly />
                         <button type="submit" class="w-full bg-orange-600 rounded-full px-4 py-2 text-white font-semibold mr-2 mb-2 border-2 border-orange-600

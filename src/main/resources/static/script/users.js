@@ -1,5 +1,21 @@
 import {formatDate} from "./date.js";
 
+export const getUserFromSession = async () => {
+    try {
+        const response = await fetch('/getUserFromSession');
+        if (response.ok) {
+            const user = await response.json();
+            return user;
+        } else {
+            console.error('Error fetching user from session:', response.statusText);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error fetching user from session:', error.message);
+        return null;
+    }
+};
+
 export const getFilterValues = () => {
     return {
         username : $('#filterDashboardUsersByUsername').val(),

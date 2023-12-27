@@ -45,7 +45,7 @@
                         <span class="inline-block bg-gray-200 rounded-full px-4 py-2 font-semibold text-gray-700 mr-2 mb-2 border-2"
                               th:text="#{textPrice} + ': ' + ${travel.price} + '$'"></span>
 
-                        <form action="/profile/wishlist/addToWishlist" method="post" name="addToWishlist">
+                        <form action="/addToWishlist" method="post" name="addToWishlist">
                             <!-- i will need to fix this, will handle this somehow else.(about session user id) -->
                             <div class="h-[0px]" th:if="${session.user != null}">
                                 <input class="hidden" type="hidden" name="idUser" th:value="${session.user.id}" readonly />

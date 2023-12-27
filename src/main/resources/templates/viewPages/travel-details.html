@@ -36,9 +36,20 @@
                 <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
                         th:text="#{textAddToCart}"></button>
             </form>
-            <form th:fragment="addTravelToWishlistForm" id="addTravelToWishlist" method="post" action="">
-                <button type="submit" class="gap-x-4 mt-2 bg-white text-red-700 border-2 border-red-700 font-bold py-2 px-4 rounded"
-                        th:text="#{textAddToWishlist}"></button>
+
+            <form action="/addToWishlist" method="post" name="addToWishlist">
+                <!-- i will need to fix this, will handle this somehow else.(about session user id) -->
+                <div class="h-[0px]" th:if="${session.user != null}">
+                    <input class="hidden" type="hidden" name="idUser" th:value="${session.user.id}" readonly />
+                </div>
+                <div class="h-[0px]" th:if="${session.user == null}">
+                    <input class="hidden" type="hidden" name="idUser" th:value="'-1'" readonly />;
+                </div>
+                <input type="hidden" name="idTravel" th:value="${travel.id}" readonly />
+                <!-- pitati za ovo -->
+                <button th:if="${session.user != null and session.user.role.name() == 'Passenger'}" type="submit"
+                        class="gap-x-4 mt-4 bg-orange-600 hover:bg-orange-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
+                        th:text="#{travelPageAddToWishlist}"></button>
             </form>
 
             <!-- up to here -->
@@ -72,9 +83,20 @@
                         <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
                                 th:text="#{textAddToCart}"></button>
                     </form>
-                    <form th:fragment="addTravelToWishlistForm" method="post" action="">
-                        <button type="submit" class="gap-x-4 mt-2 bg-white text-red-700 border-2 border-red-700 font-bold py-2 px-4 rounded"
-                                th:text="#{textAddToWishlist}"></button>
+
+                    <form action="/addToWishlist" method="post" name="addToWishlist">
+                        <!-- i will need to fix this, will handle this somehow else.(about session user id) -->
+                        <div class="h-[0px]" th:if="${session.user != null}">
+                            <input class="hidden" type="hidden" name="idUser" th:value="${session.user.id}" readonly />
+                        </div>
+                        <div class="h-[0px]" th:if="${session.user == null}">
+                            <input class="hidden" type="hidden" name="idUser" th:value="'-1'" readonly />;
+                        </div>
+                        <input type="hidden" name="idTravel" th:value="${travel.id}" readonly />
+                        <!-- pitati za ovo -->
+                        <button th:if="${session.user != null and session.user.role.name() == 'Passenger'}" type="submit"
+                                class="gap-x-4 mt-4 bg-orange-600 hover:bg-orange-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
+                                th:text="#{travelPageAddToWishlist}"></button>
                     </form>
                     <!-- up to here -->
                 </div>

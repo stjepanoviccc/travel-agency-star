@@ -1,18 +1,17 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.IUserService;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -86,10 +85,6 @@ public class UserController {
     @PostMapping("/editUserPost")
     public String editUserPost(HttpSession session, @ModelAttribute User editUser) {
         try {
-            if(!CheckRoleUtil.RoleAdministratorOrPassenger(session)) {
-                return ErrorController.permissionErrorReturn;
-            }
-
             boolean validation = userService.tryValidate(editUser, true);
             if(!validation) {
                 return "redirect:/user-validation";
@@ -174,5 +169,11 @@ public class UserController {
 
         // just to cancel error show(one of things from up must happen).
         return userService.findAll();
+    }
+
+    @GetMapping(value="/getUserFromSession", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUserFromSession(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return ResponseEntity.ok(user);
     }
 }

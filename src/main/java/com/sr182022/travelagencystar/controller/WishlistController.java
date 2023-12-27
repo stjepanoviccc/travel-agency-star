@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/profile/wishlist")
 public class WishlistController {
 
     private final IWishlistService wishlistService;
@@ -19,7 +18,7 @@ public class WishlistController {
     }
 
     @PostMapping("addToWishlist")
-    public String addToWishlist(HttpSession session, @RequestParam int idUser, @RequestParam int idTravel) {
+    public String addToWishlist(HttpSession session, @RequestParam(required = false) int idUser, @RequestParam(required = false) int idTravel) {
         try {
             // I WILL FIX THIS, I CANT RETURN PERMISSION ERROR ON THIS ALSO I MUST FIX THAT CANT BE 2 OF SAME USER TRAVEL KEYS
             if(!CheckRoleUtil.RolePassenger(session)) {

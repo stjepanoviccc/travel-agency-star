@@ -1,0 +1,14 @@
+<form action="/addToWishlist" method="post" name="addToWishlist" th:fragment="addToWishlist">
+    <!-- i will need to fix this, will handle this somehow else.(about session user id) -->
+    <div class="h-[0px]" th:if="${session.user != null}">
+        <input class="hidden" type="hidden" name="idUser" th:value="${session.user.id}" readonly />
+    </div>
+    <div class="h-[0px]" th:if="${session.user == null}">
+        <input class="hidden" type="hidden" name="idUser" th:value="'-1'" readonly />;
+    </div>
+    <input type="hidden" name="idTravel" th:value="${travel.id}" readonly />
+    <!-- pitati za ovo -->
+    <button th:if="${session.user != null and session.user.role.name() == 'Passenger'}" type="submit"
+            class="bg-red-600 rounded-full px-4 py-2 text-white font-semibold mr-2 mb-2 border-2 border-red-600
+                                transition duration-300 hover:text-red-600 hover:bg-white" th:text="#{travelPageAddToWishlist}"></button>
+</form>
