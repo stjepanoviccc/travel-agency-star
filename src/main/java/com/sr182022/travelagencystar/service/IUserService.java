@@ -20,4 +20,5 @@ public interface IUserService {
     void delete(int userId);
     void delete(int userId, boolean blocked);
     boolean tryValidate(User user, boolean editing);
+    List<User> filterUsersValidation(String username, String role, boolean clearFilter, String sortOrder);
 }

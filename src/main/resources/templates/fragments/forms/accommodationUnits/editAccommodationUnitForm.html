@@ -3,15 +3,15 @@
     <input type="hidden" id="editAccommodationUnitId" name="id" th:value="${accommodationUnit?.id}" readonly/>
     <input type="hidden" name="destinationId" th:value="${accommodationUnit?.destination.id}" readonly/>
     <label for="editAccommodationUnitName" class="block font-medium text-gray-700 mt-4" th:text="#{addEditAccommodationUnitFormName}"></label>
-    <input type="text" id="editAccommodationUnitName" name="name" th:value="${accommodationUnit?.name}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editAccommodationUnitName" name="name" th:value="${accommodationUnit?.name}" class="mt-1 p-2 border rounded-md w-full" required/>
     <label for="editAccommodationUnitCapacity" class="block font-medium text-gray-700 mt-4" th:text="#{textCapacity}"></label>
-    <input type="text" id="editAccommodationUnitCapacity" name="capacity" min="1" th:value="${accommodationUnit?.capacity}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editAccommodationUnitCapacity" name="capacity" min="1" th:value="${accommodationUnit?.capacity}" class="mt-1 p-2 border rounded-md w-full" required/>
     <!-- reviews cant be edited here -->
     <label for="editAccommodationUnitName" class="block font-medium text-gray-700 mt-4" th:text="#{textDescription}"></label>
-    <input type="text" id="editAccommodationUnitDescription" name="description" th:value="${accommodationUnit?.description}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editAccommodationUnitDescription" name="description" th:value="${accommodationUnit?.description}" class="mt-1 p-2 border rounded-md w-full" required/>
     <!-- destinatino cant be edited here -->
     <label for="editAccommodationUnitAccommodationType" class="block font-medium text-gray-700 mt-4" th:text="#{textAccommodationType}"></label>
-    <select id="editAccommodationUnitAccommodationType" name="accommodationType" class="mt-1 p-2 border rounded-md w-full" th:value="${accommodationUnit?.accommodationType}">
+    <select id="editAccommodationUnitAccommodationType" name="accommodationType" class="mt-1 p-2 border rounded-md w-full" th:value="${accommodationUnit?.accommodationType}" required>
         <option th:each="accommodationType : ${accommodationTypesForSelectMenu}" th:value="${accommodationType}" th:text="${accommodationType}"
                 th:selected="${accommodationType == accommodationUnit?.accommodationType.toString()}">
         </option>

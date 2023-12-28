@@ -151,24 +151,7 @@ public class UserController {
     public List<User> filterDashboardUsers(@RequestParam(required = false) String username, @RequestParam(required = false) String role,
                                            @RequestParam(required = false) boolean clearFilter, @RequestParam(required = false) String sortOrder) {
 
-        if(clearFilter == true) {
-            return userService.findAll();
-        }
-        if(StringUtils.isEmpty(username) && StringUtils.isEmpty(role)) {
-            return userService.findAll(sortOrder);
-        }
-        if(StringUtils.isEmpty(username) && role.trim().length() > 0) {
-            return userService.findByRole(role, sortOrder);
-        }
-        if(username.trim().length() > 0 && StringUtils.isEmpty(role)) {
-            return userService.findByUsername(username, sortOrder);
-        }
-        if(username.trim().length() > 0 && role.trim().length() > 0) {
-            return userService.findByUsernameAndRole(username, role, sortOrder);
-        }
-
-        // just to cancel error show(one of things from up must happen).
-        return userService.findAll();
+        return userService.filterUsersValidation(username, role, clearFilter, sortOrder);
     }
 
     @GetMapping(value="/getUserFromSession", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -7,6 +7,7 @@ import com.sr182022.travelagencystar.service.IUserService;
 import com.sr182022.travelagencystar.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -138,6 +139,28 @@ public class UserService implements IUserService {
 
 
         return true;
+    }
+
+    @Override
+    public List<User> filterUsersValidation(String username, String role, boolean clearFilter, String sortOrder) {
+        if(clearFilter == true) {
+            return findAll();
+        }
+        if(StringUtils.isEmpty(username) && StringUtils.isEmpty(role)) {
+            return findAll(sortOrder);
+        }
+        if(StringUtils.isEmpty(username) && role.trim().length() > 0) {
+            return findByRole(role, sortOrder);
+        }
+        if(username.trim().length() > 0 && StringUtils.isEmpty(role)) {
+            return findByUsername(username, sortOrder);
+        }
+        if(username.trim().length() > 0 && role.trim().length() > 0) {
+            return findByUsernameAndRole(username, role, sortOrder);
+        }
+
+        // cancel build error or something unexpected happen to refresh content.
+        return findAll();
     }
 
 }

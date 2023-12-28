@@ -1,17 +1,17 @@
 <form th:fragment="editVehicleForm" id="editVehicleForm" method="post" action="/dashboard/vehicles/editVehiclePost">
     <input type="hidden" id="editVehicleId" name="id" th:value="${vehicle?.id}" readonly/>
     <label for="editVehicleNumberOfSeats" class="block font-medium text-gray-700" th:text="#{textNumberOfSeats}"></label>
-    <input type="number" id="editVehicleNumberOfSeats" name="numberOfSeats" min="1" th:value="${vehicle?.numberOfSeats}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="number" id="editVehicleNumberOfSeats" name="numberOfSeats" min="1" th:value="${vehicle?.numberOfSeats}" class="mt-1 p-2 border rounded-md w-full" required/>
     <label for="editVehicleFinalDestination" class="block font-medium text-gray-700 mt-4" th:text="#{textFinalDestination}"></label>
-    <select id="editVehicleFinalDestination" name="finalDestinationId" class="mt-1 p-2 border rounded-md w-full" th:value="${vehicle?.finalDestination.id}">
+    <select id="editVehicleFinalDestination" name="finalDestinationId" class="mt-1 p-2 border rounded-md w-full" th:value="${vehicle?.finalDestination.id}" required>
         <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"
                 th:selected="${destination.id == vehicle?.finalDestination.id}"
         ></option>
     </select>
     <label for="editVehicleDescription" class="block font-medium text-gray-700 mt-4" th:text="#{textDescription}"></label>
-    <input type="text" id="editVehicleDescription" name="description" th:value="${vehicle?.description}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editVehicleDescription" name="description" th:value="${vehicle?.description}" class="mt-1 p-2 border rounded-md w-full" required/>
     <label for="editVehicleVehicleType" class="block font-medium text-gray-700 mt-4" th:text="#{textVehicleType}"></label>
-    <select id="editVehicleVehicleType" name="vehicleType" class="mt-1 p-2 border rounded-md w-full" th:value="${vehicle?.vehicleType}">
+    <select id="editVehicleVehicleType" name="vehicleType" class="mt-1 p-2 border rounded-md w-full" th:value="${vehicle?.vehicleType}" required>
         <option th:each="vehicleType : ${vehicleTypesForSelectMenu}" th:value="${vehicleType}" th:text="${vehicleType}"
                 th:selected="${vehicleType == vehicle?.vehicleType.toString()}">
         </option>

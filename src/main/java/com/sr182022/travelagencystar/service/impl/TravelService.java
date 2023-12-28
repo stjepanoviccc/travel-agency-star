@@ -42,6 +42,37 @@ public class TravelService implements ITravelService {
     }
 
     @Override
+    public List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice, LocalDate startDate, LocalDate endDate) {
+
+        if(destination == null) {
+            destination = "";
+        }
+        if(travelCategory == null) {
+            travelCategory = "";
+        }
+        if(travelVehicleType == null) {
+            travelVehicleType = "";
+        }
+        if(travelAccUnitType == null) {
+            travelAccUnitType = "";
+        }
+        if(minPrice == null) {
+            minPrice = 0F;
+        }
+        if(maxPrice == null) {
+            maxPrice = 999999F;
+        }
+        if (startDate == null) {
+            startDate = LocalDate.of(1999, 1, 1);
+        }
+        if (endDate == null) {
+            endDate = LocalDate.of(2099, 1, 1);
+        }
+
+        return databaseTravelDAO.findAll(destination, travelCategory, travelVehicleType, travelAccUnitType, minPrice, maxPrice, startDate, endDate);
+    }
+
+    @Override
     public List<String> findAllTravelCategories() {
         return Arrays.stream(TravelCategory.values())
                 .map(Enum::name)

@@ -1,11 +1,11 @@
 <form th:fragment="editDestinationForm" id="editDestinationForm" method="post" action="/dashboard/destinations/editDestinationPost">
     <input type="hidden" id="editDestinationId" name="id" th:value="${destination?.id}" readonly/>
     <label for="editDestinationCity" class="block font-medium text-gray-700 mt-4" th:text="#{textCity}"></label>
-    <input type="text" id="editDestinationCity" name="city" th:value="${destination?.city}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editDestinationCity" name="city" th:value="${destination?.city}" class="mt-1 p-2 border rounded-md w-full" required/>
     <label for="editDestinationCountry" class="block font-medium text-gray-700 mt-4" th:text="#{textCountry}"></label>
-    <input type="text" id="editDestinationCountry" name="country" th:value="${destination?.country}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editDestinationCountry" name="country" th:value="${destination?.country}" class="mt-1 p-2 border rounded-md w-full" required/>
     <label for="editDestinationContinent" class="block font-medium text-gray-700 mt-4" th:text="#{textContinent}"></label>
-    <input type="text" id="editDestinationContinent" name="continent" th:value="${destination?.continent}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="text" id="editDestinationContinent" name="continent" th:value="${destination?.continent}" class="mt-1 p-2 border rounded-md w-full" required/>
     <label for="editDestinationImage" class="block font-medium text-gray-700 mt-4" th:text="#{textImage}"></label>
     <img th:src="@{/images/}+${destination?.image}" alt="img" width="300" height="300"/>
     <input type="hidden" id="editDestinationImage" name="image" th:value="${destination?.image}"/>

@@ -1,13 +1,14 @@
 import {formatDate} from "./date.js";
 import {getUserFromSession} from "./users.js";
+import {getMessagesProperties} from "./messages.js";
 
 // filtering on index page.
 export const getFilterValues = () => {
     return {
         destination: $('#filterTravelByDestination').val(),
         travelCategory: $('#filterTravelByTravelCategory').val(),
-        travelVehicleType: $('#travelVehicleTypeSelect').val(),
-        travelAccUnitType: $('#travelAccUnitTypeSelect').val(),
+        travelVehicleType: $('#filterTravelByVehicleType').val(),
+        travelAccUnitType: $('#filterTravelByAccUnitType').val(),
         minPrice: $('#filterTravelByMinPrice').val(),
         maxPrice: $('#filterTravelByMaxPrice').val(),
         startDate: $('#filterTravelByStartDate').val(),
@@ -15,11 +16,12 @@ export const getFilterValues = () => {
     };
 }
 
-export const filterTravel = (destination, category, minPrice, maxPrice, vehicleType, accUnitType, startDate, endDate)  => {
+export const filterTravel = (destination, category, vehicleType, accUnitType, minPrice, maxPrice, startDate, endDate)  => {
+
     $.ajax({
         url: '/travel/filterTravel',
         method: 'GET',
-        data: { destination: destination, category: category, minPrice: minPrice, maxPrice: maxPrice, vehicleType: vehicleType, accUnitType: accUnitType,
+        data: { destination: destination, travelCategory: category, travelVehicleType: vehicleType, travelAccUnitType: accUnitType, minPrice: minPrice, maxPrice: maxPrice,
                 startDate: startDate, endDate: endDate},
         dataType: 'json',
         success: data => {
@@ -35,19 +37,16 @@ export const updateTravelsOnFilter = async travels => {
     const indexTravels = $('#indexTravels');
 
     indexTravels.empty();
-    let i = 1;
 
     const session = {
         user: await getUserFromSession()
     }
 
-    const textNotChosenYet = /*[[${#messages.msg('textNotChosenYet') || 'fallback'}]]*/ 'error';
-    const textAccommodationUnit = /*[[${#messages.msg('textAccommodationUnit') || 'fallback'}]]*/ 'error';
-    const textVehicle = /*[[${#messages.msg('textVehicle') || 'fallback'}]]*/ 'error';
-    const textCategory = /*[[${#messages.msg('textCategory') || 'fallback'}]]*/ 'error';
-    const textPrice = /*[[${#messages.msg('textPrice') || 'fallback'}]]*/ 'error';
-    const textAddToWishlist = /*[[${#messages.msg('textAddToWishlist') || 'fallback'}]]*/ 'error';
+    const messages = {
+        msg: await getMessagesProperties()
+    }
 
+    console.log(travels);
     travels.forEach(travel => {
         const travelElement = document.createElement('div');
         travelElement.classList.add('w-full', 'rounded', 'overflow-hidden', 'shadow-lg', 'text-center', 'border-2', 'transform', 'transition-transform', 'duration-300', 'hover:scale-105');
@@ -62,20 +61,20 @@ export const updateTravelsOnFilter = async travels => {
             <a href="'/travel?id=' + ${travel.id}" class="font-bold text-xl">${travel.destination.city}</a>
 
             ${travel.accommodationUnit != null
-            ? `<p class="text-gray-700 text-base pt-2">${textAccommodationUnit}: ${travel.accommodationUnit.accommodationType}</p>`
-            : `<p class="text-gray-700 text-base pt-2">${textAccommodationUnit}: ${textNotChosenYet}</p>`
+            ? `<p class="text-gray-700 text-base pt-2">${messages.msg.textAccommodationUnit}: ${travel.accommodationUnit.accommodationType}</p>`
+            : `<p class="text-gray-700 text-base pt-2">${messages.msg.textAccommodationUnit}: ${messages.msg.textNotChosenYet}</p>`
         }
 
             ${travel.vehicle != null
-            ? `<p class="text-gray-700 text-base" >${textVehicle}: ${travel.vehicle.vehicleType}</p>`
-            : `<p class="text-gray-700 text-base" >${textVehicle}: ${textNotChosenYet}</p>`
+            ? `<p class="text-gray-700 text-base" >${messages.msg.textVehicle}: ${travel.vehicle.vehicleType}</p>`
+            : `<p class="text-gray-700 text-base" >${messages.msg.textVehicle}: ${messages.msg.textNotChosenYet}</p>`
         }
 
-            <p class="text-gray-700 text-base">${textCategory}: ${travel.travelCategory}</p>
+            <p class="text-gray-700 text-base">${messages.msg.textCategory}: ${travel.travelCategory}</p>
             <p class="text-gray-700 text-xl mt-1 font-bold">${formatDate(travel.startDate, 'dd.MM.yyyy')} ---> ${formatDate(travel.endDate, 'dd.MM.yyyy')}</p>
         </div>
         <div class="px-6 py-2 flex justify-center items-center">
-            <span class="inline-block bg-gray-200 rounded-full px-4 py-2 font-semibold text-gray-700 mr-2 mb-2 border-2">${textPrice}: ${travel.price}$</span>
+            <span class="inline-block bg-gray-200 rounded-full px-4 py-2 font-semibold text-gray-700 mr-2 mb-2 border-2">${messages.msg.textPrice}: ${travel.price}$</span>
             <form action="/profile/wishlist/addToWishlist" method="post" name="addToWishlist">
                 <div class="h-[0px]">
                     <input class="hidden" type="hidden" name="idUser" value="${session.user != null ? session.user.id : '-1'}" readonly />
@@ -84,7 +83,7 @@ export const updateTravelsOnFilter = async travels => {
 
                 ${session.user != null && session.user.role === 'Passenger'
             ? `<button type="submit" class="bg-red-600 rounded-full px-4 py-2 text-white font-semibold mr-2 mb-2 border-2 border-red-600
-                        transition duration-300 hover:text-red-600 hover:bg-white">a</button>`
+                        transition duration-300 hover:text-red-600 hover:bg-white">${messages.msg.textAddToWishlist}</button>`
             : ''
         }
             </form>
@@ -93,8 +92,11 @@ export const updateTravelsOnFilter = async travels => {
     `);
 
         indexTravels.append(travelElement);
-        i += 1;
     });
+
+    if(travels.length == 0) {
+        indexTravels.append("<p>No content to show. Try filter something else.</p>")
+    }
 };
 
 

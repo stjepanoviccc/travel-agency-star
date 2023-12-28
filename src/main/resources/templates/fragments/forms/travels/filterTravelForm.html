@@ -5,19 +5,19 @@
     <div class="flex flex-col justify-center items-center lg:justify-start lg:flex-row gap-x-12">
         <div class="flex flex-col w-64">
             <label for="filterTravelByTravelCategory" class="block font-medium text-gray-700 mt-4" th:text="#{textTravelCategory} + ': '"></label>
-            <select id="filterTravelByTravelCategory" name="travelCategorySelect" class="border-2 p-2 rounded-md">
+            <select id="filterTravelByTravelCategory" name="travelCategory" class="border-2 p-2 rounded-md">
                 <option th:each="category : ${allTravelCategories}" th:value="${category}" th:text="${category}"></option>
             </select>
         </div>
         <div class="flex flex-col w-64">
             <label for="filterTravelByVehicleType" class="block font-medium text-gray-700 mt-4" th:text="#{textVehicleType} + ': '"></label>
-            <select id="filterTravelByVehicleType" name="travelVehicleTypeSelect" class="border-2 p-2 rounded-md">
+            <select id="filterTravelByVehicleType" name="travelVehicleType" class="border-2 p-2 rounded-md">
                 <option th:each="vType : ${allVehicleTypes}" th:value="${vType}" th:text="${vType}"></option>
             </select>
         </div>
         <div class="flex flex-col w-64">
             <label for="filterTravelByAccUnitType" class="block font-medium text-gray-700 mt-4" th:text="#{textAccommodationType} + ': '"></label>
-            <select id="filterTravelByAccUnitType" name="travelAccUnitTypeSelect" class="border-2 p-2 rounded-md">
+            <select id="filterTravelByAccUnitType" name="travelAccUnitType" class="border-2 p-2 rounded-md">
                 <option th:each="accUnitType : ${allAccUnitTypes}" th:value="${accUnitType}" th:text="${accUnitType}"></option>
             </select>
         </div>

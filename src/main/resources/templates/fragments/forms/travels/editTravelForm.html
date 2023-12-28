@@ -2,7 +2,7 @@
       action="/dashboard/travels/editTravelPost">
     <input type="hidden" id="editTravelId" name="id" th:value="${travel?.id}" readonly/>
     <label for="editTravelDestination" class="block font-medium text-gray-700" th:text="#{textDestination}"></label>
-    <select id="editTravelDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full" th:value="${travel?.destination.id}">
+    <select id="editTravelDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full" th:value="${travel?.destination.id}" required>
         <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"
                 th:selected="${destination.id == travel?.destination.id}"
         ></option>
@@ -16,14 +16,14 @@
     </select> -->
 
     <select id="editTravelVehicle" name="vehicleId" class="mt-1 p-2 border rounded-md w-full"
-            th:value="${travel?.vehicle != null} ? ${travel.vehicle.id} : ''">
+            th:value="${travel?.vehicle != null} ? ${travel.vehicle.id} : ''" required>
         <option th:each="vehicle : ${vehiclesForSelectMenu}" th:value="${vehicle.id}" th:text="${vehicle}"
                 th:selected="${travel?.vehicle != null} ? ${vehicle.id == travel.vehicle.id} : false">
         </option>
     </select>
     <label for="editTravelAccommodationUnit" class="block font-medium text-gray-700 mt-4" th:text="#{textAccommodationUnit}"></label>
     <select id="editTravelAccommodationUnit" name="accommodationUnitId" class="mt-1 p-2 border rounded-md w-full"
-            th:value="${travel?.accommodationUnit != null} ? ${travel.accommodationUnit.id} : ''">
+            th:value="${travel?.accommodationUnit != null} ? ${travel.accommodationUnit.id} : ''" required>
         <option th:each="accommodationUnit : ${accommodationUnitsForSelectMenu}"
                 th:value="${accommodationUnit.id}" th:text="${accommodationUnit}"
                 th:selected="${travel?.accommodationUnit != null} ? ${accommodationUnit.id == travel.accommodationUnit.id} : false">
@@ -31,18 +31,18 @@
     </select>
 
     <label for="editTravelStartDate" class="block font-medium text-gray-700 mt-4" th:text="#{textStartDate}"></label>
-    <input type="date" id="editTravelStartDate" name="startDate" th:value="${travel?.startDate}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="date" id="editTravelStartDate" name="startDate" th:value="${travel?.startDate}" class="mt-1 p-2 border rounded-md w-full" required/>
     <label for="editTravelEndDate" class="block font-medium text-gray-700 mt-4" th:text="#{textEndDate}"></label>
-    <input type="date" id="editTravelEndDate" name="endDate" th:value="${travel?.endDate}" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="date" id="editTravelEndDate" name="endDate" th:value="${travel?.endDate}" class="mt-1 p-2 border rounded-md w-full" required/>
     <!-- this will be calculated based on start and end dates, just holding value here -->
-    <input type="hidden" name="numberOfNights" th:value="${travel?.numberOfNights}">
+    <input type="hidden" name="numberOfNights" th:value="${travel?.numberOfNights}" required>
     <label for="editTravelTravelCategory" class="block font-medium text-gray-700 mt-4" th:text="#{textTravelCategory}"></label>
-    <select id="editTravelTravelCategory" name="travelCategory" class="mt-1 p-2 border rounded-md w-full" th:value="${travel?.travelCategory}">
+    <select id="editTravelTravelCategory" name="travelCategory" class="mt-1 p-2 border rounded-md w-full" th:value="${travel?.travelCategory}" required>
         <option th:each="travelCategory : ${travelCategoriesForSelectMenu}" th:value="${travelCategory}" th:text="${travelCategory}"
                 th:selected="${travelCategory == travel?.travelCategory.toString()}">
         </option>
     </select>
     <label for="editTravelPrice" class="block font-medium text-gray-700 mt-4" th:text="#{textPrice}"></label>
-    <input type="number" id="editTravelPrice" name="price" class="mt-1 p-2 border rounded-md w-full" min="1" th:value="${travel?.price}" />
+    <input type="number" id="editTravelPrice" name="price" class="mt-1 p-2 border rounded-md w-full" min="1" th:value="${travel?.price}" required/>
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" th:text="#{textSave}"></button>
 </form>

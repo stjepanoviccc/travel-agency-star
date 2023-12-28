@@ -1,21 +1,21 @@
 <!-- need more info in form -->
 <form th:fragment="registerForm" name="registerForm" method="post" action="/addNewUser">
     <label for="usernameRegister" class="block font-medium text-gray-700" th:text="#{textUsername} + ':'"></label>
-    <input type="text" id="usernameRegister" name="username" class="mt-1 p-2 border rounded-md w-full">
+    <input type="text" id="usernameRegister" name="username" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="passwordRegister" class="block font-medium text-gray-700 mt-4" th:text="#{textPassword} + ':'"></label>
-    <input type="password" id="passwordRegister" name="password" class="mt-1 p-2 border rounded-md w-full">
+    <input type="password" id="passwordRegister" name="password" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="emailRegister" class="block font-medium text-gray-700 mt-4" th:text="#{textEmail} + ':'"></label>
-    <input type="email" id="emailRegister" name="email" class="mt-1 p-2 border rounded-md w-full">
+    <input type="email" id="emailRegister" name="email" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="surnameRegister" class="block font-medium text-gray-700 mt-4" th:text="#{textSurname} + ':'"></label>
-    <input type="text" id="surnameRegister" name="surname" class="mt-1 p-2 border rounded-md w-full">
+    <input type="text" id="surnameRegister" name="surname" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="nameRegister" class="block font-medium text-gray-700 mt-4" th:text="#{textName} + ':'"></label>
-    <input type="text" id="nameRegister" name="name" class="mt-1 p-2 border rounded-md w-full">
+    <input type="text" id="nameRegister" name="name" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="addressRegister" class="block font-medium text-gray-700 mt-4" th:text="#{textAddress} + ':'"></label>
-    <input type="text" id="addressRegister" name="address" class="mt-1 p-2 border rounded-md w-full">
+    <input type="text" id="addressRegister" name="address" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="phoneRegister" class="block font-medium text-gray-700 mt-4" th:text="#{textPhone} + ':'"></label>
-    <input type="number" id="phoneRegister" name="phone" class="mt-1 p-2 border rounded-md w-full">
+    <input type="number" id="phoneRegister" name="phone" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="birthDateRegister" class="block font-medium text-gray-700 mt-4" th:text="#{textBirth} + ':'"></label>
-    <input type="date" id="birthDateRegister" name="birthDate" class="mt-1 p-2 border rounded-md w-full" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+    <input type="date" id="birthDateRegister" name="birthDate" class="mt-1 p-2 border rounded-md w-full" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
     <!-- registered date automatic -->
     <!-- role guest if guest register, if admin make than he can switch between roles -->
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="addUserSubmitButton" th:text="#{textRegister}"></button>

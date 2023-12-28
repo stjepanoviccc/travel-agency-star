@@ -1,27 +1,27 @@
 <form th:fragment="addNewTravelForm" id="addNewTravelForm" name="addNewTravelForm" method="post" action="/dashboard/travels/addNewTravel">
     <label for="addNewTravelDestination" class="block font-medium text-gray-700" th:text="#{textDestination}"></label>
-    <select id="addNewTravelDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full">
+    <select id="addNewTravelDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full" required>
         <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"></option>
     </select>
     <label for="addNewTravelVehicle" class="block font-medium text-gray-700 mt-4" th:text="#{textVehicle}"></label>
-    <select id="addNewTravelVehicle" name="vehicleId" class="mt-1 p-2 border rounded-md w-full">
+    <select id="addNewTravelVehicle" name="vehicleId" class="mt-1 p-2 border rounded-md w-full" required>
         <option th:each="vehicle : ${vehiclesForSelectMenu}" th:value="${vehicle.id}" th:text="${vehicle}"></option>
     </select>
     <label for="addNewTravelAccommodationUnit" class="block font-medium text-gray-700 mt-4" th:text="#{textAccommodationUnit}"></label>
-    <select id="addNewTravelAccommodationUnit" name="accommodationUnitId" class="mt-1 p-2 border rounded-md w-full">
+    <select id="addNewTravelAccommodationUnit" name="accommodationUnitId" class="mt-1 p-2 border rounded-md w-full" required>
         <option th:each="accommodationUnit : ${accommodationUnitsForSelectMenu}" th:value="${accommodationUnit.id}" th:text="${accommodationUnit}"></option>
     </select>
     <label for="addNewTravelStartDate" class="block font-medium text-gray-700 mt-4" th:text="#{textStartDate}"></label>
-    <input type="date" id="addNewTravelStartDate" name="startDate" class="mt-1 p-2 border rounded-md w-full">
+    <input type="date" id="addNewTravelStartDate" name="startDate" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="addNewTravelEndDate" class="block font-medium text-gray-700 mt-4" th:text="#{textEndDate}"></label>
-    <input type="date" id="addNewTravelEndDate" name="endDate" class="mt-1 p-2 border rounded-md w-full">
+    <input type="date" id="addNewTravelEndDate" name="endDate" class="mt-1 p-2 border rounded-md w-full" required>
     <!-- no of nights calculated based on start and end dates. -->
-    <input type="hidden" name="numberOfNights" th:value="${0}">
+    <input type="hidden" name="numberOfNights" th:value="${0}" required>
     <label for="addNewTravelTravelCategory" class="block font-medium text-gray-700 mt-4" th:text="#{textTravelCategory}"></label>
-    <select id="addNewTravelTravelCategory" name="travelCategory" class="mt-1 p-2 border rounded-md w-full">
+    <select id="addNewTravelTravelCategory" name="travelCategory" class="mt-1 p-2 border rounded-md w-full" required>
         <option th:each="travelCategory : ${travelCategoriesForSelectMenu}" th:value="${travelCategory}" th:text="${travelCategory}"></option>
     </select>
     <label for="addNewTravelPrice" class="block font-medium text-gray-700 mt-4" th:text="#{textPrice}"></label>
-    <input type="number" min="1" value="1" id="addNewTravelPrice" name="price" class="mt-1 p-2 border rounded-md w-full" />
+    <input type="number" min="1" value="1" id="addNewTravelPrice" name="price" class="mt-1 p-2 border rounded-md w-full" required/>
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" th:text="#{textAdd}">Add</button>
 </form>

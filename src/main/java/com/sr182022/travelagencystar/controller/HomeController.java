@@ -52,7 +52,7 @@ public class HomeController {
             allAccUnitTypes.add(0, "");
 
         //    model.addAttribute("allDestinationNames", allDestinationNames);
-            model.addAttribute("allTravelCategories", allVehicleTypes);
+            model.addAttribute("allTravelCategories", allTravelCategories);
             model.addAttribute("allVehicleTypes", allVehicleTypes);
             model.addAttribute("allAccUnitTypes", allAccUnitTypes);
 

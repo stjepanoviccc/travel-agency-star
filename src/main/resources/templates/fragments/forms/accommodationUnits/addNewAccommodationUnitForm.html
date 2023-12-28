@@ -1,13 +1,13 @@
 <form th:fragment="addNewAccommodationUnitForm" name="addNewAccommodationUnitForm" method="post"
       action="/dashboard/accommodation-units/addNewAccommodationUnit">
     <label for="addNewAccommodationUnitName" class="block font-medium text-gray-700" th:text="#{addEditAccommodationUnitFormName}"></label>
-    <input type="text" id="addNewAccommodationUnitName" name="name" class="mt-1 p-2 border rounded-md w-full">
+    <input type="text" id="addNewAccommodationUnitName" name="name" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="addNewAccommodationUnitCapacity" class="block font-medium text-gray-700 mt-4" th:text="#{textCapacity}"></label>
-    <input type="number" min="1" value="1" id="addNewAccommodationUnitCapacity" name="capacity" class="mt-1 p-2 border rounded-md w-full">
+    <input type="number" min="1" value="1" id="addNewAccommodationUnitCapacity" name="capacity" class="mt-1 p-2 border rounded-md w-full" required>
     <label for="addNewAccommodationUnitDescription" class="block font-medium text-gray-700 mt-4" th:text="#{textDescription}"></label>
-    <textarea id="addNewAccommodationUnitDescription" name="description" class="mt-1 p-2 border rounded-md w-full"></textarea>
+    <textarea id="addNewAccommodationUnitDescription" name="description" class="mt-1 p-2 border rounded-md w-full" required></textarea>
     <label for="addNewAccommodationUnitDestination" class="block font-medium text-gray-700 mt-4" th:text="#{textDestination}"></label>
-    <select id="addNewAccommodationUnitDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full">
+    <select id="addNewAccommodationUnitDestination" name="destinationId" class="mt-1 p-2 border rounded-md w-full" required>
         <option th:each="destination : ${destinationsForSelectMenu}" th:value="${destination.id}" th:text="${destination}"></option>
     </select>
     <label for="addNewAccommodationUnitServices" class="block font-medium text-gray-700 mt-4" th:text="#{textServices}"></label>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <label for="addNewAccommodationUnitAccommodationType" class="block font-medium text-gray-700 mt-4" th:text="#{textAccommodationType}"></label>
-    <select id="addNewAccommodationUnitAccommodationType" name="accommodationType" class="mt-1 p-2 border rounded-md w-full">
+    <select id="addNewAccommodationUnitAccommodationType" name="accommodationType" class="mt-1 p-2 border rounded-md w-full" required>
         <option th:each="accommodationType : ${accommodationTypesForSelectMenu}" th:value="${accommodationType}" th:text="${accommodationType}"></option>
     </select>
     <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" th:text="#{textAdd}"></button>
