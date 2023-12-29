@@ -42,7 +42,8 @@ public class TravelService implements ITravelService {
     }
 
     @Override
-    public List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice, LocalDate startDate, LocalDate endDate) {
+    public List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice,
+                                LocalDate startDate, LocalDate endDate, String sortOrder) {
 
         if(destination == null) {
             destination = "";
@@ -69,7 +70,7 @@ public class TravelService implements ITravelService {
             endDate = LocalDate.of(2099, 1, 1);
         }
 
-        return databaseTravelDAO.findAll(destination, travelCategory, travelVehicleType, travelAccUnitType, minPrice, maxPrice, startDate, endDate);
+        return databaseTravelDAO.findAll(destination, travelCategory, travelVehicleType, travelAccUnitType, minPrice, maxPrice, startDate, endDate, sortOrder);
     }
 
     @Override

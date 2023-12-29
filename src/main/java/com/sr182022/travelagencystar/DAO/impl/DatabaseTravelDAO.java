@@ -121,7 +121,8 @@ public class DatabaseTravelDAO implements ITravelDAO {
 
 
     @Override
-    public List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice, LocalDate startDate, LocalDate endDate) {
+    public List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice,
+                                LocalDate startDate, LocalDate endDate, String sortOrder) {
         ArrayList<Object> argList = new ArrayList<Object>();
         String sql = "SELECT t.id_travel, t.travel_start_date, t.travel_end_date, t.number_of_nights, t.travel_category, " +
                 "t.id_destination, t.id_accommodation_unit, t.id_vehicle, t.travel_price FROM travel t " +

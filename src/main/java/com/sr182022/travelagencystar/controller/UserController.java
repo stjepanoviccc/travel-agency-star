@@ -148,10 +148,11 @@ public class UserController {
 
     @GetMapping(value = "/filterDashboardUser", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<User> filterDashboardUsers(@RequestParam(required = false) String username, @RequestParam(required = false) String role,
-                                           @RequestParam(required = false) boolean clearFilter, @RequestParam(required = false) String sortOrder) {
+    public List<User> filterDashboardUsers(@RequestParam(required = false) String username, @RequestParam(required = false) String usernameSort,
+                                           @RequestParam(required = false) String role, @RequestParam(required = false) String roleSort,
+                                           @RequestParam(required = false) boolean clearFilter) {
 
-        return userService.filterUsersValidation(username, role, clearFilter, sortOrder);
+        return userService.filterUsersValidation(username, usernameSort, role, roleSort, clearFilter);
     }
 
     @GetMapping(value="/getUserFromSession", produces = MediaType.APPLICATION_JSON_VALUE)

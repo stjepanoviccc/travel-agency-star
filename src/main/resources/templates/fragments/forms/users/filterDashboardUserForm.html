@@ -1,15 +1,19 @@
 <form th:fragment="filterDashboardUserForm" id="filterDashboardUserForm" method="get" action="/filterDashboardUser">
     <label for="filterDashboardUsersByUsername" class="block font-medium text-gray-700 mt-4" th:text="#{textUsername} + ': '"></label>
     <input class="mt-1 p-2 border rounded-md w-64" type="text" id="filterDashboardUsersByUsername" name="username"/>
+    <select id="sortDashboardUsersByUsername" name="sortUsername" class="border-2 p-2 rounded-md">
+        <option value="asc" th:text="#{textSortByAsc}"></option>
+        <option value="desc" th:text="#{textSortByDesc}"></option>
+    </select>
     <label for="filterDashboardUsersByRole" class="block font-medium text-gray-700 mt-4" th:text="#{textRole} + ': '"></label>
     <select id="filterDashboardUsersByRole" name="role" class="border-2 p-2 rounded-md">
         <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role}"></option>
+    </select>
+    <select id="sortDashboardUsersByRole" name="sortRole" class="border-2 p-2 rounded-md">
+        <option value="asc" th:text="#{textSortByAsc}"></option>
+        <option value="desc" th:text="#{textSortByDesc}"></option>
     </select><br>
-    <input type="hidden" name="sortOrder" id="userDashboardSortOrder" th:value="${sortOrder}"/>
-    <button class="border-2 p-2 mt-4" type="submit" id="sortDashboardUserButton">
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="18" viewBox="0 0 320 512"><path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z"/></svg>
-    </button>
-    <br>
+<br>
     <button type="submit" class="gap-x-4 mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="applyDashboardUserFilterSubmitButton"
             th:text="#{textApplyFilters}"></button>
 </form>

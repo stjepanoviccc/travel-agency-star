@@ -4,8 +4,7 @@ export const getUserFromSession = async () => {
     try {
         const response = await fetch('/getUserFromSession');
         if (response.ok) {
-            const user = await response.json();
-            return user;
+            return await response.json();
         } else {
             console.error('Error fetching user from session:', response.statusText);
             return null;
@@ -19,15 +18,17 @@ export const getUserFromSession = async () => {
 export const getFilterValues = () => {
     return {
         username : $('#filterDashboardUsersByUsername').val(),
-        role : $('#filterDashboardUsersByRole').val()
+        usernameSort : $("#sortDashboardUsersByUsername").val(),
+        role : $('#filterDashboardUsersByRole').val(),
+        roleSort : $("#sortDashboardUsersByRole").val()
     };
 }
 
-export const filterDashboardUser = (username, role, sortOrder)  => {
+export const filterDashboardUser = (username, usernameSort,  role, roleSort, clearing)  => {
     $.ajax({
         url: '/filterDashboardUser',
         method: 'GET',
-        data: { username: username, role: role, sortOrder: sortOrder },
+        data: { username: username, usernameSort: usernameSort, role: role, roleSort: roleSort, clearFilter: clearing},
         dataType: 'json',
         success: data => {
             updateUsersOnFilter(data);

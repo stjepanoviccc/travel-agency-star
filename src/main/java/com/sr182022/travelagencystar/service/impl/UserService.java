@@ -55,8 +55,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> findByUsernameAndRole(String username, String role, String sortOrder) {
-        return databaseUserDAO.findByUsernameAndRole(username, role, sortOrder);
+    public List<User> findByUsernameAndRole(String username, String usernameSort, String role, String roleSort) {
+        return databaseUserDAO.findByUsernameAndRole(username, usernameSort, role, roleSort);
     }
 
     @Override
@@ -137,30 +137,16 @@ public class UserService implements IUserService {
             }
         }
 
-
         return true;
     }
 
     @Override
-    public List<User> filterUsersValidation(String username, String role, boolean clearFilter, String sortOrder) {
+    public List<User> filterUsersValidation(String username, String usernameSort, String role, String roleSort, boolean clearFilter) {
         if(clearFilter == true) {
             return findAll();
         }
-        if(StringUtils.isEmpty(username) && StringUtils.isEmpty(role)) {
-            return findAll(sortOrder);
-        }
-        if(StringUtils.isEmpty(username) && role.trim().length() > 0) {
-            return findByRole(role, sortOrder);
-        }
-        if(username.trim().length() > 0 && StringUtils.isEmpty(role)) {
-            return findByUsername(username, sortOrder);
-        }
-        if(username.trim().length() > 0 && role.trim().length() > 0) {
-            return findByUsernameAndRole(username, role, sortOrder);
-        }
 
-        // cancel build error or something unexpected happen to refresh content.
-        return findAll();
+        return findByUsernameAndRole(username, usernameSort, role, roleSort);
     }
 
 }

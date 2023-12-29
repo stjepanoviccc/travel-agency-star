@@ -68,11 +68,11 @@ public class TravelController {
     public List<Travel> filterTravels(@RequestParam(required = false) String destination, @RequestParam(required = false) String travelCategory,
                                     @RequestParam(required = false) String travelVehicleType, @RequestParam(required = false) String travelAccUnitType,
                                     @RequestParam(required = false) Float minPrice, @RequestParam(required = false) Float maxPrice,
-                                    @RequestParam(required = false) LocalDate startDate, @RequestParam(required = false) LocalDate endDate
+                                    @RequestParam(required = false) LocalDate startDate, @RequestParam(required = false) LocalDate endDate, String sortOrder
                                     ) {
 
    //     return travelService.findAll();
-        return travelService.findAll(destination, travelCategory, travelVehicleType, travelAccUnitType, minPrice, maxPrice, startDate, endDate);
+        return travelService.findAll(destination, travelCategory, travelVehicleType, travelAccUnitType, minPrice, maxPrice, startDate, endDate, sortOrder);
     }
 
     @GetMapping(value = "/dashboard/travels/filterVehiclesByDestination", produces = MediaType.APPLICATION_JSON_VALUE)

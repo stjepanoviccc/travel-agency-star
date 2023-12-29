@@ -84,22 +84,10 @@ $(document).ready(() => {
     // users filtering
     $('#applyDashboardUserFilterSubmitButton').on('click', event => {
         event.preventDefault();
+
         const sortOrder = $('#userDashboardSortOrder').val();
-        usersFunctions.filterDashboardUser(usersFunctions.getFilterValues().username, usersFunctions.getFilterValues().role, sortOrder);
-    });
-
-    $('#sortDashboardUserButton').on('click', event => {
-        event.preventDefault();
-
-        let sortOrder = $('#userDashboardSortOrder').val();
-        if(sortOrder == "asc") {
-            sortOrder="desc";
-        } else {
-            sortOrder = "asc";
-        }
-        $('#userDashboardSortOrder').val(sortOrder);
-
-        usersFunctions.filterDashboardUser(usersFunctions.getFilterValues().username, usersFunctions.getFilterValues().role, sortOrder);
+        usersFunctions.filterDashboardUser(usersFunctions.getFilterValues().username, usersFunctions.getFilterValues().usernameSort,
+            usersFunctions.getFilterValues().role, usersFunctions.getFilterValues().roleSort);
     });
 
     $('#clearDashboardUserFilterButton').on('click', event => {
@@ -107,9 +95,11 @@ $(document).ready(() => {
 
         const clearValues = "";
         $('#filterDashboardUsersByUsername').val(clearValues);
+        $('#sortDashboardUsersByUsername').prop('selectedIndex', 0);
         $('#filterDashboardUsersByRole').prop('selectedIndex', 0);
-
-        usersFunctions.filterDashboardUser(clearValues, clearValues, "asc");
+        $('#sortDashboardUsersByRole').prop('selectedIndex', 0);
+        let clearing = true;
+        usersFunctions.filterDashboardUser(clearValues, "asc", clearValues, "asc", clearing);
     })
 
 });

@@ -130,11 +130,11 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
-    public List<User> findByUsername(String username, String sortOrder) {
+    public List<User> findByUsername(String username, String usernameSort) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role, u.blocked " +
-                        "FROM user u WHERE LOWER(u.username) LIKE LOWER(CONCAT(?, '%')) ORDER BY u.id_user " + sortOrder;
+                        "FROM user u WHERE LOWER(u.username) LIKE LOWER(CONCAT(?, '%')) ORDER BY u.username " + usernameSort;
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, username);
@@ -142,11 +142,11 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
-    public List<User> findByRole(String role, String sortOrder) {
+    public List<User> findByRole(String role, String roleSort) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role, u.blocked " +
-                        "FROM user u WHERE u.user_role = ? ORDER BY u.id_user " + sortOrder;
+                        "FROM user u WHERE u.user_role = ? ORDER BY u.user_role " + roleSort;
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, role);
@@ -154,11 +154,13 @@ public class DatabaseUserDAO implements IUserDao {
     }
 
     @Override
-    public List<User> findByUsernameAndRole(String username, String role, String sortOrder) {
+    public List<User> findByUsernameAndRole(String username, String usernameSort, String role, String roleSort) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
                         "u.user_role, u.blocked " +
-                        "FROM user u WHERE LOWER(u.username) LIKE LOWER(CONCAT(?, '%')) and u.user_role = ? ORDER BY u.id_user " + sortOrder;
+                        "FROM user u WHERE LOWER(u.username) LIKE LOWER(CONCAT(?, '%')) and u.user_role LIKE CONCAT(?, '%')";
+
+        sql += " ORDER BY u.user_role " + roleSort + ", u.username " + usernameSort;
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, username, role);

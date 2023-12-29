@@ -14,7 +14,7 @@ public interface IUserDao {
     User findOne(String username);
     List<User> findByUsername(String username, String sortOrder);
     List<User> findByRole(String role, String sortOrder);
-    List<User> findByUsernameAndRole(String username, String role, String sortOrder);
+    List<User> findByUsernameAndRole(String username, String usernameSort, String role, String roleSort);
     void save(User newUser);
     void update(User editUser);
     // physical delete
