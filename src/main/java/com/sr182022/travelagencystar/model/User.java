@@ -26,7 +26,7 @@ public class User {
     public User() {}
 
     public User(int id, String username, String password, String email, String surname, String name, LocalDate birthDate, String address, int phone,
-                 LocalDateTime registeredDate, Role role, boolean blocked) {
+                 LocalDateTime registeredDate, Role role, boolean blocked, LoyaltyCard loyaltyCard) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -39,6 +39,7 @@ public class User {
         this.registeredDate = registeredDate;
         this.role = role;
         this.blocked = blocked;
+        this.loyaltyCard = loyaltyCard;
     }
 
     public User(LoyaltyCard loyaltyCard) { this.loyaltyCard = loyaltyCard; }

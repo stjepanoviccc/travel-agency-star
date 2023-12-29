@@ -45,10 +45,12 @@ public class DatabaseUserDAO implements IUserDao {
             String user_role = resultSet.getString(index++);
             Role role = Role.valueOf(user_role);
             boolean blocked = resultSet.getBoolean(index++);
+            // avoid null
+            int id_loyalty_card = userService.findLoyaltyCard(resultSet.getInt(index++));
 
             User user = users.get(id_user);
             if (user == null) {
-                user = new User(id_user, username, password, email, surname, name, birth_date, user_address, user_phone, user_registered_date, role, blocked);
+                user = new User(id_user, username, password, email, surname, name, birth_date, user_address, user_phone, user_registered_date, role, blocked, id_loyalty_card);
                 users.put(user.getId(), user);
             }
         }
