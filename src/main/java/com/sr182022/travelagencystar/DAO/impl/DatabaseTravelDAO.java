@@ -121,8 +121,10 @@ public class DatabaseTravelDAO implements ITravelDAO {
 
 
     @Override
-    public List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice,
-                                LocalDate startDate, LocalDate endDate, String sortOrder) {
+    public List<Travel> findAll(String destination, String destinationSort, String travelCategory, String travelCategorySort, String travelVehicleType,
+                                String travelVehicleTypeSort, String travelAccUnitType, String travelAccUnitTypeSort,
+                                Float minPrice, Float maxPrice, String priceSort,
+                                LocalDate startDate, LocalDate endDate, String dateSort) {
         ArrayList<Object> argList = new ArrayList<Object>();
         String sql = "SELECT t.id_travel, t.travel_start_date, t.travel_end_date, t.number_of_nights, t.travel_category, " +
                 "t.id_destination, t.id_accommodation_unit, t.id_vehicle, t.travel_price FROM travel t " +
@@ -167,7 +169,7 @@ public class DatabaseTravelDAO implements ITravelDAO {
             argList.add(travelCategory);
         }
 
-        if(minPrice > 0 || maxPrice > 0) {
+        if(minPrice > 0 || (maxPrice > 0 && maxPrice != 999999F)) {
             if(hasArgs) {
                 whereSql.append(" AND ");
             }
@@ -177,8 +179,8 @@ public class DatabaseTravelDAO implements ITravelDAO {
             argList.add(maxPrice);
         }
 
-        if(startDate != null && endDate != null) {
-            if(hasArgs) {
+        if (startDate.isAfter(LocalDate.of(1999, 1, 1)) || endDate.isBefore(LocalDate.of(2099, 1, 1))) {
+            if (hasArgs) {
                 whereSql.append(" AND ");
             }
             whereSql.append("t.travel_start_date >= ? AND t.travel_end_date <= ? ");
@@ -188,9 +190,62 @@ public class DatabaseTravelDAO implements ITravelDAO {
         }
 
         if(hasArgs) {
-            sql += whereSql.toString()+" ORDER BY t.id_travel;";
+            sql += whereSql;
         }
-        else {
+
+        boolean hasSort = false;
+
+        if (!destinationSort.equals("Default")) {
+            sql += " ORDER BY d.destination_city " + destinationSort;
+            hasSort = true;
+        }
+
+        if (!travelCategorySort.equals("Default")) {
+            if (hasSort) {
+                sql += ", t.travel_category " + travelCategorySort;
+            } else {
+                sql += " ORDER BY t.travel_category " + travelCategorySort;
+                hasSort = true;
+            }
+        }
+
+        if (!travelVehicleTypeSort.equals("Default")) {
+            if (hasSort) {
+                sql += ", v.vehicle_type " + travelVehicleTypeSort;
+            } else {
+                sql += " ORDER BY v.vehicle_type " + travelVehicleTypeSort;
+                hasSort = true;
+            }
+        }
+
+        if (!travelAccUnitTypeSort.equals("Default")) {
+            if (hasSort) {
+                sql += ", a.accommodation_type " + travelAccUnitTypeSort;
+            } else {
+                sql += " ORDER BY a.accommodation_type " + travelAccUnitTypeSort;
+                hasSort = true;
+            }
+        }
+
+        if (!priceSort.equals("Default")) {
+            if (hasSort) {
+                sql += ", t.travel_price " + priceSort;
+            } else {
+                sql += " ORDER BY t.travel_price " + priceSort;
+                hasSort = true;
+            }
+        }
+
+        if (!dateSort.equals("Default")) {
+            if (hasSort) {
+                sql += ", t.travel_start_date " + dateSort;
+            } else {
+                sql += " ORDER BY t.travel_start_date " + dateSort;
+                hasSort = true;
+            }
+        }
+
+        if (!hasSort) {
             sql += " ORDER BY t.id_travel";
         }
 

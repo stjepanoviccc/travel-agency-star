@@ -27,41 +27,36 @@ $(document).ready(() => {
     $('#applyTravelFilterSubmitButton').on('click', event => {
         event.preventDefault();
 
-        travelFunctions.filterTravel(travelFunctions.getFilterValues().destination, travelFunctions.getFilterValues().travelCategory,
-            travelFunctions.getFilterValues().travelVehicleType, travelFunctions.getFilterValues().travelAccUnitType, travelFunctions.getFilterValues().minPrice,
-            travelFunctions.getFilterValues().maxPrice, travelFunctions.getFilterValues().startDate, travelFunctions.getFilterValues().endDate);
-    });
-
-    $('#sortTravelButton').on('click', event => {
-        event.preventDefault();
-
-        let sortOrder = $('#travelSortOrder').val();
-        if(sortOrder == "asc") {
-            sortOrder="desc";
-        } else {
-            sortOrder = "asc";
-        }
-        $('#travelSortOrder').val(sortOrder);
-
-        travelFunctions.filterTravel(travelFunctions.getFilterValues().destination, travelFunctions.getFilterValues().travelCategory,
-            travelFunctions.getFilterValues().travelVehicleType, travelFunctions.getFilterValues().travelAccUnitType, travelFunctions.getFilterValues().minPrice,
-            travelFunctions.getFilterValues().maxPrice, travelFunctions.getFilterValues().startDate, travelFunctions.getFilterValues().endDate);
+        travelFunctions.filterTravel(travelFunctions.getFilterValues().destination,  travelFunctions.getFilterValues().destinationSort,
+            travelFunctions.getFilterValues().travelCategory, travelFunctions.getFilterValues().travelCategorySort,
+            travelFunctions.getFilterValues().travelVehicleType, travelFunctions.getFilterValues().travelVehicleTypeSort,
+            travelFunctions.getFilterValues().travelAccUnitType, travelFunctions.getFilterValues().travelAccUnitTypeSort,
+            travelFunctions.getFilterValues().minPrice, travelFunctions.getFilterValues().maxPrice,  travelFunctions.getFilterValues().priceSort,
+            travelFunctions.getFilterValues().startDate, travelFunctions.getFilterValues().endDate, travelFunctions.getFilterValues().dateSort);
     });
 
     $('#clearTravelFilterButton').on('click', event => {
         event.preventDefault();
 
         const clearValues = "";
+        const defaultt = "Default";
         $('#filterTravelByDestination').val(clearValues);
+        $('#sortTravelByDestination').prop('selectedIndex', 0);
         $('#filterTravelByTravelCategory').prop('selectedIndex', 0);
+        $('#sortTravelByTravelCategory').prop('selectedIndex', 0);
         $('#travelVehicleTypeSelect').prop('selectedIndex', 0);
+        $('#sortTravelByTravelVehicleType').prop('selectedIndex', 0);
         $('#travelAccUnitTypeSelect').prop('selectedIndex', 0);
+        $('#sortTravelByTravelAccUnitType').prop('selectedIndex', 0);
         $('#filterTravelByMinPrice').val(clearValues);
         $('#filterTravelByMaxPrice').val(clearValues);
+        $('#sortTravelByPrice').prop('selectedIndex', 0);
         $('#filterTravelByStartDate').val(clearValues);
         $('#filterTravelByEndDate').val(clearValues);
+        $('#sortTravelByDate').prop('selectedIndex', 0);
 
-        travelFunctions.filterTravel(clearValues, clearValues, clearValues, clearValues, clearValues, clearValues ,clearValues, clearValues, "asc");
+        travelFunctions.filterTravel(clearValues, defaultt, clearValues, defaultt, clearValues, defaultt, clearValues, defaultt,
+            clearValues, clearValues, defaultt ,clearValues, clearValues, defaultt);
     })
 
     // vehicles and accc units filtering

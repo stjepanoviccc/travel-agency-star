@@ -12,6 +12,7 @@ public interface ITravelDAO {
     void save(Travel newTravel, int destinationId, int accommodationUnitId, int vehicleId);
     void update(Travel editTravel, int destinationId, int accommodationUnitId, int vehicleId);
     void delete(int travelId);
-    List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice,
-                         LocalDate startDate, LocalDate endDate, String sortOrder);
+    List<Travel> findAll(String destination, String destinationSort, String travelCategory, String travelCategorySort, String travelVehicleType,
+                         String travelVehicleTypeSort, String travelAccUnitType, String travelAccUnitTypeSort, Float minPrice,
+                         Float maxPrice, String priceSort, LocalDate startDate, LocalDate endDate, String dateSort);
 }

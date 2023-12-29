@@ -8,8 +8,10 @@ import java.util.List;
 public interface ITravelService {
     List<Travel> findAll();
     List<Travel> findAll(int destinationId);
-    List<Travel> findAll(String destination, String travelCategory, String travelVehicleType, String travelAccUnitType, Float minPrice, Float maxPrice,
-                         LocalDate startDate, LocalDate endDate, String sortOrder);
+    List<Travel> findAll(String destination, String destinationSort, String travelCategory, String travelCategorySort,
+                         String travelVehicleType, String travelVehicleTypeSort, String travelAccUnitType, String travelAccUnitTypeSort,
+                         Float minPrice, Float maxPrice, String priceSort,
+                         LocalDate startDate, LocalDate endDate, String dateSort);
     List<String> findAllTravelCategories();
     Travel findOne(int travelId);
     void save(Travel newTravel, int destinationId, int accommodationUnitId, int vehicleId);

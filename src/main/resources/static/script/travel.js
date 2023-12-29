@@ -6,23 +6,31 @@ import {getMessagesProperties} from "./messages.js";
 export const getFilterValues = () => {
     return {
         destination: $('#filterTravelByDestination').val(),
+        destinationSort: $('#sortTravelByDestination').val(),
         travelCategory: $('#filterTravelByTravelCategory').val(),
+        travelCategorySort: $('#sortTravelByTravelCategory').val(),
         travelVehicleType: $('#filterTravelByVehicleType').val(),
+        travelVehicleTypeSort: $('#sortTravelByTravelVehicleType').val(),
         travelAccUnitType: $('#filterTravelByAccUnitType').val(),
+        travelAccUnitTypeSort: $('#sortTravelByTravelAccUnitType').val(),
         minPrice: $('#filterTravelByMinPrice').val(),
         maxPrice: $('#filterTravelByMaxPrice').val(),
+        priceSort: $('#sortTravelByPrice').val(),
         startDate: $('#filterTravelByStartDate').val(),
         endDate: $('#filterTravelByEndDate').val(),
+        dateSort: $('#sortTravelByDate').val()
     };
 }
 
-export const filterTravel = (destination, category, vehicleType, accUnitType, minPrice, maxPrice, startDate, endDate)  => {
+export const filterTravel = (destination, destinationSort, category, categorySort, vehicleType, vehicleTypeSort, accUnitType, accUnitTypeSort, minPrice, maxPrice,
+                             priceSort, startDate, endDate, dateSort)  => {
 
     $.ajax({
         url: '/travel/filterTravel',
         method: 'GET',
-        data: { destination: destination, travelCategory: category, travelVehicleType: vehicleType, travelAccUnitType: accUnitType, minPrice: minPrice, maxPrice: maxPrice,
-                startDate: startDate, endDate: endDate},
+        data: { destination: destination, destinationSort: destinationSort, travelCategory: category, travelCategorySort: categorySort, travelVehicleType: vehicleType,
+            travelVehicleTypeSort: vehicleTypeSort, travelAccUnitType: accUnitType, travelAccUnitTypeSort: accUnitTypeSort, minPrice: minPrice, maxPrice: maxPrice,
+            priceSort: priceSort, startDate: startDate, endDate: endDate, dateSort: dateSort},
         dataType: 'json',
         success: data => {
             updateTravelsOnFilter(data);

@@ -11,8 +11,6 @@ public interface IUserService {
     // List<User> findAll(Role role);
     User findOne(int userId);
     User findOne(String username);
-    List<User> findByUsername(String username, String sortOrder);
-    List<User> findByRole(String role, String sortOrder);
     List<User> findByUsernameAndRole(String username, String usernameSort, String role, String roleSort);
     List<String> findAllRoles();
     void save(User newUser);

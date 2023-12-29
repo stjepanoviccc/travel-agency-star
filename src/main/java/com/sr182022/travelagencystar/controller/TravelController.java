@@ -65,14 +65,19 @@ public class TravelController {
 
     @GetMapping(value = "/travel/filterTravel", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Travel> filterTravels(@RequestParam(required = false) String destination, @RequestParam(required = false) String travelCategory,
-                                    @RequestParam(required = false) String travelVehicleType, @RequestParam(required = false) String travelAccUnitType,
+    public List<Travel> filterTravels(@RequestParam(required = false) String destination,  @RequestParam(required = false) String destinationSort,
+                                      @RequestParam(required = false) String travelCategory, @RequestParam(required = false) String travelCategorySort,
+                                    @RequestParam(required = false) String travelVehicleType,  @RequestParam(required = false) String travelVehicleTypeSort,
+                                      @RequestParam(required = false) String travelAccUnitType, @RequestParam(required = false) String travelAccUnitTypeSort,
                                     @RequestParam(required = false) Float minPrice, @RequestParam(required = false) Float maxPrice,
-                                    @RequestParam(required = false) LocalDate startDate, @RequestParam(required = false) LocalDate endDate, String sortOrder
+                                      @RequestParam(required = false) String priceSort,
+                                    @RequestParam(required = false) LocalDate startDate,@RequestParam(required = false) LocalDate endDate,
+                                      @RequestParam(required = false) String dateSort
                                     ) {
 
    //     return travelService.findAll();
-        return travelService.findAll(destination, travelCategory, travelVehicleType, travelAccUnitType, minPrice, maxPrice, startDate, endDate, sortOrder);
+        return travelService.findAll(destination, destinationSort, travelCategory, travelCategorySort, travelVehicleType, travelVehicleTypeSort,
+                travelAccUnitType, travelAccUnitTypeSort, minPrice, maxPrice, priceSort, startDate, endDate, dateSort);
     }
 
     @GetMapping(value = "/dashboard/travels/filterVehiclesByDestination", produces = MediaType.APPLICATION_JSON_VALUE)
