@@ -1,5 +1,6 @@
 package com.sr182022.travelagencystar.service;
 
+import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.model.Role;
 import com.sr182022.travelagencystar.model.User;
 

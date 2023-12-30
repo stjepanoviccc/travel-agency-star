@@ -1,6 +1,7 @@
 package com.sr182022.travelagencystar.service.impl;
 
 import com.sr182022.travelagencystar.DAO.IUserDao;
+import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.model.Role;
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.IUserService;
@@ -138,5 +139,4 @@ public class UserService implements IUserService {
 
         return findByUsernameAndRole(username, usernameSort, role, roleSort);
     }
-
 }

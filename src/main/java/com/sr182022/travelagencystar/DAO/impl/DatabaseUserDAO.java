@@ -1,8 +1,10 @@
 package com.sr182022.travelagencystar.DAO.impl;
 
 import com.sr182022.travelagencystar.DAO.IUserDao;
+import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.model.Role;
 import com.sr182022.travelagencystar.model.User;
+import com.sr182022.travelagencystar.service.impl.LoyaltyCardService;
 import com.sr182022.travelagencystar.utils.DateTimeUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,10 @@ public class DatabaseUserDAO implements IUserDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private LoyaltyCardService loyaltyCardService;
+
+
     private class UserRowCallBackHandler implements RowCallbackHandler {
 
         private Map<Integer, User> users = new LinkedHashMap<>();
@@ -45,12 +51,15 @@ public class DatabaseUserDAO implements IUserDao {
             String user_role = resultSet.getString(index++);
             Role role = Role.valueOf(user_role);
             boolean blocked = resultSet.getBoolean(index++);
-            // avoid null
-            int id_loyalty_card = userService.findLoyaltyCard(resultSet.getInt(index++));
+            int loyalty_card_id = resultSet.getInt(index++);
+            LoyaltyCard loyalty_card = null;
+            if(loyalty_card_id > -1) {
+                loyalty_card = loyaltyCardService.findOne(loyalty_card_id);
+            }
 
             User user = users.get(id_user);
             if (user == null) {
-                user = new User(id_user, username, password, email, surname, name, birth_date, user_address, user_phone, user_registered_date, role, blocked, id_loyalty_card);
+                user = new User(id_user, username, password, email, surname, name, birth_date, user_address, user_phone, user_registered_date, role, blocked, loyalty_card );
                 users.put(user.getId(), user);
             }
         }
@@ -64,7 +73,7 @@ public class DatabaseUserDAO implements IUserDao {
     public List<User> findAll() {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role, u.blocked " +
+                        "u.user_role, u.blocked, u.id_loyalty_card " +
                         "FROM user u ORDER BY u.id_user";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -76,7 +85,7 @@ public class DatabaseUserDAO implements IUserDao {
     public List<User> findAll(String sortOrder) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role, u.blocked " +
+                        "u.user_role, u.blocked, u.id_loyalty_card " +
                         "FROM user u ORDER BY u.id_user " + sortOrder;
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -101,7 +110,7 @@ public class DatabaseUserDAO implements IUserDao {
     public User findOne(int userId) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role, u.blocked " +
+                        "u.user_role, u.blocked, u.id_loyalty_card " +
                         "FROM user u WHERE u.id_user = ?";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -118,7 +127,7 @@ public class DatabaseUserDAO implements IUserDao {
     public User findOne(String username) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role, u.blocked " +
+                        "u.user_role, u.blocked, u.id_loyalty_card " +
                         "FROM user u WHERE u.username = ?";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -135,7 +144,7 @@ public class DatabaseUserDAO implements IUserDao {
     public List<User> findByUsernameAndRole(String username, String usernameSort, String role, String roleSort) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role, u.blocked " +
+                        "u.user_role, u.blocked, u.id_loyalty_card " +
                         "FROM user u WHERE LOWER(u.username) LIKE LOWER(CONCAT(?, '%')) and u.user_role LIKE CONCAT(?, '%') ";
 
         boolean hasSort = false;
@@ -167,7 +176,7 @@ public class DatabaseUserDAO implements IUserDao {
     public boolean doesUsernameExist(String username) {
         String sql =
                 "SELECT u.id_user, u.username, u.password, u.email, u.surname, u.name, u.birth_date, u.user_address, u.user_phone, u.user_registered_date," +
-                        "u.user_role, u.blocked " +
+                        "u.user_role, u.blocked, u.id_loyalty_card " +
                         "FROM user u WHERE u.username = ?";
 
         UserRowCallBackHandler rowCallBackHandler = new UserRowCallBackHandler();
@@ -204,8 +213,8 @@ public class DatabaseUserDAO implements IUserDao {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 String sql = "INSERT INTO user (username, email, password, surname, name, birth_date, user_address, user_phone, user_registered_date, user_role" +
-                        ",blocked)" +
-                        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        ",blocked,id_loyalty_card)" +
+                        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 int index = 1;
@@ -220,6 +229,7 @@ public class DatabaseUserDAO implements IUserDao {
                 preparedStatement.setTimestamp(index++, DateTimeUtil.convertLocalDateTimeToTimestamp(LocalDateTime.now()));
                 preparedStatement.setString(index++, Role.Passenger.name());
                 preparedStatement.setBoolean(index++, newUser.isBlocked());
+                preparedStatement.setInt(index++, -1);
 
                 return preparedStatement;
             }
@@ -234,11 +244,12 @@ public class DatabaseUserDAO implements IUserDao {
         String sql =
                 "UPDATE user u " +
                         "SET u.username = ?, u.email = ?, u.password = ?, u.surname = ?, u.name = ?, u.birth_date = ?, u.user_address = ?, u.user_phone = ?," +
-                        "u.blocked = ? " +
+                        "u.blocked = ?, u.id_loyalty_card = ? " +
                         "WHERE u.id_user = ?";
 
         jdbcTemplate.update(sql, editUser.getUsername(), editUser.getEmail(), editUser.getPassword(), editUser.getSurname(), editUser.getName(),
-                DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(), editUser.getId());
+                DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(), editUser.getId(),
+                editUser.getLoyaltyCard());
     }
 
     // physical delete

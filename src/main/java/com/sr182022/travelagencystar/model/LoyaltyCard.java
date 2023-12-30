@@ -2,15 +2,15 @@ package com.sr182022.travelagencystar.model;
 
 public class LoyaltyCard {
     private int id;
-    private float discount;
     private int points;
     private int userId;
+    private boolean activated;
 
-    public LoyaltyCard(int id, float discount, int points, int userId) {
+    public LoyaltyCard(int id, int points, int userId, boolean activated) {
         this.id = id;
-        this.discount = discount;
         this.points = points;
         this.userId = userId;
+        this.activated = activated;
     }
 
     public int getId() {
@@ -19,14 +19,6 @@ public class LoyaltyCard {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
     }
 
     public int getPoints() {
@@ -43,5 +35,13 @@ public class LoyaltyCard {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }

@@ -134,11 +134,11 @@ public class User {
         this.role = role;
     }
 
-    public LoyaltyCard getLoyaltyCardId() {
+    public LoyaltyCard getLoyaltyCard() {
         return loyaltyCard;
     }
 
-    public void setLoyaltyCard(LoyaltyCard loyaltyCardId) {
+    public void setLoyaltyCard(LoyaltyCard loyaltyCard) {
         this.loyaltyCard = loyaltyCard;
     }
 

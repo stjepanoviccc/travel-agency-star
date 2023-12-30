@@ -3,6 +3,7 @@ import * as dashboardFunctions from "./dashboard.js";
 import * as profileFunctions from "./profile.js";
 import * as travelFunctions from "./travel.js";
 import * as usersFunctions from "./users.js";
+import * as loyaltyCardFunctions from "./loyalty-card.js";
 
 $(document).ready(() => {
 
@@ -95,6 +96,13 @@ $(document).ready(() => {
         $('#sortDashboardUsersByRole').prop('selectedIndex', 0);
         let clearing = true;
         usersFunctions.filterDashboardUser(clearValues, "asc", clearValues, "asc", clearing);
+    })
+
+    // loyalty card
+    $("#askForLoyaltyCardButton").on('click', event => {
+        event.preventDefault();
+
+        loyaltyCardFunctions.askForLoyaltyCard(loyaltyCardFunctions.getFilterValues().userId);
     })
 
 });

@@ -29,7 +29,7 @@ export const filterDashboardUser = (username, usernameSort,  role, roleSort, cle
         url: '/filterDashboardUser',
         method: 'GET',
         data: { username: username, usernameSort: usernameSort, role: role, roleSort: roleSort, clearFilter: clearing},
-        dataType: 'json',
+        dataType: "json",
         success: data => {
             updateUsersOnFilter(data);
         },

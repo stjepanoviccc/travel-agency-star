@@ -1,0 +1,6 @@
+<form th:if="${session.user.role.name() == 'Passenger' && session.user.loyaltyCard == null}" th:fragment="askForLoyaltyCard"
+      id="askForLoyaltyCardForm" method="post" action="/loyaltyCard/askForLoyaltyCard">
+    <input type="hidden" th:value="${session.user.id}" name="userId" id="askForLoyaltyCardUserId" readonly />
+    <button class="mt-4 lg:mt-6 bg-red-600 text-white px-4 py-2 text-sm font-medium border-2 border-red-600 hover:bg-white hover:text-red-600
+               hover:border-red-600 transition duration-300 cursor-pointer" type="submit" th:text="#{textAskForLoyaltyCard}" id="askForLoyaltyCardButton"></button>
+</form>
