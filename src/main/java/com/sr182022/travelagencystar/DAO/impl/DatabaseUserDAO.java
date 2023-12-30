@@ -51,10 +51,10 @@ public class DatabaseUserDAO implements IUserDao {
             String user_role = resultSet.getString(index++);
             Role role = Role.valueOf(user_role);
             boolean blocked = resultSet.getBoolean(index++);
-            int loyalty_card_id = resultSet.getInt(index++);
+            int id_loyalty_card = resultSet.getInt(index++);
             LoyaltyCard loyalty_card = null;
-            if(loyalty_card_id > -1) {
-                loyalty_card = loyaltyCardService.findOne(loyalty_card_id);
+            if(id_loyalty_card > 0) {
+                loyalty_card = loyaltyCardService.findOne(id_user);
             }
 
             User user = users.get(id_user);
@@ -248,8 +248,8 @@ public class DatabaseUserDAO implements IUserDao {
                         "WHERE u.id_user = ?";
 
         jdbcTemplate.update(sql, editUser.getUsername(), editUser.getEmail(), editUser.getPassword(), editUser.getSurname(), editUser.getName(),
-                DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(), editUser.getId(),
-                editUser.getLoyaltyCard());
+                DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(),
+                editUser.getLoyaltyCard().getId(), editUser.getId());
     }
 
     // physical delete

@@ -6,6 +6,7 @@ export const askForLoyaltyCard = userId => {
         dataType: "text",
         success: data => {
             alert("You successfuly sent request for creating loyalty card.");
+            $("#askForLoyaltyCardForm").remove();
         },
         error: error => {
             alert("You either own or requested loyalty card.")

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -45,7 +47,7 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
     @Override
     public LoyaltyCard findOne(int userId) {
         String sql =
-                "SELECT l.id_loyalty_card, l.points, l.id_user, l.activated FROM loyalty_card l WHERE l.id_loyalty_card =  ?";
+                "SELECT l.id_loyalty_card, l.points, l.id_user, l.activated FROM loyalty_card l WHERE l.id_user =  ?";
         LoyaltyCardRowCallBackHandler rowCallBackHandler = new LoyaltyCardRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, userId);
         List<LoyaltyCard> lcList = rowCallBackHandler.getLoyaltyCards();
@@ -57,7 +59,7 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
     }
 
     @Override
-    public void save(int points, int userId, boolean activated) {
+    public int save(int points, int userId, boolean activated) {
         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -74,6 +76,8 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
             }
         };
 
-        jdbcTemplate.update(preparedStatementCreator);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(preparedStatementCreator, keyHolder);
+        return keyHolder.getKey().intValue();
     }
 }

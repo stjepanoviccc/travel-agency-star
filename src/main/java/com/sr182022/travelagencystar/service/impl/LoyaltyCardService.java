@@ -22,7 +22,7 @@ public class LoyaltyCardService implements ILoyaltyCardService {
     }
 
     @Override
-    public void save(int points, int userId, boolean activated) {
-        lcDao.save(points, userId, activated);
+    public int save(int points, int userId, boolean activated) {
+        return lcDao.save(points, userId, activated);
     }
 }

@@ -9,6 +9,6 @@
         <a th:if="${session.user.role.name() == 'Passenger'}" id="linkToProfileOrders"
            class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
                duration-300 cursor-pointer" th:href="@{'/profile/orders?id=' + ${session.user.id}}" th:text="#{linkingAboveHeaderTagProfileORDERS}"></a>
-        <div th:replace="~{fragments/forms/loyaltyCards/askForLoyaltyCard :: askForLoyaltyCard}"></div>
+        <div th:if="${session.user.role.name() == 'Passenger' && session.user.loyaltyCard == null}" th:replace="~{fragments/forms/loyaltyCards/askForLoyaltyCard :: askForLoyaltyCard}"></div>
     </div>
 </div>
