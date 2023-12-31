@@ -6,6 +6,9 @@ public class LoyaltyCard {
     private int userId;
     private boolean activated;
 
+    public LoyaltyCard(int id) {
+        this.id = id;
+    }
     public LoyaltyCard(int id, int points, int userId, boolean activated) {
         this.id = id;
         this.points = points;

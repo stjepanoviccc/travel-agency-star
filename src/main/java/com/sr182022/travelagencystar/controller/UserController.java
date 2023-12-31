@@ -29,6 +29,7 @@ public class UserController {
         try {
             return "/viewPages/login-info";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -38,6 +39,7 @@ public class UserController {
         try {
             return "/validationPages/userValidationInfo";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -60,6 +62,7 @@ public class UserController {
             }
             return "redirect:/dashboard";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -78,6 +81,7 @@ public class UserController {
             model.addAttribute("user", user);
             return "editPages/editUserPage";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -96,6 +100,7 @@ public class UserController {
             }
             return "redirect:/dashboard";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -112,6 +117,7 @@ public class UserController {
             }
             return "redirect:/dashboard";
         } catch(Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -127,6 +133,7 @@ public class UserController {
 
             return "redirect:/dashboard";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -142,6 +149,7 @@ public class UserController {
 
             return "redirect:/dashboard";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

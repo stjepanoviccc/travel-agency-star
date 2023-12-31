@@ -25,6 +25,7 @@ public class DestinationController {
         try {
             return "/validationPages/destinationValidationInfo";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -44,6 +45,7 @@ public class DestinationController {
 
             return "redirect:/dashboard/destinations";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -61,6 +63,7 @@ public class DestinationController {
             model.addAttribute("destination", destinationService.findOne(destinationId));
             return "editPages/editDestinationPage";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -81,6 +84,7 @@ public class DestinationController {
 
             return "redirect:/dashboard/destinations";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -94,6 +98,7 @@ public class DestinationController {
             destinationService.delete(destinationId);
             return "redirect:/dashboard/destinations";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

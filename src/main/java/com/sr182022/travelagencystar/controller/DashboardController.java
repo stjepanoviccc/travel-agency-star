@@ -2,6 +2,7 @@ package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.Destination;
+import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.service.*;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
@@ -23,16 +24,18 @@ public class DashboardController {
     private final IVehicleService vehicleService;
     private final IAccommodationUnitService accommodationUnitService;
     private final ITravelService travelService;
+    private final ILoyaltyCardService loyaltyCardService;
 
     @Autowired
     public DashboardController(IUserService userService, IDestinationService destinationService, IVehicleService vehicleService,
-                               IAccommodationUnitService accommodationUnitService, ITravelService travelService)
+                               IAccommodationUnitService accommodationUnitService, ITravelService travelService, ILoyaltyCardService loyaltyCardService)
     {
         this.userService = userService;
         this.destinationService = destinationService;
         this.vehicleService = vehicleService;
         this.accommodationUnitService = accommodationUnitService;
         this.travelService = travelService;
+        this.loyaltyCardService = loyaltyCardService;
     }
 
     @GetMapping()
@@ -49,6 +52,7 @@ public class DashboardController {
             model.addAttribute("sortOrder", "asc");
             return "dashboard";
         } catch(Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -62,6 +66,7 @@ public class DashboardController {
             model.addAttribute("dashboardDestinationsContent", destinationService.findAll());
             return "dashboard/destinations";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -77,6 +82,7 @@ public class DashboardController {
             model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
             return "dashboard/vehicles";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -92,6 +98,7 @@ public class DashboardController {
             model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
             return "dashboard/accommodation-units";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -111,6 +118,24 @@ public class DashboardController {
             model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
             return "dashboard/travels";
         } catch (Exception e) {
+            System.out.println(e);
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
+    @GetMapping("/loyaltyCards")
+    public String getProfileLoyaltyCardsPage(HttpSession session, Model model) {
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+
+            List<LoyaltyCard> loyaltyCards = loyaltyCardService.findAll();
+            model.addAttribute("loyaltyCards", loyaltyCards);
+            return "dashboard/loyalty-cards";
+
+        } catch(Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

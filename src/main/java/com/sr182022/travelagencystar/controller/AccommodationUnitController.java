@@ -25,6 +25,7 @@ public class AccommodationUnitController {
         try {
             return "/validationPages/accommodationUnitValidationInfo";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -51,6 +52,7 @@ public class AccommodationUnitController {
             return "redirect:/dashboard/accommodation-units";
 
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -69,6 +71,7 @@ public class AccommodationUnitController {
             model.addAttribute("accommodationTypesForSelectMenu", accommodationUnitService.findAllAccommodationTypes());
             return "editPages/editAccommodationUnitPage";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
 
@@ -91,6 +94,7 @@ public class AccommodationUnitController {
             return "redirect:/dashboard/accommodation-units";
 
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -104,6 +108,7 @@ public class AccommodationUnitController {
             accommodationUnitService.delete(accommodationUnitId);
             return "redirect:/dashboard/accommodation-units";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

@@ -31,6 +31,7 @@ public class WishlistController {
             }
             return "redirect:/";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -44,6 +45,7 @@ public class WishlistController {
             wishlistService.delete(idUser, idTravel);
             return "redirect:/profile/wishlist?id=" + idUser;
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

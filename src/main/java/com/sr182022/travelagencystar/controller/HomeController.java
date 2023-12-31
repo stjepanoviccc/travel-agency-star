@@ -59,6 +59,7 @@ public class HomeController {
             model.addAttribute("sortOrder", "asc");
             return "index";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

@@ -29,6 +29,7 @@ public class VehicleController {
         try {
             return "/validationPages/vehicleValidationInfo";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -48,6 +49,7 @@ public class VehicleController {
             return "redirect:/dashboard/vehicles";
 
         } catch (Exception ex) {
+            System.out.println(ex);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -67,6 +69,7 @@ public class VehicleController {
             model.addAttribute("destinationsForSelectMenu", destinationService.findAll());
             return "editPages/editVehiclePage";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -86,6 +89,7 @@ public class VehicleController {
             return "redirect:/dashboard/vehicles";
 
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -99,6 +103,7 @@ public class VehicleController {
             vehicleService.delete(vehicleId);
             return "redirect:/dashboard/vehicles";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

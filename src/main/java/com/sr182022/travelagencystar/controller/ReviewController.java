@@ -22,6 +22,7 @@ public class ReviewController {
             reviewService.delete(reviewId);
             return "redirect:/dashboard/vehicles";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

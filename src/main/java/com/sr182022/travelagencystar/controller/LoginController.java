@@ -41,6 +41,7 @@ public class LoginController {
                 return ErrorController.loginErrorReturn;
             }
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
 
@@ -60,6 +61,7 @@ public class LoginController {
 
             return "redirect:/";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

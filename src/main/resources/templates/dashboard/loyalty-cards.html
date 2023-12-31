@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Agency Star - Dashboard - Loyalty Cards</title>
+    <div th:replace="~{fragments/config/head :: headConfig}"></div>
+</head>
+<body>
+
+<!-- nav -->
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<!-- main content for this page -->
+<main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
+
+    <!-- fragment for changing page -->
+    <div th:replace="~{fragments/ui/dashboard/LinkingAboveHeaderTag :: LinkingAboveHeaderTag}"></div>
+
+    <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{dashboardLoyaltyCardsPageHeading}"></h1>
+
+    <h2 class="pt-6 pb-4 lg:pt-8 lg:pb-6 text-xl lg:text-2xl text-center lg:text-left" th:text="#{dashboardLoyaltyCardsPageSubheading}"></h2>
+
+    <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
+        <table class="min-w-full text-center font-light">
+            <thead class="border-b font-medium dark:border-neutral-500">
+            <tr >
+                <th scope="col" class="px-4 py-4">#</th>
+                <th scope="col" class="px-4 py-4" th:text="#{textUsername} + ' ID'"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textLoyaltyCardId}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textAccept}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textDecline}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:replace="~{fragments/tableItems/tableLoyaltyCardItem :: tableLoyaltyCardItem}"> </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" th:src="@{/script/script.js}"></script>
+</body>
+</html>

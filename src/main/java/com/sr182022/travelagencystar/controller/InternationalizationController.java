@@ -40,6 +40,7 @@ public class InternationalizationController {
 
             return "redirect:/";
         } catch(Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

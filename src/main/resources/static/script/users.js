@@ -1,5 +1,13 @@
 import {formatDate} from "./date.js";
 
+export const getFilterValues = () => {
+    return {
+        username : $('#filterDashboardUsersByUsername').val(),
+        usernameSort : $("#sortDashboardUsersByUsername").val(),
+        role : $('#filterDashboardUsersByRole').val(),
+        roleSort : $("#sortDashboardUsersByRole").val()
+    };
+}
 export const getUserFromSession = async () => {
     try {
         const response = await fetch('/getUserFromSession');
@@ -14,16 +22,6 @@ export const getUserFromSession = async () => {
         return null;
     }
 };
-
-export const getFilterValues = () => {
-    return {
-        username : $('#filterDashboardUsersByUsername').val(),
-        usernameSort : $("#sortDashboardUsersByUsername").val(),
-        role : $('#filterDashboardUsersByRole').val(),
-        roleSort : $("#sortDashboardUsersByRole").val()
-    };
-}
-
 export const filterDashboardUser = (username, usernameSort,  role, roleSort, clearing)  => {
     $.ajax({
         url: '/filterDashboardUser',

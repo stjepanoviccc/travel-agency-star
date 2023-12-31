@@ -10,6 +10,10 @@
                 duration-300 cursor-pointer" href="/dashboard/accommodation-units" th:text="#{linkingAboveHeaderTagACCOMMODATIONUNITS}"></a>
                 <a id="linkToVehiclesFromDashboard" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
                 duration-300 cursor-pointer" href="/dashboard/vehicles" th:text="#{linkingAboveHeaderTagVEHICLES}"></a>
+                <!-- implement button to see list of loyalty cards for appending here -->
+                <a id="linkToLoyaltyCards"
+                   class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition
+               duration-300 cursor-pointer" th:href="@{'/dashboard/loyaltyCards?id=' + ${session.user.id}}" th:text="#{linkingAboveHeaderTagProfileLOYALTYCARDS}"></a>
             </div>
             <div th:case="'Organizer'">
                 <a id="linkToTravelsFromDashboard" class="mt-4 lg:mt-6 bg-white-600 text-gray-600 px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-gray-600 hover:text-white transition

@@ -229,7 +229,7 @@ public class DatabaseUserDAO implements IUserDao {
                 preparedStatement.setTimestamp(index++, DateTimeUtil.convertLocalDateTimeToTimestamp(LocalDateTime.now()));
                 preparedStatement.setString(index++, Role.Passenger.name());
                 preparedStatement.setBoolean(index++, newUser.isBlocked());
-                preparedStatement.setInt(index++, -1);
+                preparedStatement.setNull(index++, Types.INTEGER);
 
                 return preparedStatement;
             }
@@ -247,9 +247,21 @@ public class DatabaseUserDAO implements IUserDao {
                         "u.blocked = ?, u.id_loyalty_card = ? " +
                         "WHERE u.id_user = ?";
 
-        jdbcTemplate.update(sql, editUser.getUsername(), editUser.getEmail(), editUser.getPassword(), editUser.getSurname(), editUser.getName(),
-                DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(),
-                editUser.getLoyaltyCard().getId(), editUser.getId());
+        LoyaltyCard card = loyaltyCardService.findOne(editUser.getId());
+        if(card != null) {
+            editUser.setLoyaltyCard(card);
+        }
+
+        if(card == null) {
+            jdbcTemplate.update(sql, editUser.getUsername(), editUser.getEmail(), editUser.getPassword(), editUser.getSurname(), editUser.getName(),
+                    DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(),
+                    null, editUser.getId());
+        }
+        else {
+            jdbcTemplate.update(sql, editUser.getUsername(), editUser.getEmail(), editUser.getPassword(), editUser.getSurname(), editUser.getName(),
+                    DateTimeUtil.convertLocalDateToTimestamp(editUser.getBirthDate()), editUser.getAddress(), editUser.getPhone(), editUser.isBlocked(),
+                    editUser.getLoyaltyCard().getId(), editUser.getId());
+        }
     }
 
     // physical delete

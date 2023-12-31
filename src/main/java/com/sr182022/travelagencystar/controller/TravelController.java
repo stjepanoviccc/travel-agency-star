@@ -39,6 +39,7 @@ public class TravelController {
         try {
             return "/validationPages/travelValidationInfo";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -59,6 +60,7 @@ public class TravelController {
             model.addAttribute("allTravels", travels);
             return "/viewPages/travel-details";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -111,6 +113,7 @@ public class TravelController {
             travelService.save(newTravel, destinationId, accommodationUnitId, vehicleId);
             return "redirect:/dashboard/travels";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
 
@@ -135,6 +138,7 @@ public class TravelController {
             model.addAttribute("travelCategoriesForSelectMenu", travelService.findAllTravelCategories());
             return "editPages/editTravelPage";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -160,6 +164,7 @@ public class TravelController {
             return "redirect:/dashboard/travels";
 
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -173,6 +178,7 @@ public class TravelController {
             travelService.delete(travelId);
             return "redirect:/dashboard/travels";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

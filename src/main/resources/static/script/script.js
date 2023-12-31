@@ -101,8 +101,21 @@ $(document).ready(() => {
     // loyalty card
     $("#askForLoyaltyCardButton").on('click', event => {
         event.preventDefault();
-
         loyaltyCardFunctions.askForLoyaltyCard(loyaltyCardFunctions.getFilterValues().userId);
+    })
+
+    $('#acceptLoyaltyCardButton').on('click', event => {
+        event.preventDefault();
+        const form = $(this).closest("form");
+        const itemId = form.find('input[name="loyaltyCardId"]').val();
+        loyaltyCardFunctions.acceptLoyaltyCard(itemId);
+    })
+
+    $('#declineLoyaltyCardButton').on('click', event => {
+        event.preventDefault();
+        const form = $(this).closest("form");
+        const itemId = form.find('input[name="loyaltyCardId"]').val();
+        loyaltyCardFunctions.declineLoyaltyCard(itemId);
     })
 
 });

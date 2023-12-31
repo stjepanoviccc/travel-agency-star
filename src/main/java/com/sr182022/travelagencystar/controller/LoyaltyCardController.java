@@ -26,7 +26,7 @@ public class LoyaltyCardController {
 
     @PostMapping("askForLoyaltyCard")
     public String askForLoyaltyCard(HttpSession session, @RequestParam int userId) {
-        // first it is false so it means manager must activate or delete it. also im fidning user and setting him this new id.
+        // first it is false so it means manager must activate or delete it. also im finding user and setting him this new id.
         try {
             if(!CheckRoleUtil.RolePassenger(session)) {
                 return ErrorController.permissionErrorReturn;
@@ -42,19 +42,44 @@ public class LoyaltyCardController {
             session.setAttribute("user", u);
             return "redirect:/profile?id=" + userId;
         } catch(Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
 
     @PostMapping("acceptLoyaltyCard")
-    public String acceptLoyaltyCard() {
-        return "";
+    public String acceptLoyaltyCard(HttpSession session, @RequestParam int loyaltyCardId) {
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+
+            loyaltyCardService.update(loyaltyCardId, 0);
+            User u = (User) session.getAttribute("user");
+            return "redirect:/dashboard/loyaltyCards?id=" + u.getId();
+        } catch(Exception e) {
+            System.out.println(e);
+            return ErrorController.internalErrorReturn;
+        }
+
     }
 
     // started working on this
-    @PostMapping("rejectLoyaltyCard")
-    public String declineLoyaltyCard() {
-        return "";
+    @PostMapping("declineLoyaltyCard")
+    public String declineLoyaltyCard(HttpSession session, @RequestParam int loyaltyCardId) {
+        try {
+            if(!CheckRoleUtil.RoleAdministrator(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+
+            loyaltyCardService.delete(loyaltyCardId);
+            User u = (User) session.getAttribute("user");
+            return "redirect:/dashboard/loyaltyCards?id=" + u.getId();
+
+        } catch(Exception e) {
+            System.out.println(e);
+            return ErrorController.internalErrorReturn;
+        }
     }
 
 }

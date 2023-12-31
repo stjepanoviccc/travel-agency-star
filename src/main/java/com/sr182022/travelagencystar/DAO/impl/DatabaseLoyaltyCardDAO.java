@@ -44,6 +44,16 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
         }
     }
 
+    // selecting only inactive (activated = 0);
+    @Override
+    public List<LoyaltyCard> findAll() {
+        String sql =
+                "SELECT * FROM loyalty_card lc WHERE lc.activated = 0 ORDER BY lc.id_loyalty_card";
+                LoyaltyCardRowCallBackHandler rowCallBackHandler = new LoyaltyCardRowCallBackHandler();
+                jdbcTemplate.query(sql, rowCallBackHandler);
+                return rowCallBackHandler.getLoyaltyCards();
+    }
+
     @Override
     public LoyaltyCard findOne(int userId) {
         String sql =
@@ -79,5 +89,24 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(preparedStatementCreator, keyHolder);
         return keyHolder.getKey().intValue();
+    }
+
+    @Override
+    public int update(int loyaltyCardId, int points) {
+        String sql =
+                "UPDATE loyalty_card lc " +
+                        "SET lc.points = ?, lc.activated = 1 WHERE id_loyalty_card = ?";
+
+        jdbcTemplate.update(sql, points, loyaltyCardId);
+        return loyaltyCardId;
+    }
+
+    @Override
+    public int delete(int loyaltyCardId) {
+        String sql =
+                "DELETE FROM loyalty_card lc WHERE lc.id_loyalty_card = ?";
+
+        jdbcTemplate.update(sql, loyaltyCardId);
+        return loyaltyCardId;
     }
 }

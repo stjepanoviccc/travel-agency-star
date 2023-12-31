@@ -1,6 +1,8 @@
 package com.sr182022.travelagencystar.controller;
 
+import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.model.WishlistItem;
+import com.sr182022.travelagencystar.service.ILoyaltyCardService;
 import com.sr182022.travelagencystar.service.IWishlistService;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +44,7 @@ public class ProfileController {
             return "profile";
 
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -62,6 +65,7 @@ public class ProfileController {
         return "profile/wishlist";
 
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }
@@ -76,9 +80,10 @@ public class ProfileController {
             if(loggedUser.getId() != id) {
                 return ErrorController.permissionErrorReturn;
             }
-            //
+
             return "profile/orders";
         } catch (Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

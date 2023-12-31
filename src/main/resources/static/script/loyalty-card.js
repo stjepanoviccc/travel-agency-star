@@ -1,3 +1,9 @@
+export const getFilterValues = () => {
+    return {
+        userId: $("#askForLoyaltyCardUserId").val()
+    };
+}
+
 export const askForLoyaltyCard = userId => {
     $.ajax({
         url:"/loyaltyCard/askForLoyaltyCard",
@@ -14,8 +20,32 @@ export const askForLoyaltyCard = userId => {
     })
 };
 
-export const getFilterValues = () => {
-    return {
-        userId: $("#askForLoyaltyCardUserId").val()
-    };
-}
+export const acceptLoyaltyCard = loyaltyCardId => {
+    $.ajax({
+        url:"/loyaltyCard/acceptLoyaltyCard",
+        method:"POST",
+        data:{loyaltyCardId: loyaltyCardId},
+        dataType: "text",
+        success: data => {
+            alert("Loyalty Card with ID: " + loyaltyCardId + " accepted.");
+        },
+        error: error => {
+            alert("Error accepting Loyalty Card.")
+        }
+    })
+};
+
+export const declineLoyaltyCard = loyaltyCardId => {
+    $.ajax({
+        url:"/loyaltyCard/declineLoyaltyCard",
+        method:"POST",
+        data:{loyaltyCardId: loyaltyCardId},
+        dataType: "text",
+        success: data => {
+            alert("Loyalty Card with ID: " + loyaltyCardId + " declined.");
+        },
+        error: error => {
+            alert("Error accepting Loyalty Card.")
+        }
+    })
+};

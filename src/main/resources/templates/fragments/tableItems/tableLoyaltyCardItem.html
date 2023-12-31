@@ -1,0 +1,11 @@
+<tr th:fragment="tableLoyaltyCardItem" th:each="card: ${loyaltyCards}" class="border-b dark:border-neutral-500">
+    <td class="whitespace-nowrap px-6 py-2 font-medium" th:text="${cardStat.count}"></td>
+    <td class="whitespace-nowrap px-6 py-2" th:text="${card.getUserId()}"></td>
+    <td class="whitespace-nowrap px-6 py-2" th:text="${card.getId()}"></td>
+    <td class="whitespace-nowrap px-6 py-2">
+        <div th:replace="~{fragments/forms/loyaltyCards/acceptLoyaltyCard :: acceptLoyaltyCard}"></div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-2">
+        <div th:replace="~{fragments/forms/loyaltyCards/declineLoyaltyCard :: declineLoyaltyCard}"></div>
+    </td>
+</tr>
