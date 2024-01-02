@@ -31,8 +31,8 @@
             <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${travel?.price} + '$'"></p>
 
             <!-- for reservation implementing soon -->
-            <input type="hidden" id="id" name="id" th:value="${travel?.id}" readonly/>
-            <form th:fragment="addTravelToCartForm" id="addTravelToCartForm" method="post" action="">
+            <form th:fragment="addTravelToCartForm" id="addTravelToCartForm" method="post" action="/cart/addToCart">
+                <input type="hidden" id="id" name="id" th:value="${travel?.id}" readonly/>
                 <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
                         th:text="#{textAddToCart}"></button>
             </form>

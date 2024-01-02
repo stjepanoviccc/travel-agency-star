@@ -19,31 +19,31 @@
             <tr >
                 <th scope="col" class="px-4 py-4">#</th>
                 <th scope="col" class="px-4 py-4" th:text="#{textDestination}"></th>
-                <th scope="col" class="px-4 py-4" th:text="#{cartPageTravelID}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textID}"></th>
                 <th scope="col" class="px-4 py-4" th:text="#{textStartDate}"></th>
                 <th scope="col" class="px-4 py-4" th:text="#{textEndDate}"></th>
-                <th scope="col" class="px-4 py-4" th:text="#{textVehicleType}"></th>
-                <th scope="col" class="px-4 py-4" th:text="#{textAccommodationType}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textVehicle}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textAUnit}"></th>
                 <th scope="col" class="px-4 py-4" th:text="#{textNights}"></th>
                 <th scope="col" class="px-4 py-4" th:text="#{textPrice}"></th>
-                <th scope="col" class="px-4 py-4" th:text="#{cartPagePassengers}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textPassengers}"></th>
                 <th scope="col" class="px-4 py-4" th:text="#{textRemove}"></th>
             </tr>
             </thead>
             <tbody>
-                <tr th:each=""></tr>
-                <tr th:replace="~{fragments/tableItems/tableCartItem :: tableCartItem}"> </tr>
-                <tr th:replace="~{fragments/tableItems/tableCartItem :: tableCartItem}"> </tr>
-                <tr th:replace="~{fragments/tableItems/tableCartItem :: tableCartItem}"> </tr>
-
+                <tr th:if="${cart != null and cart.size() > 0}" th:replace="~{fragments/tableItems/tableCartItem :: tableCartItem}"> </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
+    <div th:if="${cart != null}" class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
         <h3 class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice}"></h3>
         <button class="mt-4 px-4 py-2 text-xl border-2 border-green-600 bg-green-600 text-white rounded transition duration-300 hover:bg-white hover:text-green-600"
         th:text="#{cartPageConfirmPayment}"></button>
+    </div>
+
+    <div th:if="${cart == null}">
+        <p class="pt-4 text-center">No items to show.</p>
     </div>
 
 </main>

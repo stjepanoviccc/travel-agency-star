@@ -59,6 +59,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return vehicleType.name() + " - " + finalDestination.getCity() + " - " + description;
+        return description;
     }
 }
