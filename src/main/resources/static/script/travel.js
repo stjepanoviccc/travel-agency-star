@@ -54,7 +54,6 @@ export const updateTravelsOnFilter = async travels => {
         msg: await getMessagesProperties()
     }
 
-    console.log(travels);
     travels.forEach(travel => {
         const travelElement = document.createElement('div');
         travelElement.classList.add('w-full', 'rounded', 'overflow-hidden', 'shadow-lg', 'text-center', 'border-2', 'transform', 'transition-transform', 'duration-300', 'hover:scale-105');

@@ -2,8 +2,8 @@ package com.sr182022.travelagencystar.service;
 
 import com.sr182022.travelagencystar.model.CartItem;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,4 +13,6 @@ public interface ICartService {
     public void removeFromCart(LocalDateTime cartItemId, HttpSession session);
     boolean checkDoesExist(List<CartItem> cart, CartItem newCartItem);
     void initializeCartIfNull(HttpSession session);
+    void updateCart(HttpSession session, LocalDateTime cartItemId, int passengers);
+    String updateTotalPrice(HttpSession session);
 }

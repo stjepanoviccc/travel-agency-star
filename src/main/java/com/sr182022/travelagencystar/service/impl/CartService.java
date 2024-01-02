@@ -62,4 +62,26 @@ public class CartService implements ICartService {
             session.setAttribute("totalPrice", f);
         }
     }
+
+    @Override
+    public void updateCart(HttpSession session, LocalDateTime cartItemId, int passengers) {
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+        for(CartItem item : cart) {
+            if(item.getCartItemId().equals(cartItemId)) {
+                int prePassengersNum = item.getPassengers();
+                int newPassengersNum = passengers;
+                item.setPassengers(newPassengersNum);
+                float totalPrice = (float) session.getAttribute("totalPrice");
+                totalPrice -= prePassengersNum * item.getTravel().getPrice();
+                totalPrice += newPassengersNum * item.getTravel().getPrice();
+                session.setAttribute("totalPrice", totalPrice);
+            }
+        }
+    }
+
+    @Override
+    public String updateTotalPrice(HttpSession session) {
+        Float tp = (Float) session.getAttribute("totalPrice");
+        return tp.toString();
+    }
 }

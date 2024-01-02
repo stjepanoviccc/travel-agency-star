@@ -37,7 +37,8 @@
     </div>
 
     <div th:if="${cart != null}" class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
-        <h3 class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice}"></h3>
+        <h3 th:if="${totalPrice == null}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + '0.0$'"></h3>
+        <h3 th:if="${totalPrice != null}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + ${totalPrice} + '$'" id="totalPrice"></h3>
         <button class="mt-4 px-4 py-2 text-xl border-2 border-green-600 bg-green-600 text-white rounded transition duration-300 hover:bg-white hover:text-green-600"
         th:text="#{cartPageConfirmPayment}"></button>
     </div>

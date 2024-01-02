@@ -11,7 +11,8 @@
     <td class="whitespace-nowrap px-6 py-4">
         <form action="/cart/updateCart" method="post">
             <input type="hidden" name="cartItemId" th:value="${item.cartItemId}" />
-            <input class="w-12 text-center border-2 border-black" type="number" name="cartItemPassengers" min="1" th:value="${item.passengers}" />
+            <input type="number" class="w-10 text-center border-2 border-black cartItemPassengers" name="cartItemPassengers" min="1" th:value="${item.passengers}" />
+            <button type="submit" class="btnUpdateCartJs" th:text="#{textSave}"></button>
         </form>
     </td>
     <td class="whitespace-nowrap px-6 py-4">

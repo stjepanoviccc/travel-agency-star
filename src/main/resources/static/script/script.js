@@ -4,6 +4,7 @@ import * as profileFunctions from "./profile.js";
 import * as travelFunctions from "./travel.js";
 import * as usersFunctions from "./users.js";
 import * as loyaltyCardFunctions from "./loyalty-card.js";
+import * as cartFunctions from "./cart.js";
 
 $(document).ready(() => {
 
@@ -116,6 +117,28 @@ $(document).ready(() => {
         const form = $(this).closest("form");
         const itemId = form.find('input[name="loyaltyCardId"]').val();
         loyaltyCardFunctions.declineLoyaltyCard(itemId);
+    })
+
+    // cart functionalities
+    $('.btnUpdateCartJs').on('click', event => {
+        event.preventDefault();
+        const clickedButton = $(event.currentTarget);
+        const minPassengers = 1;
+        const maxPassengers = 1000;
+        const form = clickedButton.closest('form');
+        const cartItemId = form.find('input[name="cartItemId"]').val();
+        let passengers = form.find('input[name="cartItemPassengers"]').val();
+        passengers = Math.round(passengers);
+
+        if(passengers < minPassengers || passengers > maxPassengers) {
+          alert("Check your passengers num. Update failed");
+          return;
+        }
+
+        cartFunctions.updateCart(cartItemId, passengers);
+        setTimeout(() => {
+            cartFunctions.updateTotalPrice();
+        },100);
     })
 
 });
