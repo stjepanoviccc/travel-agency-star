@@ -1,0 +1,5 @@
+<form th:fragment="addToCartForm" action="/cart/updateCart" method="post">
+    <input type="hidden" name="cartItemId" th:value="${item.cartItemId}" />
+    <input type="number" class="w-10 text-center border-2 border-black cartItemPassengers" name="cartItemPassengers" min="1" th:value="${item.passengers}" />
+    <button type="submit" class="btnUpdateCartJs" th:text="#{textSave}"></button>
+</form>

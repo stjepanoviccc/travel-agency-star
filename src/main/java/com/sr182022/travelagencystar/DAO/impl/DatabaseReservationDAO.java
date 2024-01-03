@@ -1,19 +1,19 @@
 package com.sr182022.travelagencystar.DAO.impl;
 
 import com.sr182022.travelagencystar.DAO.IReservationDAO;
-import com.sr182022.travelagencystar.model.Destination;
 import com.sr182022.travelagencystar.model.Reservation;
 import com.sr182022.travelagencystar.model.Travel;
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.ITravelService;
 import com.sr182022.travelagencystar.service.IUserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,13 +44,15 @@ public class DatabaseReservationDAO implements IReservationDAO {
             int id_travel = resultSet.getInt(index++);
             int id_user = resultSet.getInt(index++);
             int passengers = resultSet.getInt(index++);
+            float price = resultSet.getFloat(index++);
 
             Travel travel = travelService.findOne(id_travel);
             User user = userService.findOne(id_user);
 
             Reservation reservation = reservations.get(id_reservation);
             if (reservation == null) {
-                reservation = new Reservation(id_reservation, travel, user, passengers);
+                reservation = new Reservation(id_reservation, travel, user, passengers, price);
+                reservations.put(reservation.getReservationId(), reservation);
             }
         }
 
@@ -62,7 +64,7 @@ public class DatabaseReservationDAO implements IReservationDAO {
     @Override
     public List<Reservation> findAll() {
         String sql =
-                "SELECT r.id_reservation, r.id_travel, r.id_user, r.passengers " +
+                "SELECT r.id_reservation, r.id_travel, r.id_user, r.passengers, r.price " +
                         "FROM reservation r ORDER BY r.id_reservation";
 
         ReservationRowCallBackHandler rowCallBackHandler = new ReservationRowCallBackHandler();
@@ -73,7 +75,7 @@ public class DatabaseReservationDAO implements IReservationDAO {
     @Override
     public Reservation findOne(int travelId, int userId) {
         String sql =
-                "SELECT r.id_reservation, r.id_travel, r.id_user, r.passengers " +
+                "SELECT r.id_reservation, r.id_travel, r.id_user, r.passengers, r.price " +
                         "FROM reservation r WHERE r.id_travel = ? and r.id_user = ?";
 
         ReservationRowCallBackHandler rowCallBackHandler = new ReservationRowCallBackHandler();
@@ -86,10 +88,29 @@ public class DatabaseReservationDAO implements IReservationDAO {
         }
     }
 
-    @Override void save(int travelId, int userId, int passengers) {
+    @Transactional
+    @Override
+    public void save(Reservation res) {
+        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                String sql = "INSERT INTO reservation (id_travel, id_user, passengers, price) " +
+                        "VALUES (?, ?, ?, ?)";
 
+                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                int index = 1;
+                preparedStatement.setInt(index++, res.getTravel().getId());
+                preparedStatement.setInt(index++, res.getUser().getId());
+                preparedStatement.setInt(index++, res.getPassengers());
+                preparedStatement.setFloat(index++, res.getPassengers() * res.getTravel().getPrice());
+                return preparedStatement;
+            }
+        };
+
+        jdbcTemplate.update(preparedStatementCreator);
     }
 
+    @Transactional
     @Override
     public void delete(int travelId, int userId) {
         String sql = "DELETE FROM reservation r WHERE r.id_travel = ? and r.id_user = ?";

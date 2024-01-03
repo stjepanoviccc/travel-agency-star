@@ -5,9 +5,17 @@ public class Reservation {
     private Travel travel;
     private User user;
     private int passengers;
+    private float price;
 
-    public Reservation(int reservationId, Travel travel, User user, int passengers) {
+    public Reservation(int reservationId, Travel travel, User user, int passengers, float price) {
         this.reservationId = reservationId;
+        this.travel = travel;
+        this.user = user;
+        this.passengers = passengers;
+        this.price = price;
+    }
+
+    public Reservation(Travel travel, User user, int passengers) {
         this.travel = travel;
         this.user = user;
         this.passengers = passengers;
@@ -43,5 +51,13 @@ public class Reservation {
 
     public void setPassengers(int passengers) {
         this.passengers = passengers;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

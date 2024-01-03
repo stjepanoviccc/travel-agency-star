@@ -6,6 +6,7 @@ import com.sr182022.travelagencystar.model.Travel;
 import com.sr182022.travelagencystar.model.User;
 import com.sr182022.travelagencystar.service.ICartService;
 import com.sr182022.travelagencystar.service.ITravelService;
+import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class CartController {
 
     @GetMapping
     public String getCartPage(HttpSession session, Model model) {
+        if(!CheckRoleUtil.RolePassenger(session)) {
+            return ErrorController.permissionErrorReturn;
+        }
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
         model.addAttribute("cart", cart);
         if(session.getAttribute("totalPrice") != null) {

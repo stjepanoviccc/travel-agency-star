@@ -1,0 +1,4 @@
+<form th:fragment="createReservationForm" action="/reservation/createReservation" method="post">
+    <button th:if="${totalPrice!=null && totalPrice>0}" class="mt-4 px-4 py-2 text-xl border-2 border-green-600 bg-green-600 text-white rounded transition duration-300
+    hover:bg-white hover:text-green-600" th:text="#{cartPageConfirmPayment}"></button>
+</form>

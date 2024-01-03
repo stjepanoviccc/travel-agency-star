@@ -7,5 +7,6 @@ import java.util.List;
 public interface IReservationDAO {
     List<Reservation> findAll();
     Reservation findOne(int travelId, int userId);
+    void save(Reservation res);
     void delete(int travelId, int userId);
 }
