@@ -1,8 +1,10 @@
 package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.LoyaltyCard;
+import com.sr182022.travelagencystar.model.Reservation;
 import com.sr182022.travelagencystar.model.WishlistItem;
 import com.sr182022.travelagencystar.service.ILoyaltyCardService;
+import com.sr182022.travelagencystar.service.IReservationService;
 import com.sr182022.travelagencystar.service.IWishlistService;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
@@ -22,10 +24,12 @@ public class ProfileController {
 
     private final IUserService userService;
     private final IWishlistService wishlistService;
+    private final IReservationService reservationService;
 
-    public ProfileController(IUserService userService, IWishlistService wishlistService) {
+    public ProfileController(IUserService userService, IWishlistService wishlistService, IReservationService reservationService) {
         this.userService = userService;
         this.wishlistService = wishlistService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping
@@ -80,6 +84,10 @@ public class ProfileController {
             if(loggedUser.getId() != id) {
                 return ErrorController.permissionErrorReturn;
             }
+
+            User user = (User) session.getAttribute("user");
+            List<Reservation> reservationList = reservationService.findAll(user.getId());
+            model.addAttribute("reservationList", reservationList);
 
             return "profile/orders";
         } catch (Exception e) {

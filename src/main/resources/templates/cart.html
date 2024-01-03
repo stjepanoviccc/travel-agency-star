@@ -37,8 +37,8 @@
     </div>
 
     <div th:if="${cart != null}" class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
-        <h3 th:if="${totalPrice == null}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + '0.0$'"></h3>
-        <h3 th:if="${totalPrice != null && totalPrice>0}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + ${totalPrice} + '$'" id="totalPrice"></h3>
+        <h3 th:if="${totalPrice == null}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + '0.0 din'"></h3>
+        <h3 th:if="${totalPrice != null && totalPrice>0}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + ${totalPrice} + ' din'" id="totalPrice"></h3>
         <div th:replace="~{fragments/forms/reservations/createReservation :: createReservationForm}"></div>
     </div>
 

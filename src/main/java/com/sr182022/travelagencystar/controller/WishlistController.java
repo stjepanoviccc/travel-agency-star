@@ -29,7 +29,7 @@ public class WishlistController {
             if(!doesExist) {
                 wishlistService.save(idUser, idTravel);
             }
-            return "redirect:/";
+            return "redirect:/profile/wishlist?id=" + idUser;
         } catch (Exception e) {
             System.out.println(e);
             return ErrorController.internalErrorReturn;

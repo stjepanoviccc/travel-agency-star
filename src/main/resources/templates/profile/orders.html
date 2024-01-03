@@ -19,9 +19,30 @@
     <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{profilePageHeading}"></h1>
 
     <h2 class="pt-6 pb-4 lg:pt-8 lg:pb-6 text-xl lg:text-2xl text-center lg:text-left" th:text="#{profileSubheadingOrders}"></h2>
+    <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
+        <table class="min-w-full text-center font-light">
+            <thead class="border-b font-medium dark:border-neutral-500">
+            <tr >
+                <th scope="col" class="px-4 py-4">#</th>
+                <th scope="col" class="px-4 py-4" th:text="#{textDestination}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textVehicle}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textAccommodationUnit}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textStartDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textEndDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textPrice}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textPassengers}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textBoughtAt}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${reservationList != null and reservationList.size() > 0}" th:replace="~{fragments/tableItems/tableOrderItem :: tableOrderItem}"></tr>
+            </tbody>
+        </table>
 
-    <p>ovde ce biti sve kupovine tj rezervacije</p>
+        <p class="pt-4 text-center" th:unless="${reservationList != null and reservationList.size() > 0}" th:text="#{textNoContentToShow}">
 
+        </p>
+    </div>
 </main>
 
 <!-- footer -->

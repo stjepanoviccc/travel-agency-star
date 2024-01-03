@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface IReservationService {
     List<Reservation> findAll();
+    List<Reservation> findAll(int userId);
     Reservation findOne(int travelId, int userId);
     void save(Reservation res);
     void delete(int travelId, int userId);

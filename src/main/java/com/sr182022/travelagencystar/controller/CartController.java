@@ -35,50 +35,63 @@ public class CartController {
 
     @GetMapping
     public String getCartPage(HttpSession session, Model model) {
-        if(!CheckRoleUtil.RolePassenger(session)) {
-            return ErrorController.permissionErrorReturn;
-        }
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        model.addAttribute("cart", cart);
-        if(session.getAttribute("totalPrice") != null) {
-            float totalPrice = (float) session.getAttribute("totalPrice");
-            model.addAttribute("totalPrice", totalPrice);
-        }
+        try {
+            if(!CheckRoleUtil.RolePassenger(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+            model.addAttribute("cart", cart);
+            if(session.getAttribute("totalPrice") != null) {
+                float totalPrice = (float) session.getAttribute("totalPrice");
+                model.addAttribute("totalPrice", totalPrice);
+            }
 
-        return "cart";
+            return "cart";
+        } catch(Exception e) {
+            return ErrorController.internalErrorReturn;
+        }
     }
 
     @PostMapping("addToCart")
     public String addToCart(HttpSession session, @RequestParam int id) {
-        Travel newTravel = travelService.findOne(id);
-        User user = (User) session.getAttribute("user");
-        if(user == null || user.getRole().equals(Role.Administrator) || user.getRole().equals(Role.Organizer)) {
-            return ErrorController.permissionErrorReturn;
-        }
-        cartService.initializeCartIfNull(session);
+        try {
+            Travel newTravel = travelService.findOne(id);
+            User user = (User) session.getAttribute("user");
+            if(user == null || user.getRole().equals(Role.Administrator) || user.getRole().equals(Role.Organizer)) {
+                return ErrorController.permissionErrorReturn;
+            }
+            cartService.initializeCartIfNull(session);
 
-        // local date is id. setting new travel and initial number of passengers which can be changed on cart page.
-        CartItem newCartItem = new CartItem(LocalDateTime.now(), newTravel, 1);
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        boolean doesCartItemExist = cartService.checkDoesExist(cart, newCartItem);
-        if(doesCartItemExist == true) {
+            // local date is id. setting new travel and initial number of passengers which can be changed on cart page.
+            CartItem newCartItem = new CartItem(LocalDateTime.now(), newTravel, 1);
+            List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+            boolean doesCartItemExist = cartService.checkDoesExist(cart, newCartItem);
+            if(doesCartItemExist == true) {
+                return "redirect:/cart";
+            }
+
+            cartService.addToCart(newCartItem, session);
             return "redirect:/cart";
+        } catch(Exception e) {
+            return ErrorController.internalErrorReturn;
         }
-
-        cartService.addToCart(newCartItem, session);
-        return "redirect:/cart";
     }
 
     @PostMapping("updateCart")
     public String updateCart(HttpSession session, @RequestParam LocalDateTime cartItemId,
                              @RequestParam int passengers) {
-        User user = (User) session.getAttribute("user");
-        if(user == null || user.getRole().equals(Role.Administrator) || user.getRole().equals(Role.Organizer)) {
-            return ErrorController.permissionErrorReturn;
+        try {
+            User user = (User) session.getAttribute("user");
+            if(user == null || user.getRole().equals(Role.Administrator) || user.getRole().equals(Role.Organizer)) {
+                return ErrorController.permissionErrorReturn;
+            }
+
+            cartService.updateCart(session, cartItemId, passengers);
+            return "redirect:/cart";
+        } catch(Exception e) {
+            return ErrorController.internalErrorReturn;
         }
 
-        cartService.updateCart(session, cartItemId, passengers);
-        return "redirect:/cart";
     }
 
     @GetMapping("/updateTotalPrice")
@@ -96,17 +109,21 @@ public class CartController {
 
     @PostMapping("removeFromCart")
     public String deleteFromCart(HttpSession session, @RequestParam LocalDateTime cartItemId) {
-        User user = (User) session.getAttribute("user");
-        if(user == null || user.getRole().equals(Role.Administrator) || user.getRole().equals(Role.Organizer)) {
-            return ErrorController.permissionErrorReturn;
-        }
+        try {
+            User user = (User) session.getAttribute("user");
+            if(user == null || user.getRole().equals(Role.Administrator) || user.getRole().equals(Role.Organizer)) {
+                return ErrorController.permissionErrorReturn;
+            }
 
-        List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-        if(cart == null) {
+            List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+            if(cart == null) {
+                return ErrorController.internalErrorReturn;
+            }
+
+            cartService.removeFromCart(cartItemId, session);
+            return "redirect:/cart";
+        } catch(Exception e) {
             return ErrorController.internalErrorReturn;
         }
-
-        cartService.removeFromCart(cartItemId, session);
-        return "redirect:/cart";
     }
 }

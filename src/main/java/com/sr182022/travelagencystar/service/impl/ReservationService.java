@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class ReservationService implements IReservationService {
     @Override
     public List<Reservation> findAll() {
         return reservationDAO.findAll();
+    }
+
+    @Override
+    public List<Reservation> findAll(int userId) {
+        return reservationDAO.findAll(userId);
     }
 
     @Override
@@ -61,7 +67,7 @@ public class ReservationService implements IReservationService {
 
         List<Reservation> resList = new ArrayList<Reservation>();
         for(CartItem i : cart) {
-            Reservation res = new Reservation(i.getTravel(), user, i.getPassengers());
+            Reservation res = new Reservation(i.getTravel(), user, i.getPassengers(), LocalDateTime.now().plusHours(1));
             save(res);
         }
 

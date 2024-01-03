@@ -25,7 +25,7 @@ export const updateTotalPrice = () => {
                 msg: await getMessagesProperties()
             }
             const text = messages.msg.cartPageTotalPrice;
-            $("#totalPrice").text(text + " " + newTotalPrice + "$");
+            $("#totalPrice").text(text + " " + newTotalPrice + " din");
         },
         error: error => {
             alert("Error updating total price.")

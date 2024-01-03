@@ -28,7 +28,7 @@
             <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${#temporals.format(travel.endDate, 'dd.MM.yyyy')}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${travel?.numberOfNights}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textTravelCategory} + ': ' + ${travel?.travelCategory}"></p>
-            <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${travel?.price} + '$'"></p>
+            <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${travel?.price} + ' din'"></p>
 
             <!-- for reservation implementing soon -->
             <form th:fragment="addTravelToCartForm" id="addTravelToCartForm" method="post" action="/cart/addToCart">
@@ -75,11 +75,11 @@
                     <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${#temporals.format(t.endDate, 'dd.MM.yyyy')}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${t.numberOfNights}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{textTravelCategory} + ': ' + ${t.travelCategory}"></p>
-                    <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${t.price} + '$'"></p>
+                    <p class="block font-medium text-xl mt-3" th:text="#{textPrice} + ': ' + ${t.price} + ' din'"></p>
 
                     <!-- for reservation implementing soon -->
-                    <input type="hidden" name="id" th:value="${t?.id}" readonly/>
-                    <form th:fragment="addTravelToCartForm" method="post" action="">
+                    <form th:fragment="addTravelToCartForm" id="addTravelToCartForm2" method="post" action="/cart/addToCart">
+                        <input type="hidden" name="id" th:value="${travel?.id}" readonly/>
                         <button type="submit" class="gap-x-4 mt-8 bg-red-600 hover:bg-red-700 text-white border-2 border-red-700 font-bold py-2 px-4 rounded"
                                 th:text="#{textAddToCart}"></button>
                     </form>
