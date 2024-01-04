@@ -2,16 +2,27 @@ package com.sr182022.travelagencystar.model;
 
 public class TravelReservation {
     private int tr_id;
-    private int id_travel;
-    private int id_reservation;
+    private Travel travel;
     private int totalSpace;
     private int soldSpace;
     private int availableSpace;
 
-    public TravelReservation(int tr_id, int id_travel, int id_reservation, int totalSpace, int soldSpace, int availableSpace) {
+    public TravelReservation(int soldSpace, int availableSpace, int tr_id) {
+        this.soldSpace = soldSpace;
+        this.availableSpace = availableSpace;
         this.tr_id = tr_id;
-        this.id_travel = id_travel;
-        this.id_reservation = id_reservation;
+    }
+
+    public TravelReservation(Travel travel, int totalSpace, int soldSpace, int availableSpace) {
+        this.travel = travel;
+        this.totalSpace = totalSpace;
+        this.soldSpace = soldSpace;
+        this.availableSpace = availableSpace;
+    }
+
+    public TravelReservation(int tr_id, Travel travel, int totalSpace, int soldSpace, int availableSpace) {
+        this.tr_id = tr_id;
+        this.travel = travel;
         this.totalSpace = totalSpace;
         this.soldSpace =soldSpace;
         this.availableSpace = availableSpace;
@@ -25,20 +36,12 @@ public class TravelReservation {
         this.tr_id = tr_id;
     }
 
-    public int getId_travel() {
-        return id_travel;
+    public Travel getTravel() {
+        return travel;
     }
 
-    public void setId_travel(int id_travel) {
-        this.id_travel = id_travel;
-    }
-
-    public int getId_reservation() {
-        return id_reservation;
-    }
-
-    public void setId_reservation(int id_reservation) {
-        this.id_reservation = id_reservation;
+    public void setTravel(Travel travel) {
+        this.travel = travel;
     }
 
     public int getTotalSpace() {

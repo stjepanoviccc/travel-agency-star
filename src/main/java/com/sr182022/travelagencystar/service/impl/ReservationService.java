@@ -46,6 +46,8 @@ public class ReservationService implements IReservationService {
 
     @Override
     public boolean validateReservation(HttpSession session) {
+        return true;
+        /*
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
         User user = (User) session.getAttribute("user");
         List<Reservation> allRes = findAll();
@@ -57,7 +59,7 @@ public class ReservationService implements IReservationService {
                 }
             }
         }
-        return true;
+        return true; */
     }
 
     @Override
@@ -71,11 +73,6 @@ public class ReservationService implements IReservationService {
             save(res);
         }
 
-        // clear after success creating
-        cart.clear();
-        session.setAttribute("cart", cart);
-        float f = 0;
-        session.setAttribute("totalPrice", f);
         return resList;
     }
 }

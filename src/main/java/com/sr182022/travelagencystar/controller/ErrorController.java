@@ -10,6 +10,7 @@ public class ErrorController {
     public static final String permissionErrorReturn = "redirect:/permission-error";
     public static final String routeErrorReturn = "redirect:/route-error";
     public static final String internalErrorReturn = "redirect:/internal-error";
+    public static final String availableSpaceErrorReturn = "redirect:/space-error";
 
     @GetMapping("/login-error")
     public String getLoginErrorPage() {
@@ -25,4 +26,6 @@ public class ErrorController {
     @GetMapping("/internal-error")
     public String getInternalErrorPage() { return "/errorPages/internalErrorPage"; }
 
+    @GetMapping("/space-error")
+    public String getAvailableSpaceErrorPage() { return "/errorPages/availableSpaceErrorPage"; }
 }

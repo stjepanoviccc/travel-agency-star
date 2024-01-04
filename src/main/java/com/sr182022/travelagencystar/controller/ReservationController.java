@@ -1,7 +1,9 @@
 package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.Reservation;
+import com.sr182022.travelagencystar.model.TravelReservation;
 import com.sr182022.travelagencystar.service.IReservationService;
+import com.sr182022.travelagencystar.service.ITravelReservation;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,12 @@ import java.util.List;
 @RequestMapping("/reservation")
 public class ReservationController {
     private IReservationService reservationService;
+    private ITravelReservation trService;
 
     @Autowired
-    public ReservationController(IReservationService reservationService) {
+    public ReservationController(IReservationService reservationService, ITravelReservation trService) {
         this.reservationService = reservationService;
+        this.trService = trService;
     }
 
     @PostMapping("createReservation")
@@ -29,14 +33,17 @@ public class ReservationController {
             }
 
             boolean validation = reservationService.validateReservation(session);
-            if(!validation) {
-                // handle false validity
-                return "redirect:/cart";
+            boolean passengerValidation = trService.passengerValidation(session);
+            if(!validation || !passengerValidation) {
+                return ErrorController.availableSpaceErrorReturn;
             }
 
-            List<Reservation> reservations = reservationService.createReservation(session);
+            reservationService.createReservation(session);
+            trService.createTravelReservation(session);
+
             return "redirect:/cart";
         } catch(Exception e) {
+            System.out.println(e);
             return ErrorController.internalErrorReturn;
         }
     }

@@ -104,6 +104,22 @@ public class DatabaseReservationDAO implements IReservationDAO {
         }
     }
 
+    @Override
+    public Reservation findOne(int reservationId) {
+        String sql =
+                "SELECT r.id_reservation, r.id_travel, r.id_user, r.passengers, r.price, r.created_at " +
+                        "FROM reservation r WHERE r.id_reservation = ?";
+
+        ReservationRowCallBackHandler rowCallBackHandler = new ReservationRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, reservationId);
+        List<Reservation> reservationList = rowCallBackHandler.getReservations();
+        if (!reservationList.isEmpty()) {
+            return reservationList.get(0);
+        } else {
+            return null;
+        }
+    }
+
     @Transactional
     @Override
     public void save(Reservation res) {
