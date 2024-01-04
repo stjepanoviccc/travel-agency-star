@@ -124,13 +124,15 @@ public class DatabaseTravelDAO implements ITravelDAO {
     public List<Travel> findAll(String destination, String destinationSort, String travelCategory, String travelCategorySort, String travelVehicleType,
                                 String travelVehicleTypeSort, String travelAccUnitType, String travelAccUnitTypeSort,
                                 Float minPrice, Float maxPrice, String priceSort,
-                                LocalDate startDate, LocalDate endDate, String dateSort) {
+                                LocalDate startDate, LocalDate endDate, String dateSort, Integer nightsFrom, Integer nightsTo, String sortNights,
+                                Integer passengerAvailability, String sortTravelPassengerAvailability, String inputID, String sortTravelByID) {
         ArrayList<Object> argList = new ArrayList<Object>();
         String sql = "SELECT t.id_travel, t.travel_start_date, t.travel_end_date, t.number_of_nights, t.travel_category, " +
                 "t.id_destination, t.id_accommodation_unit, t.id_vehicle, t.travel_price FROM travel t " +
                 "LEFT JOIN destination d on d.id_destination = t.id_destination " +
                 "LEFT JOIN vehicle v on v.id_vehicle = t.id_vehicle " +
-                "LEFT JOIN accommodation_unit a on a.id_accommodation_unit = t.id_accommodation_unit ";
+                "LEFT JOIN accommodation_unit a on a.id_accommodation_unit = t.id_accommodation_unit " +
+                "LEFT JOIN travel_reservation tr on t.id_travel = tr.id_travel ";
 
         StringBuffer whereSql = new StringBuffer(" WHERE ");
         boolean hasArgs = false;
@@ -189,6 +191,35 @@ public class DatabaseTravelDAO implements ITravelDAO {
             argList.add(endDate);
         }
 
+        if(nightsFrom > 0 || (nightsTo > 0 && nightsTo != 999999)) {
+            if(hasArgs) {
+                whereSql.append(" AND ");
+            }
+            whereSql.append("t.number_of_nights >= ? AND t.number_of_nights <= ? ");
+            hasArgs = true;
+            argList.add(nightsFrom);
+            argList.add(nightsTo);
+        }
+
+        if(passengerAvailability > 0) {
+            if(hasArgs) {
+                whereSql.append(" AND ");
+            }
+            whereSql.append("a.accommodation_unit_capacity - COALESCE(tr.available_space, 0) >= ? ");
+            hasArgs = true;
+            argList.add(passengerAvailability);
+        }
+
+        if(!inputID.isEmpty()) {
+            if(hasArgs) {
+                whereSql.append(" AND ");
+            }
+            whereSql.append("t.id_travel like ? ");
+            hasArgs = true;
+            argList.add(inputID);
+            // argList.add('%' + inputID + '%');
+        }
+
         if(hasArgs) {
             sql += whereSql;
         }
@@ -243,6 +274,29 @@ public class DatabaseTravelDAO implements ITravelDAO {
                 sql += " ORDER BY t.travel_start_date " + dateSort;
                 hasSort = true;
             }
+        }
+
+        if (!sortNights.equals("Default")) {
+            if (hasSort) {
+                sql += ", t.number_of_nights " + sortNights;
+            } else {
+                sql += " ORDER BY t.number_of_nights " + sortNights;
+                hasSort = true;
+            }
+        }
+
+        if (!sortTravelPassengerAvailability.equals("Default")) {
+            if (hasSort) {
+                sql += ", a.accommodation_unit_capacity" + sortTravelPassengerAvailability;
+            } else {
+                sql += " ORDER BY a.accommodation_unit_capacity " + sortTravelPassengerAvailability;
+                hasSort = true;
+            }
+        }
+
+        if (!sortTravelByID.equals("Default")) {
+            sql += " ORDER BY t.id_travel " + sortTravelByID;
+            hasSort = true;
         }
 
         if (!hasSort) {

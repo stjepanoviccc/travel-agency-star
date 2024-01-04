@@ -14,5 +14,6 @@ public interface ITravelDAO {
     void delete(int travelId);
     List<Travel> findAll(String destination, String destinationSort, String travelCategory, String travelCategorySort, String travelVehicleType,
                          String travelVehicleTypeSort, String travelAccUnitType, String travelAccUnitTypeSort, Float minPrice,
-                         Float maxPrice, String priceSort, LocalDate startDate, LocalDate endDate, String dateSort);
+                         Float maxPrice, String priceSort, LocalDate startDate, LocalDate endDate, String dateSort, Integer nightsFrom, Integer nightsTo,
+                         String sortNights, Integer passengerAvailability, String sortTravelPassengersAvailability, String inputID, String sortTravelByID);
 }

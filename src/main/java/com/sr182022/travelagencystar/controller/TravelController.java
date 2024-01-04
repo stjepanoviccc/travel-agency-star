@@ -2,11 +2,9 @@ package com.sr182022.travelagencystar.controller;
 
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.Travel;
+import com.sr182022.travelagencystar.model.TravelReservation;
 import com.sr182022.travelagencystar.model.Vehicle;
-import com.sr182022.travelagencystar.service.IAccommodationUnitService;
-import com.sr182022.travelagencystar.service.IDestinationService;
-import com.sr182022.travelagencystar.service.ITravelService;
-import com.sr182022.travelagencystar.service.IVehicleService;
+import com.sr182022.travelagencystar.service.*;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
@@ -15,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,13 +22,15 @@ public class TravelController {
     private final IDestinationService destinationService;
     private final IVehicleService vehicleService;
     private final IAccommodationUnitService accommodationUnitService;
+    private final ITravelReservation trService;
 
     public TravelController(ITravelService travelService, IDestinationService destinationService, IVehicleService vehicleService,
-                            IAccommodationUnitService accommodationUnitService) {
+                            IAccommodationUnitService accommodationUnitService, ITravelReservation trService) {
         this.travelService = travelService;
         this.destinationService = destinationService;
         this.vehicleService = vehicleService;
         this.accommodationUnitService = accommodationUnitService;
+        this.trService = trService;
     }
 
     @GetMapping("/dashboard/travels/travel-validation")
@@ -54,6 +53,10 @@ public class TravelController {
 
             int destinationId = travel.getDestination().getId();
             List<Travel> travels = travelService.findAll(destinationId);
+            List<TravelReservation> trs = trService.findAll();
+            if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
+                travelService.returnOnlyAvailableTravels(session, travels, trs);
+            }
             travels = travelService.removeSelectedOne(travel.getId(), travels);
 
             model.addAttribute("travel", travel);
@@ -67,19 +70,30 @@ public class TravelController {
 
     @GetMapping(value = "/travel/filterTravel", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Travel> filterTravels(@RequestParam(required = false) String destination,  @RequestParam(required = false) String destinationSort,
+    public List<Travel> filterTravels(HttpSession session,
+                                    @RequestParam(required = false) String destination,  @RequestParam(required = false) String destinationSort,
                                       @RequestParam(required = false) String travelCategory, @RequestParam(required = false) String travelCategorySort,
                                     @RequestParam(required = false) String travelVehicleType,  @RequestParam(required = false) String travelVehicleTypeSort,
                                       @RequestParam(required = false) String travelAccUnitType, @RequestParam(required = false) String travelAccUnitTypeSort,
                                     @RequestParam(required = false) Float minPrice, @RequestParam(required = false) Float maxPrice,
                                       @RequestParam(required = false) String priceSort,
                                     @RequestParam(required = false) LocalDate startDate,@RequestParam(required = false) LocalDate endDate,
-                                      @RequestParam(required = false) String dateSort
+                                      @RequestParam(required = false) String dateSort,
+                                      @RequestParam(required = false) Integer nightsFrom, @RequestParam(required = false) Integer nightsTo,
+                                      @RequestParam(required = false) String nightsSort,
+                                      @RequestParam(required = false) Integer passengersAvailability,
+                                      @RequestParam(required = false) String sortTravelByPassengersAvailability,
+                                      @RequestParam(required = false) String inputID, @RequestParam(required = false) String sortTravelByID
                                     ) {
+        List<TravelReservation> trs = trService.findAll();
+        List<Travel> allTravels = travelService.findAll(destination, destinationSort, travelCategory, travelCategorySort, travelVehicleType, travelVehicleTypeSort,
+                travelAccUnitType, travelAccUnitTypeSort, minPrice, maxPrice, priceSort, startDate, endDate, dateSort,
+                nightsFrom, nightsTo, nightsSort, passengersAvailability, sortTravelByPassengersAvailability, inputID, sortTravelByID);
+        if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
+            travelService.returnOnlyAvailableTravels(session, allTravels, trs);
+        }
 
-   //     return travelService.findAll();
-        return travelService.findAll(destination, destinationSort, travelCategory, travelCategorySort, travelVehicleType, travelVehicleTypeSort,
-                travelAccUnitType, travelAccUnitTypeSort, minPrice, maxPrice, priceSort, startDate, endDate, dateSort);
+        return allTravels;
     }
 
     @GetMapping(value = "/dashboard/travels/filterVehiclesByDestination", produces = MediaType.APPLICATION_JSON_VALUE)

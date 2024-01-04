@@ -1,18 +1,18 @@
 package com.sr182022.travelagencystar.service.impl;
 
 import com.sr182022.travelagencystar.DAO.ITravelDAO;
-import com.sr182022.travelagencystar.model.AccommodationUnit;
-import com.sr182022.travelagencystar.model.Travel;
-import com.sr182022.travelagencystar.model.TravelCategory;
-import com.sr182022.travelagencystar.model.Vehicle;
+import com.sr182022.travelagencystar.model.*;
 import com.sr182022.travelagencystar.service.IAccommodationUnitService;
 import com.sr182022.travelagencystar.service.ITravelService;
 import com.sr182022.travelagencystar.service.IVehicleService;
+import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import com.sr182022.travelagencystar.utils.DateTimeUtil;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +45,9 @@ public class TravelService implements ITravelService {
     public List<Travel> findAll(String destination, String destinationSort, String travelCategory, String travelCategorySort,
                                 String travelVehicleType, String travelVehicleTypeSort, String travelAccUnitType, String travelAccUnitTypeSort,
                                 Float minPrice, Float maxPrice, String priceSort,
-                                LocalDate startDate, LocalDate endDate, String dateSort) {
+                                LocalDate startDate, LocalDate endDate, String dateSort,
+                                Integer nightsFrom, Integer nightsTo, String sortNights,
+                                Integer passengersAvailability, String sortTravelPassengersAvailability, String inputID, String sortTravelByID) {
 
         if(destination == null) {
             destination = "";
@@ -71,9 +73,22 @@ public class TravelService implements ITravelService {
         if (endDate == null) {
             endDate = LocalDate.of(2099, 1, 1);
         }
+        if(nightsFrom == null) {
+            nightsFrom = Integer.MIN_VALUE;
+        }
+        if(nightsTo == null) {
+            nightsTo = Integer.MAX_VALUE;
+        }
+        if(passengersAvailability == null) {
+            passengersAvailability = Integer.MIN_VALUE;
+        }
+        if(inputID == null) {
+            inputID = "";
+        }
 
         return databaseTravelDAO.findAll(destination, destinationSort, travelCategory, travelCategorySort, travelVehicleType, travelVehicleTypeSort,
-                travelAccUnitType, travelAccUnitTypeSort, minPrice, maxPrice, priceSort, startDate, endDate, dateSort);
+                travelAccUnitType, travelAccUnitTypeSort, minPrice, maxPrice, priceSort, startDate, endDate, dateSort, nightsFrom, nightsTo, sortNights,
+                passengersAvailability, sortTravelPassengersAvailability, inputID, sortTravelByID);
     }
 
     @Override
@@ -144,4 +159,20 @@ public class TravelService implements ITravelService {
         }
         return true;
     }
-}
+
+    @Override
+    public List<Travel> returnOnlyAvailableTravels(HttpSession session, List<Travel> allTravels, List<TravelReservation> trs) {
+        List<Travel> travelsToRemove = new ArrayList<Travel>();
+        for (TravelReservation tr : trs) {
+            for (Travel t : allTravels) {
+                if (t.getId() == tr.getTravel().getId()) {
+                    if (tr.getAvailableSpace() <= 0) {
+                        travelsToRemove.add(t);
+                    }
+                }
+            }
+        }
+        allTravels.removeAll(travelsToRemove);
+        return allTravels;
+        }
+    }

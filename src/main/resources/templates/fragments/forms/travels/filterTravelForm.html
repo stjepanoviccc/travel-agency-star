@@ -78,6 +78,42 @@
         </select>
     </div>
 
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start lg:flex-row gap-x-12 mt-4">
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByNightsFrom" class="block font-medium text-gray-700" th:text="#{textNightsFrom} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="number" min="0" id="filterTravelByNightsFrom" name="nightsFrom"/>
+        </div>
+
+        <div class="flex flex-col w-64">
+            <label for="filterTravelByNightsTo" class="block font-medium text-gray-700" th:text="#{textNightsTo} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="number" min="0" id="filterTravelByNightsTo" name="nightsTo"/><br>
+        </div>
+
+        <select id="sortTravelByNights" name="sortTravelNights" class="border-2 p-2 rounded-md lg:mt-7">
+            <option value="Default" th:text="#{textDefaultSort}"></option>
+            <option value="asc" th:text="#{textSortByAsc}"></option>
+            <option value="desc" th:text="#{textSortByDesc}"></option>
+        </select>
+    </div>
+
+    <label for="filterTravelByPassengersAvailability" class="block font-medium text-gray-700 mt-4" th:text="#{textPassengersAvailability} + ': '"></label>
+    <input class="mt-1 p-2 border rounded-md w-64" type="number" min="1" id="filterTravelByPassengersAvailability" name="passengersAvailability"/><br>
+    <select id="sortTravelByPassengersAvailability" name="sortTravelPassengersAvailability" class="border-2 p-2 rounded-md">
+        <option value="Default" th:text="#{textDefaultSort}"></option>
+        <option value="asc" th:text="#{textSortByAsc}"></option>
+        <option value="desc" th:text="#{textSortByDesc}"></option>
+    </select>
+
+    <div th:style="${session.user == null or (session.user != null and session.user.role.name() == 'Passenger') ? 'display:none;' : ''}">
+        <label for="filterTravelByID" class="block font-medium text-gray-700 mt-4" th:text="#{textID} + ': '"></label>
+        <input class="mt-1 p-2 border rounded-md w-64" type="number" min="1" id="filterTravelByID" name="inputID"/><br>
+        <select id="sortTravelByID" name="sortTravelByID" class="border-2 p-2 rounded-md">
+            <option value="Default" th:text="#{textDefaultSort}"></option>
+            <option value="asc" th:text="#{textSortByAsc}"></option>
+            <option value="desc" th:text="#{textSortByDesc}"></option>
+        </select>
+    </div>
+
     <br>
     <button type="submit" class="gap-x-4 mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="applyTravelFilterSubmitButton"
             th:text="#{textApplyFilters}"></button>

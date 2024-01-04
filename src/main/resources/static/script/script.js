@@ -34,7 +34,10 @@ $(document).ready(() => {
             travelFunctions.getFilterValues().travelVehicleType, travelFunctions.getFilterValues().travelVehicleTypeSort,
             travelFunctions.getFilterValues().travelAccUnitType, travelFunctions.getFilterValues().travelAccUnitTypeSort,
             travelFunctions.getFilterValues().minPrice, travelFunctions.getFilterValues().maxPrice,  travelFunctions.getFilterValues().priceSort,
-            travelFunctions.getFilterValues().startDate, travelFunctions.getFilterValues().endDate, travelFunctions.getFilterValues().dateSort);
+            travelFunctions.getFilterValues().startDate, travelFunctions.getFilterValues().endDate, travelFunctions.getFilterValues().dateSort,
+            travelFunctions.getFilterValues().nightsFrom, travelFunctions.getFilterValues().nightsTo, travelFunctions.getFilterValues().nightsSort,
+            travelFunctions.getFilterValues().passengersAvailability, travelFunctions.getFilterValues().sortTravelByPassengersAvailability,
+            travelFunctions.getFilterValues().inputID, travelFunctions.getFilterValues().sortTravelByID);
     });
 
     $('#clearTravelFilterButton').on('click', event => {
@@ -56,9 +59,16 @@ $(document).ready(() => {
         $('#filterTravelByStartDate').val(clearValues);
         $('#filterTravelByEndDate').val(clearValues);
         $('#sortTravelByDate').prop('selectedIndex', 0);
+        $('#filterTravelByNightsFrom').val(clearValues);
+        $('#filterTravelByNightsTo').val(clearValues);
+        $('#sortTravelByNights').prop('selectedIndex', 0);
+        $('#filterTravelByPassengersAvailability').val(clearValues);
+        $('#sortTravelByPassengersAvailability').prop('selectedIndex', 0);
+        $('#filterTravelByID').val(clearValues);
+        $('#sortTravelByID').prop('selectedIndex', 0);
 
         travelFunctions.filterTravel(clearValues, defaultt, clearValues, defaultt, clearValues, defaultt, clearValues, defaultt,
-            clearValues, clearValues, defaultt ,clearValues, clearValues, defaultt);
+            clearValues, clearValues, defaultt ,clearValues, clearValues, defaultt, clearValues, clearValues, defaultt, clearValues, defaultt, clearValues, defaultt);
     })
 
     // vehicles and accc units filtering
