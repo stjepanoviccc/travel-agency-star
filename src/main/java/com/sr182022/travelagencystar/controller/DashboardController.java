@@ -3,6 +3,7 @@ package com.sr182022.travelagencystar.controller;
 import com.sr182022.travelagencystar.model.AccommodationUnit;
 import com.sr182022.travelagencystar.model.Destination;
 import com.sr182022.travelagencystar.model.LoyaltyCard;
+import com.sr182022.travelagencystar.model.Reservation;
 import com.sr182022.travelagencystar.service.*;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
@@ -25,10 +26,12 @@ public class DashboardController {
     private final IAccommodationUnitService accommodationUnitService;
     private final ITravelService travelService;
     private final ILoyaltyCardService loyaltyCardService;
+    private final IReservationService reservationService;
 
     @Autowired
     public DashboardController(IUserService userService, IDestinationService destinationService, IVehicleService vehicleService,
-                               IAccommodationUnitService accommodationUnitService, ITravelService travelService, ILoyaltyCardService loyaltyCardService)
+                               IAccommodationUnitService accommodationUnitService, ITravelService travelService, ILoyaltyCardService loyaltyCardService,
+                               IReservationService reservationService)
     {
         this.userService = userService;
         this.destinationService = destinationService;
@@ -36,6 +39,7 @@ public class DashboardController {
         this.accommodationUnitService = accommodationUnitService;
         this.travelService = travelService;
         this.loyaltyCardService = loyaltyCardService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping()
@@ -133,6 +137,24 @@ public class DashboardController {
             List<LoyaltyCard> loyaltyCards = loyaltyCardService.findAll();
             model.addAttribute("loyaltyCards", loyaltyCards);
             return "dashboard/loyalty-cards";
+
+        } catch(Exception e) {
+            System.out.println(e);
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
+    @GetMapping("/pendingReservations")
+    public String getPendingReservationsPage(HttpSession session, Model model) {
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+
+            boolean pending = true;
+            List<Reservation> pendingReservations = reservationService.findAll(pending);
+            model.addAttribute("pendingReservations", pendingReservations);
+            return "dashboard/reservations";
 
         } catch(Exception e) {
             System.out.println(e);

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -89,6 +91,24 @@ public class DatabaseReservationDAO implements IReservationDAO {
     }
 
     @Override
+    public List<Reservation> findAll(boolean pending) {
+        String sql =
+                "SELECT pr.pending_reservation_id, r.id_travel, r.id_user, r.passengers, r.price, r.created_at " +
+                        "FROM pending_reservations pr " +
+                        "JOIN reservation r on pr.pending_reservation_id = r.id_reservation " +
+                        "ORDER BY pr.pending_reservation_id desc";
+
+        ReservationRowCallBackHandler rowCallBackHandler = new ReservationRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler);
+        List<Reservation> pendingReservationList = rowCallBackHandler.getReservations();
+        if(pendingReservationList.isEmpty()) {
+            return null;
+        } else {
+            return rowCallBackHandler.getReservations();
+        }
+    }
+
+    @Override
     public Reservation findOne(int travelId, int userId) {
         String sql =
                 "SELECT r.id_reservation, r.id_travel, r.id_user, r.passengers, r.price, r.created_at " +
@@ -123,24 +143,30 @@ public class DatabaseReservationDAO implements IReservationDAO {
     @Transactional
     @Override
     public void save(Reservation res) {
-        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                String sql = "INSERT INTO reservation (id_travel, id_user, passengers, price, created_at) " +
-                        "VALUES (?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                int index = 1;
-                preparedStatement.setInt(index++, res.getTravel().getId());
-                preparedStatement.setInt(index++, res.getUser().getId());
-                preparedStatement.setInt(index++, res.getPassengers());
-                preparedStatement.setFloat(index++, res.getPassengers() * res.getTravel().getPrice());
-                preparedStatement.setTimestamp(index++, DateTimeUtil.convertLocalDateTimeToTimestamp(res.getCreatedAt()));
-                return preparedStatement;
-            }
+        PreparedStatementCreator preparedStatementCreator = connection -> {
+            String sql = "INSERT INTO reservation (id_travel, id_user, passengers, price, created_at) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            int index = 1;
+            preparedStatement.setInt(index++, res.getTravel().getId());
+            preparedStatement.setInt(index++, res.getUser().getId());
+            preparedStatement.setInt(index++, res.getPassengers());
+            preparedStatement.setFloat(index++, res.getPassengers() * res.getTravel().getPrice());
+            preparedStatement.setTimestamp(index++, DateTimeUtil.convertLocalDateTimeToTimestamp(res.getCreatedAt()));
+            return preparedStatement;
         };
 
-        jdbcTemplate.update(preparedStatementCreator);
+        jdbcTemplate.update(preparedStatementCreator, keyHolder);
+
+        // Retrieve the generated ID
+        int generatedId = keyHolder.getKey().intValue();
+
+        // Step 2: Insert into 'pending_reservations' table
+        String sqlPendingReservations = "INSERT INTO pending_reservations (pending_reservation_id) VALUES (?)";
+        jdbcTemplate.update(sqlPendingReservations, generatedId);
     }
 
     @Transactional
@@ -148,5 +174,17 @@ public class DatabaseReservationDAO implements IReservationDAO {
     public void delete(int travelId, int userId) {
         String sql = "DELETE FROM reservation r WHERE r.id_travel = ? and r.id_user = ?";
         jdbcTemplate.update(sql, travelId, userId);
+    }
+
+    @Override
+    public void acceptReservation(int reservationId) {
+        String sql = "DELETE FROM pending_reservations pr WHERE pr.pending_reservation_id = ?";
+        jdbcTemplate.update(sql, reservationId);
+    }
+
+    @Override
+    public void declineReservation(Reservation r) {
+        String sql = "DELETE FROM pending_reservations pr WHERE pr.pending_reservation_id = ?";
+        jdbcTemplate.update(sql, r.getReservationId());
     }
 }

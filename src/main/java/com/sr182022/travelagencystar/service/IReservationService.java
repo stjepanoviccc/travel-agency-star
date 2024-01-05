@@ -10,9 +10,13 @@ import java.util.List;
 public interface IReservationService {
     List<Reservation> findAll();
     List<Reservation> findAll(int userId);
+    List<Reservation> findAll(boolean pending);
+    Reservation findOne(int reservationId);
     Reservation findOne(int travelId, int userId);
     void save(Reservation res);
     void delete(int travelId, int userId);
     boolean validateReservation(HttpSession session);
     List<Reservation> createReservation(HttpSession session);
+    void acceptReservation(int reservationId);
+    void declineReservation(Reservation r);
 }

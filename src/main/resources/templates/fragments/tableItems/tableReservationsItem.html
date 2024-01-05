@@ -1,0 +1,14 @@
+<tr th:fragment="tableReservationItem" th:each="res: ${pendingReservations}" class="border-b dark:border-neutral-500">
+    <td class="whitespace-nowrap px-6 py-2 font-medium" th:text="${resStat.count}"></td>
+    <td class="whitespace-nowrap px-6 py-2" th:text="${res.user.id}"></td>
+    <td class="whitespace-nowrap px-6 py-2" th:text="${res.reservationId}"></td>
+    <td class="whitespace-nowrap px-6 py-2" th:text="${res.travel.id}"></td>
+    <td class="whitespace-nowrap px-6 py-2" th:text="${res.passengers}"></td>
+    <td class="whitespace-nowrap px-6 py-2" th:text="${res.price}"></td>
+    <td class="whitespace-nowrap px-6 py-2">
+        <div th:replace="~{fragments/forms/reservations/acceptReservation :: acceptReservation}"></div>
+    </td>
+    <td class="whitespace-nowrap px-6 py-2">
+        <div th:replace="~{fragments/forms/reservations/declineReservation :: declineReservation}"></div>
+    </td>
+</tr>

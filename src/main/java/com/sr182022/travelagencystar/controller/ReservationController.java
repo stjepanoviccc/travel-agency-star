@@ -48,5 +48,39 @@ public class ReservationController {
         }
     }
 
+    @PostMapping("acceptReservation")
+    public String acceptReservation(HttpSession session, int reservationId) {
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+
+            reservationService.acceptReservation(reservationId);
+            return "redirect:/dashboard/pendingReservations";
+        } catch(Exception e) {
+            System.out.println(e);
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
+    @PostMapping("declineReservation")
+    public String declineReservation(HttpSession session, int reservationId) {
+        try {
+            if(!CheckRoleUtil.RoleOrganizer(session)) {
+                return ErrorController.permissionErrorReturn;
+            }
+
+            Reservation declineRes = reservationService.findOne(reservationId);
+            TravelReservation tr = trService.findOne(declineRes.getTravel().getId());
+            tr = trService.reverseValidation(tr, declineRes);
+            trService.update(tr);
+            reservationService.declineReservation(declineRes);
+            return "redirect:/dashboard/pendingReservations";
+        } catch(Exception e) {
+            System.out.println(e);
+            return ErrorController.internalErrorReturn;
+        }
+    }
+
 
 }

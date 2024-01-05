@@ -1,0 +1,6 @@
+<form th:if="${session.user.role.name() == 'Organizer'}" th:fragment="declineReservation"
+      id="declineReservation" method="post" action="/reservation/declineReservation">
+    <input type="hidden" th:value="${res.reservationId}" name="reservationId" id="declineReservationId" readonly />
+    <button class="declineReservationButton bg-red-600 text-white px-4 py-2 text-sm font-medium border-2 border-red-600 hover:bg-white hover:text-red-600
+               hover:border-red-600 transition duration-300 cursor-pointer" type="submit" th:text="#{textDecline}"></button>
+</form>

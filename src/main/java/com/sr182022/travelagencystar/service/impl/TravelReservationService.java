@@ -53,6 +53,11 @@ public class TravelReservationService implements ITravelReservation {
     }
 
     @Override
+    public TravelReservation findOne(int travelId) {
+        return trDAO.findOne(travelId);
+    }
+
+    @Override
     public void save(TravelReservation tr) {
         trDAO.save(tr);
     }
@@ -129,5 +134,15 @@ public class TravelReservationService implements ITravelReservation {
         session.setAttribute("cart", cart);
         float f = 0;
         session.setAttribute("totalPrice", f);
+    }
+
+    @Override
+    public TravelReservation reverseValidation(TravelReservation tr, Reservation declineRes) {
+        // im just reversing logic -> it couldnt go other way because i realized late that manager have to accept it.
+        int oldAvailableSpace = tr.getAvailableSpace();
+        int oldSoldSpace = tr.getSoldSpace();
+        tr.setAvailableSpace(oldAvailableSpace + declineRes.getPassengers());
+        tr.setSoldSpace(oldSoldSpace - declineRes.getPassengers());
+        return tr;
     }
 }

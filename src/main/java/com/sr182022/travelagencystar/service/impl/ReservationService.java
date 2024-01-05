@@ -32,6 +32,16 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
+    public List<Reservation> findAll(boolean pending) {
+        return reservationDAO.findAll(pending);
+    }
+
+    @Override
+    public Reservation findOne(int reservationId) {
+        return reservationDAO.findOne(reservationId);
+    }
+
+    @Override
     public Reservation findOne(int travelId, int userId) {
         return reservationDAO.findOne(travelId, userId);
     }
@@ -74,5 +84,15 @@ public class ReservationService implements IReservationService {
         }
 
         return resList;
+    }
+
+    @Override
+    public void acceptReservation(int reservationId) {
+        reservationDAO.acceptReservation(reservationId);
+    }
+
+    @Override
+    public void declineReservation(Reservation r) {
+        reservationDAO.declineReservation(r);
     }
 }
