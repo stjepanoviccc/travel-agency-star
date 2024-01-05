@@ -1,0 +1,8 @@
+<tr th:fragment="tableReportItem" th:each="tr : ${trList}" class="border-b dark:border-neutral-500">
+    <td class="whitespace-nowrap px-6 py-4 font-medium" th:text="${trStat.count}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${tr.travel.destination}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${tr.travel.vehicle}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${tr.totalSpace}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${tr.soldSpace}"></td>
+    <td class="whitespace-nowrap px-6 py-4" th:text="${tr.soldSpace * tr.travel.price + ' din'}"></td>
+</tr>

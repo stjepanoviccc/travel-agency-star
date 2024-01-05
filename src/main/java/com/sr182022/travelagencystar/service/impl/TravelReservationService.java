@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -33,6 +34,22 @@ public class TravelReservationService implements ITravelReservation {
     @Override
     public List<TravelReservation> findAll(int travelId) {
         return trDAO.findAll(travelId);
+    }
+
+    @Override
+    public List<TravelReservation> findAll(LocalDate startDate, LocalDate endDate, String sortDate, String sortTravelForReportsByDestination,
+                                           String sortTravelForReportsByVehicle, String sortTravelForReportsByTotalSpace, String sortTravelForReportsBySoldSpace,
+                                           String sortTravelForReportsByTotalPrice) {
+        if (startDate == null) {
+            startDate = LocalDate.of(1999, 1, 1);
+        }
+        if (endDate == null) {
+            endDate = LocalDate.of(2099, 1, 1);
+        }
+
+        return trDAO.findAll(startDate, endDate, sortDate, sortTravelForReportsByDestination,
+                sortTravelForReportsByVehicle, sortTravelForReportsByTotalSpace, sortTravelForReportsBySoldSpace,
+                sortTravelForReportsByTotalPrice);
     }
 
     @Override

@@ -29,6 +29,19 @@ export const getFilterValues = () => {
     };
 }
 
+export const getFilterValuesForTravelReservation = () => {
+  return {
+      startDate: $('#filterTravelForReportsByStartDate').val(),
+      endDate: $('#filterTravelForReportsByEndDate').val(),
+      sortDate: $('#sortTravelForReportsByDate').val(),
+      sortTravelForReportsByDestination: $('#sortTravelForReportsByDestination').val(),
+      sortTravelForReportsByVehicle: $('#sortTravelForReportsByVehicle').val(),
+      sortTravelForReportsByTotalSpace: $('#sortTravelForReportsByTotalSpace').val(),
+      sortTravelForReportsBySoldSpace: $('#sortTravelForReportsBySoldSpace').val(),
+      sortTravelForReportsByTotalPrice: $('#sortTravelForReportsByTotalPrice').val()
+  }
+};
+
 export const filterTravel = (destination, destinationSort, category, categorySort, vehicleType, vehicleTypeSort, accUnitType, accUnitTypeSort, minPrice, maxPrice,
                              priceSort, startDate, endDate, dateSort, nightsFrom, nightsTo, nightsSort, passengersAvailability, sortTravelByPassengersAvailability,
                              inputID, sortTravelByID)  => {
@@ -46,6 +59,25 @@ export const filterTravel = (destination, destinationSort, category, categorySor
         },
         error: error => {
             console.error('Fetching travels error: ', error);
+        }
+    });
+}
+
+export const filterTravelForReports = (startDate, endDate, sortDate, sortTravelForReportsByDestination, sortTravelForReportsByVehicle, sortTravelForReportsByTotalSpace,
+                                        sortTravelForReportsBySoldSpace, sortTravelForReportsByTotalPrice) => {
+
+    $.ajax({
+        url: '/report/filterTravelReportItem',
+        method: 'GET',
+        data: { startDate: startDate, endDate: endDate, sortDate: sortDate, sortTravelForReportsByDestination: sortTravelForReportsByDestination,
+            sortTravelForReportsByVehicle:sortTravelForReportsByVehicle, sortTravelForReportsByTotalSpace:sortTravelForReportsByTotalSpace,
+            sortTravelForReportsBySoldSpace:sortTravelForReportsBySoldSpace, sortTravelForReportsByTotalPrice:sortTravelForReportsByTotalPrice},
+        dataType: 'json',
+        success: data => {
+            updateTravelsForReportOnFilter(data);
+        },
+        error: error => {
+            console.error('Fetching travels for report error: ', error);
         }
     });
 }
@@ -115,6 +147,48 @@ export const updateTravelsOnFilter = async travels => {
     }
 };
 
+export const updateTravelsForReportOnFilter = async trs => {
+    let index = 1;
+    let totalPriceForAll = 0;
+    let totalSold = 0;
+    const reportTravels = $('#reportTravels');
+    reportTravels.empty();
+
+    trs.forEach(tr => {
+        let totalPrice = tr.soldSpace * tr.travel.price;
+        totalPriceForAll += totalPrice;
+        totalSold += tr.soldSpace;
+        const trElement = document.createElement("tr");
+        trElement.classList.add('border-b', 'dark:border-neutral-500');
+        trElement.innerHTML =
+            `
+                <td class="whitespace-nowrap px-6 py-4 font-medium">${index}</td>
+                <td class="whitespace-nowrap px-6 py-4">${tr.travel.destination.city}</td>
+                <td class="whitespace-nowrap px-6 py-4">${tr.travel.vehicle.description}</td>
+                <td class="whitespace-nowrap px-6 py-4">${tr.totalSpace}</td>
+                <td class="whitespace-nowrap px-6 py-4">${tr.soldSpace}</td>
+                <td class="whitespace-nowrap px-6 py-4">${totalPrice + " din"}</td>
+            `;
+
+        index++;
+        reportTravels.append(trElement);
+    })
+
+    if(trs.length > 0) {
+        let totalTr = document.createElement("tr");
+        totalTr.innerHTML = `
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="whitespace-nowrap px-6 py-4 text-xl text-green-600 font-bold">${totalSold}</td>
+            <td class="whitespace-nowrap px-6 py-4 text-xl text-green-600 font-bold">${totalPriceForAll}</td>
+        `
+        reportTravels.append(totalTr);
+    } else {
+        reportTravels.append("<p>No content to show. Try filter something else.</p>");
+    }
+};
 
 // filtering for edit travel.
 export const filterUnits = (destinationId, type)  => {

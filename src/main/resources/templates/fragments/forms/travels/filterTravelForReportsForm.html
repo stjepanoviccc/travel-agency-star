@@ -1,0 +1,81 @@
+<form th:fragment="filterTravelForReportsForm" id="filterTravelForReportsForm" method="get" action="/report/filterTravelForReports">
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start lg:flex-row gap-x-12 mt-4">
+        <div class="flex flex-col w-64">
+            <label for="filterTravelForReportsByStartDate" class="block font-medium text-gray-700" th:text="#{textStartDate} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="date" id="filterTravelForReportsByStartDate" name="startDate"/>
+        </div>
+
+        <div class="flex flex-col w-64">
+            <label for="filterTravelForReportsByEndDate" class="block font-medium text-gray-700" th:text="#{textEndDate} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="date" id="filterTravelForReportsByEndDate" name="endDate"/><br>
+        </div>
+
+        <select id="sortTravelForReportsByDate" name="sortDate" class="border-2 p-2 rounded-md lg:mt-7">
+            <option value="Default" th:text="#{textDefaultSort}"></option>
+            <option value="asc" th:text="#{textSortByAsc}"></option>
+            <option value="desc" th:text="#{textSortByDesc}"></option>
+        </select>
+    </div>
+
+    <!-- filterTravelForReports -->
+    <div class="flex flex-row gap-x-12 justify-center lg:justify-start">
+        <div class="flex flex-col">
+            <label for="sortTravelForReportsByDestination" class="block font-medium text-gray-700 mt-4" th:text="#{textDestination} + ': '"></label>
+            <select id="sortTravelForReportsByDestination" name="sortTravelForReportsByDestination" class="border-2 p-2 rounded-md">
+                <option value="Default" th:text="#{textDefaultSort}"></option>
+                <option value="asc" th:text="#{textSortByAsc}"></option>
+                <option value="desc" th:text="#{textSortByDesc}"></option>
+            </select>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="sortTravelForReportsByVehicle" class="block font-medium text-gray-700 mt-4" th:text="#{textVehicle} + ': '"></label>
+            <select id="sortTravelForReportsByVehicle" name="sortTravelForReportsByVehicle" class="border-2 p-2 rounded-md">
+                <option value="Default" th:text="#{textDefaultSort}"></option>
+                <option value="asc" th:text="#{textSortByAsc}"></option>
+                <option value="desc" th:text="#{textSortByDesc}"></option>
+            </select>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="sortTravelForReportsByTotalSpace" class="block font-medium text-gray-700 mt-4" th:text="#{textTotalSpace} + ': '"></label>
+            <select id="sortTravelForReportsByTotalSpace" name="sortTravelForReportsByTotalSpace" class="border-2 p-2 rounded-md">
+                <option value="Default" th:text="#{textDefaultSort}"></option>
+                <option value="asc" th:text="#{textSortByAsc}"></option>
+                <option value="desc" th:text="#{textSortByDesc}"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="flex flex-row gap-x-12 justify-center lg:justify-start">
+        <div class="flex flex-col">
+            <label for="sortTravelForReportsBySoldSpace" class="block font-medium text-gray-700 mt-4" th:text="#{textSoldSpace} + ': '"></label>
+            <select id="sortTravelForReportsBySoldSpace" name="sortTravelForReportsBySoldSpace" class="border-2 p-2 rounded-md">
+                <option value="Default" th:text="#{textDefaultSort}"></option>
+                <option value="asc" th:text="#{textSortByAsc}"></option>
+                <option value="desc" th:text="#{textSortByDesc}"></option>
+            </select>
+        </div>
+
+        <div class="flex flex-col">
+            <label for="sortTravelForReportsByTotalPrice" class="block font-medium text-gray-700 mt-4" th:text="#{textTotalPrice} + ': '"></label>
+            <select id="sortTravelForReportsByTotalPrice" name="sortTravelForReportsByTotalPrice" class="border-2 p-2 rounded-md">
+                <option value="Default" th:text="#{textDefaultSort}"></option>
+                <option value="asc" th:text="#{textSortByAsc}"></option>
+                <option value="desc" th:text="#{textSortByDesc}"></option>
+            </select>
+        </div>
+    </div>
+
+
+    <br>
+    <button type="submit" class="gap-x-4 mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="applyTravelForReportsFilterSubmitButton"
+            th:text="#{textApplyFilters}"></button>
+</form>
+
+<form th:fragment="clearFilterForm" id="clearTravelForReportsFilterForm" method="get" action="/report/filterTravelForReports">
+    <input type="hidden" name="clearFilter" value="true"/>
+    <br>
+    <button type="submit" class="gap-x-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" id="clearTravelForReportsFilterButton"
+            th:text="#{textClearFilters}"></button>
+</form>

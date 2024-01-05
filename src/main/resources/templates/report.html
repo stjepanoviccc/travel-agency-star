@@ -13,6 +13,38 @@
 <main class="min-h-[92vh] mx-auto max-w-7xl py-6 px-2 sm:px-6 lg:px-8 lg:py-12">
     <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{reportPageHeading}"></h1>
 
+    <div class="pt-6 lg:pt-8 text-center lg:text-left">
+        <p class="pr-2 font-bold text-lg mb-12" th:text="#{textFilterBy}"></p>
+        <div th:replace="~{fragments/forms/travels/filterTravelForReportsForm :: filterTravelForReportsForm}"></div>
+        <div th:replace="~{fragments/forms/travels/filterTravelForReportsForm :: #clearTravelForReportsFilterForm}"></div>
+
+        <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
+            <table class="min-w-full text-center font-light">
+                <thead class="border-b font-medium dark:border-neutral-500">
+                <tr >
+                    <th scope="col" class="px-4 py-4">#</th>
+                    <th scope="col" class="px-4 py-4" th:text="#{textDestination}"></th>
+                    <th scope="col" class="px-4 py-4" th:text="#{textVehicle}"></th>
+                    <th scope="col" class="px-4 py-4" th:text="#{textTotalSpace}"></th>
+                    <th scope="col" class="px-4 py-4" th:text="#{textSoldSpace}"></th>
+                    <th scope="col" class="px-4 py-4" th:text="#{textTotalPrice}"></th>
+                </tr>
+                </thead>
+                <tbody id="reportTravels">
+                <tr th:replace="~{fragments/tableItems/tableReportItem :: tableReportItem}"> </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="whitespace-nowrap px-6 py-4 text-xl text-green-600 font-bold" th:text="${totalSold}"></td>
+                    <td class="whitespace-nowrap px-6 py-4 text-xl text-green-600 font-bold" th:text="${totalPriceForAll}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 
 </main>
 

@@ -71,6 +71,33 @@ $(document).ready(() => {
             clearValues, clearValues, defaultt ,clearValues, clearValues, defaultt, clearValues, clearValues, defaultt, clearValues, defaultt, clearValues, defaultt);
     })
 
+    // travel for reports filtering
+    $('#applyTravelForReportsFilterSubmitButton').on('click', event => {
+        event.preventDefault();
+
+        travelFunctions.filterTravelForReports(travelFunctions.getFilterValuesForTravelReservation().startDate, travelFunctions.getFilterValuesForTravelReservation().endDate,
+            travelFunctions.getFilterValuesForTravelReservation().sortDate, travelFunctions.getFilterValuesForTravelReservation().sortTravelForReportsByDestination,
+            travelFunctions.getFilterValuesForTravelReservation().sortTravelForReportsByVehicle, travelFunctions.getFilterValuesForTravelReservation().sortTravelForReportsByTotalSpace,
+            travelFunctions.getFilterValuesForTravelReservation().sortTravelForReportsBySoldSpace, travelFunctions.getFilterValuesForTravelReservation().sortTravelForReportsByTotalPrice);
+    });
+
+    $('#clearTravelForReportsFilterButton').on('click', event => {
+        event.preventDefault();
+
+        const clearValues = "";
+        const defaultt = "Default";
+        $('#filterTravelForReportsByStartDate').val(clearValues);
+        $('#filterTravelForReportsByEndDate').val(clearValues);
+        $('#sortTravelForReportsByDate').prop('selectedIndex', 0);
+        $('#sortTravelForReportsByDestination').prop('selectedIndex', 0);
+        $('#sortTravelForReportsByVehicle').prop('selectedIndex', 0);
+        $('#sortTravelForReportsByTotalSpace').prop('selectedIndex', 0);
+        $('#sortTravelForReportsBySoldSpace').prop('selectedIndex', 0);
+        $('#sortTravelForReportsByTotalPrice').prop('selectedIndex', 0);
+
+        travelFunctions.filterTravelForReports(clearValues, clearValues, defaultt, defaultt, defaultt, defaultt, defaultt, defaultt);
+    })
+
     // vehicles and accc units filtering
     $('#editTravelDestination').on('change', () => {
         setTimeout(() => {
