@@ -1,0 +1,95 @@
+<form th:fragment="addCouponForm" action="/coupon/addCouponForm" method="post">
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start lg:flex-row gap-x-12 mt-4">
+        <div class="flex flex-col w-64">
+            <label for="addCouponStartDate" class="block font-medium text-gray-700" th:text="#{textStartDate} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="date" id="addCouponStartDate" name="startDate"/>
+        </div>
+
+        <div class="flex flex-col w-64">
+            <label for="addCouponEndDate" class="block font-medium text-gray-700" th:text="#{textEndDate} + ': '"></label>
+            <input class="mt-1 p-2 border rounded-md w-64" type="date" id="addCouponEndDate" name="endDate"/><br>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start gap-x-12 mt-4">
+        <h3 class="font-medium text-xl" th:text="#{textTravelCategory} + ': '"></h3>
+        <div class="flex flex-row gap-x-8 mt-2">
+            <div class="flex flex-row gap-x-2">
+                <label th:text="#{textTravelCategory}"></label>
+                <input type="checkbox" name="travelCategory" value="category1">
+            </div>
+            <div class="flex flex-row gap-x-2">
+                <label th:text="#{textTravelCategory}"></label>
+                <input type="checkbox" name="travelCategory" value="category1">
+            </div>
+            <div class="flex flex-row gap-x-2">
+                <label th:text="#{textTravelCategory}"></label>
+                <input type="checkbox" name="travelCategory" value="category1">
+            </div>
+            <div class="flex flex-row gap-x-2">
+                <label th:text="#{textTravelCategory}"></label>
+                <input type="checkbox" name="travelCategory" value="category1">
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start gap-x-12 mt-12">
+        <h3 class="font-medium text-xl" th:text="#{textTravel} + ': '"></h3>
+        <table class="min-w-full text-center font-light">
+            <thead class="border-b font-medium dark:border-neutral-500">
+            <tr >
+                <th scope="col" class="px-4 py-4">#</th>
+                <th scope="col" class="px-4 py-4" th:text="#{textDestination}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textID}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textStartDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textEndDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textVehicle}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textAUnit}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textPrice}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-b dark:border-neutral-500">
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                    <input type="checkbox" name="travelCategory" value="category1">
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">2</td>
+                <td class="whitespace-nowrap px-6 py-4">3</td>
+                <td class="whitespace-nowrap px-6 py-4">4</td>
+                <td class="whitespace-nowrap px-6 py-4">5</td>
+                <td class="whitespace-nowrap px-6 py-4">6</td>
+                <td class="whitespace-nowrap px-6 py-4">7</td>
+                <td class="whitespace-nowrap px-6 py-4">8</td>
+            </tr>
+            <tr class="border-b dark:border-neutral-500">
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                    <input type="checkbox" name="travelCategory" value="category1">
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">2</td>
+                <td class="whitespace-nowrap px-6 py-4">3</td>
+                <td class="whitespace-nowrap px-6 py-4">4</td>
+                <td class="whitespace-nowrap px-6 py-4">5</td>
+                <td class="whitespace-nowrap px-6 py-4">6</td>
+                <td class="whitespace-nowrap px-6 py-4">7</td>
+                <td class="whitespace-nowrap px-6 py-4">8</td>
+            </tr>
+            <tr class="border-b dark:border-neutral-500">
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                    <input type="checkbox" name="travelCategory" value="category1">
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">2</td>
+                <td class="whitespace-nowrap px-6 py-4">3</td>
+                <td class="whitespace-nowrap px-6 py-4">4</td>
+                <td class="whitespace-nowrap px-6 py-4">5</td>
+                <td class="whitespace-nowrap px-6 py-4">6</td>
+                <td class="whitespace-nowrap px-6 py-4">7</td>
+                <td class="whitespace-nowrap px-6 py-4">8</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <button type="submit" class="mt-12 border-2 p-2 border-red-600" id="btnAddCouponJs" th:text="#{textSave}"></button>
+</form>

@@ -13,6 +13,7 @@
                                 <div th:case="'Administrator'">
                                     <a href="/" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navTravelLink}"></a>
                                     <a href="/report" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navReportsLink}"></a>
+                                    <a href="/coupon" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navCouponLink}"></a>
                                     <a href="/dashboard" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300" th:text="#{navDashboardLink}"></a>
                                     <a th:href="'/profile?id=' + ${session.user.id}" class="hover:text-red-600 rounded-md px-2 py-1 font-medium transition duration-300"
                                        th:text="#{navProfileLink}"></a>
