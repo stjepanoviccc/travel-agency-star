@@ -47,12 +47,15 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public void save(Reservation res) { reservationDAO.save(res); }
+    public void save(Reservation res, float pointsForUsage) { reservationDAO.save(res, pointsForUsage); }
 
     @Override
     public void delete(int travelId, int userId) {
         reservationDAO.delete(travelId, userId);
     }
+
+    @Override
+    public void delete(int reservationId) {reservationDAO.delete(reservationId);}
 
     @Override
     public boolean validateReservation(HttpSession session) {
@@ -73,17 +76,30 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public List<Reservation> createReservation(HttpSession session) {
+    public float createReservation(HttpSession session, int pointsForUsage, float totalFinalPrice) {
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
         User user = (User) session.getAttribute("user");
 
         List<Reservation> resList = new ArrayList<Reservation>();
+
         for(CartItem i : cart) {
+            float finalPrice = 0;
             Reservation res = new Reservation(i.getTravel(), user, i.getPassengers(), LocalDateTime.now().plusHours(1));
-            save(res);
+
+            // count if points are used / unused
+            if(pointsForUsage == 0) {
+                // if not used
+                finalPrice = res.getPassengers() * res.getTravel().getPrice();
+            } else {
+                // if used
+                float percentageToCutOff = 5 * pointsForUsage;
+                finalPrice = res.getTravel().getPrice() - (100 - (100 * 100/percentageToCutOff));
+            }
+            totalFinalPrice += finalPrice;
+            save(res, finalPrice);
         }
 
-        return resList;
+        return totalFinalPrice;
     }
 
     @Override

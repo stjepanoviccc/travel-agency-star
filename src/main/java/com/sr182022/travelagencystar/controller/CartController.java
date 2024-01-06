@@ -39,7 +39,10 @@ public class CartController {
             if(!CheckRoleUtil.RolePassenger(session)) {
                 return ErrorController.permissionErrorReturn;
             }
+            User u = (User) session.getAttribute("user");
             List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+
+            model.addAttribute("user", u);
             model.addAttribute("cart", cart);
             if(session.getAttribute("totalPrice") != null) {
                 float totalPrice = (float) session.getAttribute("totalPrice");

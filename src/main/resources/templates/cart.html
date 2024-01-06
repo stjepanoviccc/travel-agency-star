@@ -39,6 +39,8 @@
     <div th:if="${cart != null}" class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
         <h3 th:if="${totalPrice == null}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + '0.0 din'"></h3>
         <h3 th:if="${totalPrice != null && totalPrice>0}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + ${totalPrice} + ' din'" id="totalPrice"></h3>
+        <h3 th:if="${session.user.loyaltyCard != null}" class="text-lg lg:text-xl font-bold" th:text="#{textAvailablePoints} + ': ' + ${session.user.loyaltyCard.points}"></h3>
+        <h3 th:if="${session.user.loyaltyCard != null}" class="text-lg lg:text-xl font-bold" th:text="#{textMaxUsablePoints} + ':  10'"></h3>
         <div th:replace="~{fragments/forms/reservations/createReservation :: createReservationForm}"></div>
     </div>
 

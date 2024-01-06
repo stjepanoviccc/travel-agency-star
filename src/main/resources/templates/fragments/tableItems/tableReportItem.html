@@ -1,4 +1,4 @@
-<tr th:fragment="tableReportItem" th:each="tr : ${trList}" class="border-b dark:border-neutral-500">
+<tr th:fragment="tableReportItem" th:each="tr : ${trList}" class="border-b dark:border-neutral-500" th:if="${tr.soldSpace * tr.travel.price > 0}">
     <td class="whitespace-nowrap px-6 py-4 font-medium" th:text="${trStat.count}"></td>
     <td >
         <a class="whitespace-nowrap px-6 py-4 text-red-600 font-bold" th:href="@{/travel(id=${tr.travel.id})}" th:text="${tr.travel.destination}"></a>

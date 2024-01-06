@@ -1,4 +1,7 @@
 <form th:fragment="createReservationForm" action="/reservation/createReservation" method="post">
+    <label th:if="${session.user.loyaltyCard != null}" class="text-lg lg:text-xl font-bold" th:text="#{textUsePoints}"></label>
+    <input th:class="${session.user.loyaltyCard == null} ? 'hidden' : 'border-2 border-black pl-2'"
+           type="number" value="0" min="0" max="10" name="pointsForUsage" id="pointsForUsage"><br>
     <button th:if="${totalPrice!=null && totalPrice>0}" class="mt-4 px-4 py-2 text-xl border-2 border-green-600 bg-green-600 text-white rounded transition duration-300
     hover:bg-white hover:text-green-600" th:text="#{cartPageConfirmPayment}"></button>
 </form>

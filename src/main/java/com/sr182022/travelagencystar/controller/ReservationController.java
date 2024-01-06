@@ -1,7 +1,10 @@
 package com.sr182022.travelagencystar.controller;
 
+import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.model.Reservation;
 import com.sr182022.travelagencystar.model.TravelReservation;
+import com.sr182022.travelagencystar.model.User;
+import com.sr182022.travelagencystar.service.ILoyaltyCardService;
 import com.sr182022.travelagencystar.service.IReservationService;
 import com.sr182022.travelagencystar.service.ITravelReservation;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
@@ -18,15 +21,17 @@ import java.util.List;
 public class ReservationController {
     private IReservationService reservationService;
     private ITravelReservation trService;
+    private ILoyaltyCardService loyaltyCardService;
 
     @Autowired
-    public ReservationController(IReservationService reservationService, ITravelReservation trService) {
+    public ReservationController(IReservationService reservationService, ITravelReservation trService, ILoyaltyCardService loyaltyCardService) {
         this.reservationService = reservationService;
         this.trService = trService;
+        this.loyaltyCardService = loyaltyCardService;
     }
 
     @PostMapping("createReservation")
-    public String createReservation(HttpSession session) {
+    public String createReservation(HttpSession session, int pointsForUsage) {
         try {
             if(!CheckRoleUtil.RolePassenger(session)) {
                 return ErrorController.permissionErrorReturn;
@@ -37,9 +42,15 @@ public class ReservationController {
             if(!validation || !passengerValidation) {
                 return ErrorController.availableSpaceErrorReturn;
             }
-
-            reservationService.createReservation(session);
+            float totalFinalPrice = 0;
+            totalFinalPrice = reservationService.createReservation(session, pointsForUsage, totalFinalPrice);
             trService.createTravelReservation(session);
+            User user = (User) session.getAttribute("user");
+            if(user.getLoyaltyCard() != null && totalFinalPrice >= 10000) {
+                int addPoints = (int) totalFinalPrice / 10000;
+                loyaltyCardService.update(user.getLoyaltyCard().getId(), addPoints);
+                loyaltyCardService.saveJunction(user.getLoyaltyCard(), addPoints);
+            }
 
             return "redirect:/cart";
         } catch(Exception e) {
@@ -56,6 +67,11 @@ public class ReservationController {
             }
 
             reservationService.acceptReservation(reservationId);
+            Reservation r = reservationService.findOne(reservationId);
+            User u = r.getUser();
+            if(u.getLoyaltyCard() != null) {
+                loyaltyCardService.deleteJunction(u.getLoyaltyCard().getId());
+            }
             return "redirect:/dashboard/pendingReservations";
         } catch(Exception e) {
             System.out.println(e);
@@ -75,6 +91,15 @@ public class ReservationController {
             tr = trService.reverseValidation(tr, declineRes);
             trService.update(tr);
             reservationService.declineReservation(declineRes);
+            if(declineRes.getUser().getLoyaltyCard() != null) {
+                int reducePointsBy = loyaltyCardService.takePointsFromJunction(declineRes.getUser().getLoyaltyCard().getId());
+                LoyaltyCard lc = loyaltyCardService.findOne(declineRes.getUser().getId());
+                lc.setPoints(lc.getPoints() - reducePointsBy);
+                loyaltyCardService.update(lc.getId(), lc.getPoints());
+                loyaltyCardService.deleteJunction(lc.getId());
+                reservationService.delete(declineRes.getReservationId());
+            }
+
             return "redirect:/dashboard/pendingReservations";
         } catch(Exception e) {
             System.out.println(e);

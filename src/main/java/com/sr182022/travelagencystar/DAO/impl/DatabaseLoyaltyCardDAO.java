@@ -2,6 +2,7 @@ package com.sr182022.travelagencystar.DAO.impl;
 
 import com.sr182022.travelagencystar.DAO.ILoyaltyCardDAO;
 import com.sr182022.travelagencystar.model.LoyaltyCard;
+import com.sr182022.travelagencystar.model.LoyaltyCardJunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -91,6 +92,7 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
         return keyHolder.getKey().intValue();
     }
 
+
     @Override
     public int update(int loyaltyCardId, int points) {
         String sql =
@@ -109,4 +111,67 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
         jdbcTemplate.update(sql, loyaltyCardId);
         return loyaltyCardId;
     }
+
+    // this under is like this because spec changed late and had to make it work.
+
+    public void saveJunction(LoyaltyCard loyaltyCard, int addPoints) {
+        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                String sql =
+                        "INSERT INTO loyalty_card_junction(id_junction, points) VALUES(?, ?)";
+
+                PreparedStatement preparedStatement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                int index = 1;
+                preparedStatement.setInt(index++, loyaltyCard.getId());
+                preparedStatement.setInt(index++, addPoints);
+
+                return preparedStatement;
+            }
+        };
+
+        jdbcTemplate.update(preparedStatementCreator);
+    }
+
+    @Override
+    public void deleteJunction(int loyaltyCardId) {
+        String sql = "DELETE FROM loyalty_card_junction lc WHERE lc.id_junction = ?";
+        jdbcTemplate.update(sql, loyaltyCardId);
+    }
+
+    private class LoyaltyCardJunctionRowCallBackHandler implements RowCallbackHandler{
+
+        private Map<Integer, LoyaltyCardJunction> loyaltyCardJunctions = new LinkedHashMap<>();
+        @Override
+        public void processRow(ResultSet resultSet) throws SQLException {
+            int index = 1;
+            int id = resultSet.getInt(index++);
+            int id_junction = resultSet.getInt(index++);
+            int points = resultSet.getInt(index++);
+
+            LoyaltyCardJunction lcj = loyaltyCardJunctions.get(id);
+            if(lcj == null) {
+                lcj = new LoyaltyCardJunction(id, id_junction, points);
+                loyaltyCardJunctions.put(lcj.getId(), lcj);
+            }
+        }
+
+        public List<LoyaltyCardJunction> getLoyaltyCardJunctions() { return new ArrayList<>(loyaltyCardJunctions.values());
+        }
+    }
+
+    @Override
+    public int takePointsFromJunction(int loyaltyCardId) {
+        String sql =
+                "SELECT lcj.id, lcj.id_junction, lcj.points FROM loyalty_card_junction lcj WHERE lcj.id_junction = ?";
+        LoyaltyCardJunctionRowCallBackHandler rowCallBackHandler = new LoyaltyCardJunctionRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, loyaltyCardId);
+        List<LoyaltyCardJunction> lcjList = rowCallBackHandler.getLoyaltyCardJunctions();
+        if(!lcjList.isEmpty()) {
+            return lcjList.get(0).getPoints();
+        } else {
+            return 0;
+        }
+    }
+
 }

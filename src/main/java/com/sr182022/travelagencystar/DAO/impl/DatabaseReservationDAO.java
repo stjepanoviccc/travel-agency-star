@@ -1,6 +1,7 @@
 package com.sr182022.travelagencystar.DAO.impl;
 
 import com.sr182022.travelagencystar.DAO.IReservationDAO;
+import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.model.Reservation;
 import com.sr182022.travelagencystar.model.Travel;
 import com.sr182022.travelagencystar.model.User;
@@ -142,7 +143,7 @@ public class DatabaseReservationDAO implements IReservationDAO {
 
     @Transactional
     @Override
-    public void save(Reservation res) {
+    public void save(Reservation res, float finalPrice) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         PreparedStatementCreator preparedStatementCreator = connection -> {
@@ -154,7 +155,7 @@ public class DatabaseReservationDAO implements IReservationDAO {
             preparedStatement.setInt(index++, res.getTravel().getId());
             preparedStatement.setInt(index++, res.getUser().getId());
             preparedStatement.setInt(index++, res.getPassengers());
-            preparedStatement.setFloat(index++, res.getPassengers() * res.getTravel().getPrice());
+            preparedStatement.setFloat(index++, finalPrice);
             preparedStatement.setTimestamp(index++, DateTimeUtil.convertLocalDateTimeToTimestamp(res.getCreatedAt()));
             return preparedStatement;
         };
@@ -174,6 +175,13 @@ public class DatabaseReservationDAO implements IReservationDAO {
     public void delete(int travelId, int userId) {
         String sql = "DELETE FROM reservation r WHERE r.id_travel = ? and r.id_user = ?";
         jdbcTemplate.update(sql, travelId, userId);
+    }
+
+    @Transactional
+    @Override
+    public void delete(int reservationId) {
+        String sql = "DELETE FROM reservation r WHERE r.id_reservation = ?";
+        jdbcTemplate.update(sql, reservationId);
     }
 
     @Override

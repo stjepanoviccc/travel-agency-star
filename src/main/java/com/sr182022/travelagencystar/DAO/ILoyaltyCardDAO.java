@@ -10,5 +10,6 @@ public interface ILoyaltyCardDAO {
     int save(int points, int userId, boolean activated);
     int update(int loyaltyCardId, int points);
     int delete(int loyaltyCardId);
-
+    void deleteJunction(int loyaltyCardId);
+    int takePointsFromJunction(int loyaltyCardId);
 }

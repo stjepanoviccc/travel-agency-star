@@ -42,4 +42,17 @@ public class LoyaltyCardService implements ILoyaltyCardService {
     public int delete(int loyaltyCardId) {
         return lcDao.delete(loyaltyCardId);
     }
+
+    @Override
+    public void saveJunction(LoyaltyCard loyaltyCard, int addPoints) {
+        lcDao.saveJunction(loyaltyCard, addPoints);
+    }
+    @Override
+    public void deleteJunction(int loyaltyCardId) {
+        lcDao.deleteJunction(loyaltyCardId);
+    }
+    @Override
+    public int takePointsFromJunction(int loyaltyCardId) {
+        return lcDao.takePointsFromJunction(loyaltyCardId);
+    };
 }
