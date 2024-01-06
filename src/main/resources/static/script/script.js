@@ -5,6 +5,7 @@ import * as travelFunctions from "./travel.js";
 import * as usersFunctions from "./users.js";
 import * as loyaltyCardFunctions from "./loyalty-card.js";
 import * as cartFunctions from "./cart.js";
+import * as couponFunctions from "./coupon.js";
 
 $(document).ready(() => {
 
@@ -178,4 +179,33 @@ $(document).ready(() => {
         },100);
     })
 
+    // select all checkboxes on coupon page
+    $('#btnSelectAllCheckboxesForCoupon').on('click', () => {
+        couponFunctions.selectAllCheckboxes();
+    })
+
+    // add coupon submitting
+    $('#btnAddCouponJs').on('click', event => {
+        event.preventDefault();
+        const discount = couponFunctions.getFilterValues().discount;
+        const startDate = couponFunctions.getFilterValues().startDate;
+        const selectedCategories = couponFunctions.getFilterValues().selectedCategories;
+        const selectedTravelIDs = couponFunctions.getFilterValues().selectedTravelIDs;
+
+        if(discount == null || discount == "" || discount < 0 || discount > 100) {
+            alert("Discount can't be under 0 or over 100 and also it must be selected.");
+            return;
+        }
+        if(startDate == null || startDate == "") {
+            alert("Start date must be selected");
+            return;
+        }
+        if(selectedCategories == "" && selectedTravelIDs == "") {
+            alert("You must select category(one or more) or travel(one or more).");
+            return;
+        }
+
+        couponFunctions.addCoupon(discount, startDate, couponFunctions.getFilterValues().endDate, selectedCategories, selectedTravelIDs);
+        couponFunctions.resetToDefaultValues();
+    });
 });

@@ -14,9 +14,27 @@
     <h1 class="text-center text-3xl lg:text-4xl lg:text-left" th:text="#{couponPageHeading}"></h1>
     <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left" th:text="#{couponPageSubheading}"></h2>
     <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
-        <div th:replace="~{fragments/forms/coupons/addCouponForm :: addCouponForm}">
+        <div th:replace="~{fragments/forms/coupons/addCouponForm :: addCouponForm}"></div>
     </div>
 
+    <div class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
+        <h2 class="pt-6 lg:pt-8 text-xl lg:text-2xl text-center lg:text-left" th:text="#{couponPageSubheading2}"></h2>
+        <table class="min-w-full text-center font-light mt-4">
+            <thead class="border-b font-medium dark:border-neutral-500">
+            <tr >
+                <th scope="col" class="px-4 py-4">#</th>
+                <th scope="col" class="px-4 py-4" th:text="#{textID}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textStartDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textEndDate}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textDiscount}"></th>
+                <th scope="col" class="px-4 py-4" th:text="#{textDelete}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${coupons != null and coupons.size() > 0}" th:replace="~{fragments/tableItems/tableCouponItem :: tableCouponItem}"> </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <!-- footer -->

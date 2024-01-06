@@ -1,4 +1,9 @@
-<form th:fragment="addCouponForm" action="/coupon/addCouponForm" method="post">
+<form th:fragment="addCouponForm" action="/coupon/addCoupon" method="post">
+    <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start w-full mt-4">
+        <label for="addCouponStartDate" class="block font-medium text-gray-700" th:text="#{textDiscount} + ' % '"></label>
+        <input class="mt-1 p-2 border rounded-md w-24" min="0" max="100" type="number" id="addCouponDiscount" name="discount"/>
+    </div>
+
     <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start lg:flex-row gap-x-12 mt-4">
         <div class="flex flex-col w-64">
             <label for="addCouponStartDate" class="block font-medium text-gray-700" th:text="#{textStartDate} + ': '"></label>
@@ -14,21 +19,9 @@
     <div class="flex flex-col justify-center items-center lg:items-start lg:justify-start gap-x-12 mt-4">
         <h3 class="font-medium text-xl" th:text="#{textTravelCategory} + ': '"></h3>
         <div class="flex flex-row gap-x-8 mt-2">
-            <div class="flex flex-row gap-x-2">
-                <label th:text="#{textTravelCategory}"></label>
-                <input type="checkbox" name="travelCategory" value="category1">
-            </div>
-            <div class="flex flex-row gap-x-2">
-                <label th:text="#{textTravelCategory}"></label>
-                <input type="checkbox" name="travelCategory" value="category1">
-            </div>
-            <div class="flex flex-row gap-x-2">
-                <label th:text="#{textTravelCategory}"></label>
-                <input type="checkbox" name="travelCategory" value="category1">
-            </div>
-            <div class="flex flex-row gap-x-2">
-                <label th:text="#{textTravelCategory}"></label>
-                <input type="checkbox" name="travelCategory" value="category1">
+            <div th:each="tc : ${travelCategories}" class="flex flex-row gap-x-2">
+                <label th:text="${tc}"></label>
+                <input type="checkbox" name="travelCategories" th:value="${tc}">
             </div>
         </div>
     </div>
@@ -38,7 +31,10 @@
         <table class="min-w-full text-center font-light">
             <thead class="border-b font-medium dark:border-neutral-500">
             <tr >
-                <th scope="col" class="px-4 py-4">#</th>
+                <th scope="col" class="px-4 py-4">
+                    <button type="button" class="bg-gray-600 text-white px-4 py-2 text-sm font-medium border-2 border-gray-600 hover:bg-white hover:text-gray-600
+                    hover:border-gray-600 transition duration-300 cursor-pointer" id="btnSelectAllCheckboxesForCoupon" th:text="#{textSelectAll}"></button>
+                </th>
                 <th scope="col" class="px-4 py-4" th:text="#{textDestination}"></th>
                 <th scope="col" class="px-4 py-4" th:text="#{textID}"></th>
                 <th scope="col" class="px-4 py-4" th:text="#{textStartDate}"></th>
@@ -49,47 +45,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="border-b dark:border-neutral-500">
+            <tr th:each="travel : ${travels}" class="border-b dark:border-neutral-500">
                 <td class="whitespace-nowrap px-6 py-4 font-medium">
-                    <input type="checkbox" name="travelCategory" value="category1">
+                    <input type="checkbox" name="travels" th:value="${travel.id}">
                 </td>
-                <td class="whitespace-nowrap px-6 py-4">2</td>
-                <td class="whitespace-nowrap px-6 py-4">3</td>
-                <td class="whitespace-nowrap px-6 py-4">4</td>
-                <td class="whitespace-nowrap px-6 py-4">5</td>
-                <td class="whitespace-nowrap px-6 py-4">6</td>
-                <td class="whitespace-nowrap px-6 py-4">7</td>
-                <td class="whitespace-nowrap px-6 py-4">8</td>
-            </tr>
-            <tr class="border-b dark:border-neutral-500">
-                <td class="whitespace-nowrap px-6 py-4 font-medium">
-                    <input type="checkbox" name="travelCategory" value="category1">
-                </td>
-                <td class="whitespace-nowrap px-6 py-4">2</td>
-                <td class="whitespace-nowrap px-6 py-4">3</td>
-                <td class="whitespace-nowrap px-6 py-4">4</td>
-                <td class="whitespace-nowrap px-6 py-4">5</td>
-                <td class="whitespace-nowrap px-6 py-4">6</td>
-                <td class="whitespace-nowrap px-6 py-4">7</td>
-                <td class="whitespace-nowrap px-6 py-4">8</td>
-            </tr>
-            <tr class="border-b dark:border-neutral-500">
-                <td class="whitespace-nowrap px-6 py-4 font-medium">
-                    <input type="checkbox" name="travelCategory" value="category1">
-                </td>
-                <td class="whitespace-nowrap px-6 py-4">2</td>
-                <td class="whitespace-nowrap px-6 py-4">3</td>
-                <td class="whitespace-nowrap px-6 py-4">4</td>
-                <td class="whitespace-nowrap px-6 py-4">5</td>
-                <td class="whitespace-nowrap px-6 py-4">6</td>
-                <td class="whitespace-nowrap px-6 py-4">7</td>
-                <td class="whitespace-nowrap px-6 py-4">8</td>
+                <td class="whitespace-nowrap px-6 py-4" th:text="${travel.destination}"></td>
+                <td class="whitespace-nowrap px-6 py-4" th:text="${travel.id}"></td>
+                <td class="whitespace-nowrap px-6 py-4" th:text="${travel.startDate}"></td>
+                <td class="whitespace-nowrap px-6 py-4" th:text="${travel.endDate}"></td>
+                <td class="whitespace-nowrap px-6 py-4" th:text="${travel.vehicle}"></td>
+                <td class="whitespace-nowrap px-6 py-4" th:text="${travel.accommodationUnit}"></td>
+                <td class="whitespace-nowrap px-6 py-4" th:text="${travel.price}"></td>
             </tr>
             </tbody>
         </table>
     </div>
 
-
-
-    <button type="submit" class="mt-12 border-2 p-2 border-red-600" id="btnAddCouponJs" th:text="#{textSave}"></button>
+    <button type="submit" class="bg-red-600 text-white px-4 py-2 text-sm font-medium border-2 border-red-600 hover:bg-white hover:text-red-600
+               hover:border-red-600 transition duration-300 cursor-pointer mt-12" id="btnAddCouponJs" th:text="#{textSave}"></button>
 </form>

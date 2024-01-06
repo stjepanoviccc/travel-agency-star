@@ -11,6 +11,7 @@ public class ErrorController {
     public static final String routeErrorReturn = "redirect:/route-error";
     public static final String internalErrorReturn = "redirect:/internal-error";
     public static final String availableSpaceErrorReturn = "redirect:/space-error";
+    public static final String couponErrorReturn = "redirect:/coupon-error";
 
     @GetMapping("/login-error")
     public String getLoginErrorPage() {
@@ -28,4 +29,7 @@ public class ErrorController {
 
     @GetMapping("/space-error")
     public String getAvailableSpaceErrorPage() { return "/errorPages/availableSpaceErrorPage"; }
+
+    @GetMapping("/coupon-error")
+    public String getCouponErrorPage() { return "/errorPages/couponErrorPage"; }
 }
