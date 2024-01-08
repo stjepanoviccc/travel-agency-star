@@ -30,7 +30,7 @@
                 <th scope="col" class="px-4 py-4" th:text="#{textDelete}"></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="couponContainerJs">
             <tr th:if="${coupons != null and coupons.size() > 0}" th:replace="~{fragments/tableItems/tableCouponItem :: tableCouponItem}"> </tr>
             </tbody>
         </table>

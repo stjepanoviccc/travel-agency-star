@@ -5,12 +5,10 @@ import com.sr182022.travelagencystar.service.ICouponService;
 import com.sr182022.travelagencystar.service.ITravelService;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -38,6 +36,21 @@ public class CouponController {
         model.addAttribute("travels", travelService.findAll());
 
         return "coupon";
+    }
+
+    @GetMapping(value = "updateUI", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Coupon> getUpdateUI(Model model){
+        List<Coupon> cps = couponService.findAll();
+        return cps;
+    }
+
+    @GetMapping("success")
+    public String getCouponSuccessPage(HttpSession session) {
+        if(!CheckRoleUtil.RoleAdministrator(session)) {
+            return ErrorController.permissionErrorReturn;
+        }
+        return "viewPages/coupon-success";
     }
 
     @PostMapping("deleteCoupon")
@@ -70,13 +83,8 @@ public class CouponController {
             }
 
             Coupon coupon = new Coupon(startDate, endDate, discount);
-            boolean validation = couponService.validate(coupon, categoriesList, travelIDsList);
-            if(!validation) {
-                return ErrorController.couponErrorReturn;
-            }
             couponService.createCouponsBasedOnArguments(coupon, categoriesList, travelIDsList);
-
-            return "redirect:/coupon";
+            return "redirect:/coupon/success";
         } catch(Exception e) {
             System.out.println(e);
             return ErrorController.internalErrorReturn;

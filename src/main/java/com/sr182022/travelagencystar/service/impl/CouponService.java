@@ -8,6 +8,7 @@ import com.sr182022.travelagencystar.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,19 +29,19 @@ public class CouponService implements ICouponService {
     }
 
     @Override
-    public void save(Coupon c) {
-        couponDAO.save(c);
+    public int save(Coupon c) {
+        return couponDAO.save(c);
     }
 
     @Override
-    public boolean validate(Coupon c, List<String> selectedCategories, List<String> selectedTravelIDs) {
-        if(c.getStartDate()==null || c.getDiscount() == null) {
-            return false;
+    public Coupon validate(Coupon c, List<String> selectedCategories, List<String> selectedTravelIDs) {
+        if(c.getStartDate()==null) {
+            c.setStartDate(LocalDate.MIN);
         }
-        if(selectedCategories == null && selectedTravelIDs == null) {
-            return false;
+        if(c.getDiscount() == null) {
+            c.setDiscount(0);
         }
-        return true;
+        return c;
     }
 
     @Override

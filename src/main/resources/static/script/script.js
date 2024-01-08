@@ -193,6 +193,13 @@ $(document).ready(() => {
         const selectedCategories = couponFunctions.getFilterValues().selectedCategories;
         const selectedTravelIDs = couponFunctions.getFilterValues().selectedTravelIDs;
 
+        if(selectedTravelIDs != "" && discount != "" && discount > 0 && discount <= 100 && startDate != "") {
+            // meaning if specific travel/s is selected i dont even need to choose date etc
+            couponFunctions.addCoupon(discount, startDate, couponFunctions.getFilterValues().endDate, selectedCategories, selectedTravelIDs);
+            couponFunctions.resetToDefaultValues();
+            return;
+        }
+
         if(discount == null || discount == "" || discount < 0 || discount > 100) {
             alert("Discount can't be under 0 or over 100 and also it must be selected.");
             return;

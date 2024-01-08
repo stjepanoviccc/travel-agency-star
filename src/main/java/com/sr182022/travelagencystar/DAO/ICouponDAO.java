@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ICouponDAO {
     List<Coupon> findAll();
-    void save(Coupon c);
+    int save(Coupon c);
     void delete(int couponId);
 }

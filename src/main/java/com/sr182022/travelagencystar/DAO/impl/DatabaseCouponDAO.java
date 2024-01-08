@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -81,7 +83,7 @@ public class DatabaseCouponDAO implements ICouponDAO {
     }
 
     @Override
-    public void save(Coupon c) {
+    public int save(Coupon c) {
         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -114,7 +116,9 @@ public class DatabaseCouponDAO implements ICouponDAO {
             }
         };
 
-        jdbcTemplate.update(preparedStatementCreator);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(preparedStatementCreator, keyHolder);
+        return keyHolder.getKey().intValue();
     }
 
     @Transactional
