@@ -1,5 +1,6 @@
 package com.sr182022.travelagencystar.service;
 
+import com.sr182022.travelagencystar.model.Coupon;
 import com.sr182022.travelagencystar.model.Travel;
 import com.sr182022.travelagencystar.model.TravelReservation;
 import jakarta.servlet.http.HttpSession;
@@ -25,4 +26,6 @@ public interface ITravelService {
     List<Travel> removeSelectedOne(int selectedTravelId, List<Travel> travels);
     boolean tryValidate(Travel travel, int destinationId, int vehicleId, int accUnitId);
     List<Travel> returnOnlyAvailableTravels(HttpSession session, List<Travel> allTravels, List<TravelReservation> trs);
+    List<Travel> checkForCoupons(List<Travel> allTravels, List<Coupon> allCoupons);
+    Travel checkForCoupons(Travel travel, List<Coupon> allCoupons);
 }

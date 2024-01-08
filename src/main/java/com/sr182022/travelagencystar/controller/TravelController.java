@@ -1,9 +1,6 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.model.AccommodationUnit;
-import com.sr182022.travelagencystar.model.Travel;
-import com.sr182022.travelagencystar.model.TravelReservation;
-import com.sr182022.travelagencystar.model.Vehicle;
+import com.sr182022.travelagencystar.model.*;
 import com.sr182022.travelagencystar.service.*;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
@@ -23,14 +20,16 @@ public class TravelController {
     private final IVehicleService vehicleService;
     private final IAccommodationUnitService accommodationUnitService;
     private final ITravelReservation trService;
+    private final ICouponService couponService;
 
     public TravelController(ITravelService travelService, IDestinationService destinationService, IVehicleService vehicleService,
-                            IAccommodationUnitService accommodationUnitService, ITravelReservation trService) {
+                            IAccommodationUnitService accommodationUnitService, ITravelReservation trService, ICouponService couponService) {
         this.travelService = travelService;
         this.destinationService = destinationService;
         this.vehicleService = vehicleService;
         this.accommodationUnitService = accommodationUnitService;
         this.trService = trService;
+        this.couponService = couponService;
     }
 
     @GetMapping("/dashboard/travels/travel-validation")
@@ -47,12 +46,17 @@ public class TravelController {
     public String travelDetailsPage(HttpSession session, @RequestParam int id, Model model) {
         try {
             Travel travel = travelService.findOne(id);
+            List<Coupon> allCoupons = couponService.findAll();
+            travel = travelService.checkForCoupons(travel, allCoupons);
             if(travel == null) {
                 return ErrorController.routeErrorReturn;
             }
 
             int destinationId = travel.getDestination().getId();
             List<Travel> travels = travelService.findAll(destinationId);
+            if(travels != null) {
+                travels = travelService.checkForCoupons(travels, allCoupons);
+            }
             List<TravelReservation> trs = trService.findAll();
             if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
                 travelService.returnOnlyAvailableTravels(session, travels, trs);

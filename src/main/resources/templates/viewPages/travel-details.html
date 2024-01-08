@@ -15,6 +15,7 @@
 
     <div class="flex flex-col lg:flex-row gap-x-24 mt-14 border-4 shadow-2xl p-4">
         <div class="w-full text-center">
+            <p class="text-xl mb-3 border-2 bg-red-600 text-white p-2 rounded-full" th:if="${travel?.onDiscount == true}" th:text="#{textOnSale}"></p>
             <p class="block font-medium text-xl" th:text="#{textDestination} + ': ' + ${travel?.destination}"></p>
             <p th:if="${travel.vehicle != null}"
                     class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${travel?.vehicle}"></p>
@@ -76,6 +77,7 @@
         <div th:each="t : ${allTravels}">
             <div class="flex flex-col lg:flex-row gap-x-24 mt-14 border-4 p-4">
                 <div class="w-full text-center">
+                    <p class="text-xl mb-3 border-2 bg-red-600 text-white p-2 rounded-full" th:if="${t?.onDiscount == true}" th:text="#{textOnSale}"></p>
                     <p class="block font-medium text-xl" th:text="#{textDestination} + ': ' + ${t.destination}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${t.vehicle}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${t.accommodationUnit.name}"></p>

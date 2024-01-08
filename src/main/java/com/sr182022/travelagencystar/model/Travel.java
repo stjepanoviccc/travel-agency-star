@@ -11,6 +11,11 @@ public class Travel {
     private int numberOfNights;
     private TravelCategory travelCategory;
     private float price;
+    private boolean onDiscount;
+
+    public Travel() {
+
+    }
 
     public Travel(Integer id, Destination destination, Vehicle vehicle, AccommodationUnit accommodationUnit, LocalDate startDate, LocalDate endDate, int numberOfNights,
                   TravelCategory travelCategory, float price) {
@@ -25,8 +30,8 @@ public class Travel {
         this.price = price;
     }
 
-    public Travel() {
-
+    public Travel(boolean onDiscount) {
+        this.onDiscount = onDiscount;
     }
 
     public int getId() {
@@ -99,5 +104,13 @@ public class Travel {
 
     public void setTravelCategory(TravelCategory travelCategory) {
         this.travelCategory = travelCategory;
+    }
+
+    public boolean isOnDiscount() {
+        return onDiscount;
+    }
+
+    public void setOnDiscount(boolean onDiscount) {
+        this.onDiscount = onDiscount;
     }
 }

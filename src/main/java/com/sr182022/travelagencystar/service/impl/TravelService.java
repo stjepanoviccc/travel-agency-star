@@ -175,4 +175,102 @@ public class TravelService implements ITravelService {
         allTravels.removeAll(travelsToRemove);
         return allTravels;
         }
+
+    @Override
+    public List<Travel> checkForCoupons(List<Travel> allTravels, List<Coupon> allCoupons) {
+        for(Travel tr : allTravels) {
+            for(Coupon c : allCoupons) {
+                // checking with id
+                if(c.getTravel() != null) {
+                    if(tr.getId() == c.getTravel().getId()) {
+                        float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                        tr.setPrice(newPrice);
+                        tr.setOnDiscount(true);
+                    }
+                }
+
+                // checking category
+                switch (tr.getTravelCategory()) {
+                    case Winter:
+                        if (c.isWinter()) {
+                            float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                            tr.setPrice(newPrice);
+                            tr.setOnDiscount(true);
+                        }
+                        break;
+                    case Summer:
+                        if (c.isSummer()) {
+                            float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                            tr.setPrice(newPrice);
+                            tr.setOnDiscount(true);
+                        }
+                        break;
+                    case Last_min:
+                        if (c.isLast_min()) {
+                            float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                            tr.setPrice(newPrice);
+                            tr.setOnDiscount(true);
+                        }
+                        break;
+                    case New_year:
+                        if (c.isNew_year()) {
+                            float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                            tr.setPrice(newPrice);
+                            tr.setOnDiscount(true);
+                        }
+                        break;
+                }
+            }
+        }
+
+        return allTravels;
     }
+
+    @Override
+    public Travel checkForCoupons(Travel tr, List<Coupon> allCoupons) {
+        for(Coupon c : allCoupons) {
+            // checking with id
+            if(c.getTravel() != null) {
+                if(tr.getId() == c.getTravel().getId()) {
+                    float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                    tr.setPrice(newPrice);
+                    tr.setOnDiscount(true);
+                }
+            }
+
+            // checking category
+            switch (tr.getTravelCategory()) {
+                case Winter:
+                    if (c.isWinter()) {
+                        float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                        tr.setPrice(newPrice);
+                        tr.setOnDiscount(true);
+                    }
+                    break;
+                case Summer:
+                    if (c.isSummer()) {
+                        float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                        tr.setPrice(newPrice);
+                        tr.setOnDiscount(true);
+                    }
+                    break;
+                case Last_min:
+                    if (c.isLast_min()) {
+                        float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                        tr.setPrice(newPrice);
+                        tr.setOnDiscount(true);
+                    }
+                    break;
+                case New_year:
+                    if (c.isNew_year()) {
+                        float newPrice = tr.getPrice() - (tr.getPrice() * c.getDiscount()/100);
+                        tr.setPrice(newPrice);
+                        tr.setOnDiscount(true);
+                    }
+                    break;
+            }
+        }
+
+        return tr;
+    }
+}

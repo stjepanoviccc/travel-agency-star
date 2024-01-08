@@ -24,7 +24,7 @@
             <!-- each card -->
             <div th:each="travel : ${travelsForCards}" class="indexTravelCard">
                 <div class="w-full rounded overflow-hidden shadow-lg text-center border-2 transform transition-transform duration-300 hover:scale-105">
-                    <!-- this will probably be form and link will be redirected to exact travel page with details. -->
+                    <div th:replace="~{fragments/ui/discountCircle :: discountCircleFragment}"></div>
                     <a th:href="'/travel?id=' + ${travel.id}">
                         <img class="h-64 w-full" th:src="@{/images/}+${travel.destination.image}" alt="travel-img">
                     </a>
@@ -51,7 +51,7 @@
                                 <input class="hidden" type="hidden" name="idUser" th:value="${session.user.id}" readonly />
                             </div>
                             <div class="h-[0px]" th:if="${session.user == null}">
-                                <input class="hidden" type="hidden" name="idUser" th:value="'-1'" readonly />;
+                                <input class="hidden" type="hidden" name="idUser" th:value="'-1'" readonly />
                             </div>
                             <input type="hidden" name="idTravel" th:value="${travel.id}" readonly />
                             <!-- pitati za ovo -->

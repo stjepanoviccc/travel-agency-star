@@ -1,9 +1,6 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.model.Destination;
-import com.sr182022.travelagencystar.model.Travel;
-import com.sr182022.travelagencystar.model.TravelReservation;
-import com.sr182022.travelagencystar.model.User;
+import com.sr182022.travelagencystar.model.*;
 import com.sr182022.travelagencystar.service.*;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpSession;
@@ -24,20 +21,25 @@ public class HomeController {
     private final IVehicleService vehicleService;
     private final IDestinationService destinationService;
     private final ITravelReservation trService;
+    private final ICouponService couponService;
 
     public HomeController(ITravelService travelService, IAccommodationUnitService accommodationUnitService,
-                          IVehicleService vehicleService, IDestinationService destinationService, ITravelReservation trService) {
+                          IVehicleService vehicleService, IDestinationService destinationService, ITravelReservation trService, ICouponService couponService) {
         this.travelService = travelService;
         this.accommodationUnitService = accommodationUnitService;
         this.vehicleService = vehicleService;
         this.destinationService = destinationService;
         this.trService = trService;
+        this.couponService = couponService;
     }
 
     @GetMapping
     public String getHomePage(HttpSession session, Model model) {
         try {
             List<Travel> allTravels = travelService.findAll();
+            List<Coupon> allCoupons = couponService.findAll();
+            allTravels = travelService.checkForCoupons(allTravels, allCoupons);
+
             List<TravelReservation> trs = trService.findAll();
             if(!CheckRoleUtil.RoleAdministratorOrOrganizer(session)) {
                 travelService.returnOnlyAvailableTravels(session, allTravels, trs);

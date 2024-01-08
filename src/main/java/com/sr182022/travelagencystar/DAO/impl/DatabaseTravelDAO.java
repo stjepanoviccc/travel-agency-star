@@ -304,7 +304,7 @@ public class DatabaseTravelDAO implements ITravelDAO {
         }
 
         return jdbcTemplate.query(sql, argList.toArray(), new TravelRowMapper());
-}
+    }
 
     @Override
     public Travel findOne(int travelId) {
