@@ -93,8 +93,10 @@ public class ReservationService implements IReservationService {
             } else {
                 // if used
                 float percentageToCutOff = 5 * pointsForUsage;
-                finalPrice = res.getTravel().getPrice() - (100 - (100 * 100/percentageToCutOff));
+                finalPrice = res.getTravel().getPrice() - (res.getTravel().getPrice() * (percentageToCutOff/100));
+                finalPrice *= res.getPassengers();
             }
+
             totalFinalPrice += finalPrice;
             save(res, finalPrice);
         }

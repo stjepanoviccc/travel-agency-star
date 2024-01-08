@@ -48,11 +48,18 @@ public class ReservationController {
             User user = (User) session.getAttribute("user");
             if(user.getLoyaltyCard() != null && totalFinalPrice >= 10000) {
                 int addPoints = (int) totalFinalPrice / 10000;
-                loyaltyCardService.update(user.getLoyaltyCard().getId(), addPoints);
+                if(pointsForUsage > 0) {
+                    addPoints -= pointsForUsage;
+                }
+                if(user.getLoyaltyCard().getPoints() > 0) {
+                    loyaltyCardService.update(user.getLoyaltyCard().getId(), addPoints, "updateAdd");
+                } else {
+                    loyaltyCardService.update(user.getLoyaltyCard().getId(), addPoints, "updateInitOrReduce");
+                }
                 loyaltyCardService.saveJunction(user.getLoyaltyCard(), addPoints);
             }
 
-            return "redirect:/cart";
+            return "redirect:/";
         } catch(Exception e) {
             System.out.println(e);
             return ErrorController.internalErrorReturn;
@@ -95,7 +102,7 @@ public class ReservationController {
                 int reducePointsBy = loyaltyCardService.takePointsFromJunction(declineRes.getUser().getLoyaltyCard().getId());
                 LoyaltyCard lc = loyaltyCardService.findOne(declineRes.getUser().getId());
                 lc.setPoints(lc.getPoints() - reducePointsBy);
-                loyaltyCardService.update(lc.getId(), lc.getPoints());
+                loyaltyCardService.update(lc.getId(), lc.getPoints(), "updateInitOrReduce");
                 loyaltyCardService.deleteJunction(lc.getId());
                 reservationService.delete(declineRes.getReservationId());
             }

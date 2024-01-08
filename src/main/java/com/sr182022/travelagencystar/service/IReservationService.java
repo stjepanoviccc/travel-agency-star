@@ -11,7 +11,7 @@ public interface IReservationService {
     List<Reservation> findAll(boolean pending);
     Reservation findOne(int reservationId);
     Reservation findOne(int travelId, int userId);
-    void save(Reservation res, float pointsForUsage);
+    void save(Reservation res, float finalPrice);
     void delete(int travelId, int userId);
     void delete(int reservationId);
     boolean validateReservation(HttpSession session);

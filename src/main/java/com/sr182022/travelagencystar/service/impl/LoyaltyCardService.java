@@ -34,8 +34,8 @@ public class LoyaltyCardService implements ILoyaltyCardService {
     }
 
     @Override
-    public int update(int loyaltyCardId, int points) {
-        return lcDao.update(loyaltyCardId, points);
+    public int update(int loyaltyCardId, int points, String casee) {
+        return lcDao.update(loyaltyCardId, points, casee);
     }
 
     @Override

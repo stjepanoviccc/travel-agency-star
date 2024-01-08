@@ -54,7 +54,7 @@ public class LoyaltyCardController {
                 return ErrorController.permissionErrorReturn;
             }
 
-            loyaltyCardService.update(loyaltyCardId, 0);
+            loyaltyCardService.update(loyaltyCardId, 0, "updateInitOrReduce");
             User u = (User) session.getAttribute("user");
             return "redirect:/dashboard/loyaltyCards?id=" + u.getId();
         } catch(Exception e) {

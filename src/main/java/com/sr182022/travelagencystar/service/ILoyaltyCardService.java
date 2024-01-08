@@ -8,7 +8,7 @@ public interface ILoyaltyCardService {
     List<LoyaltyCard> findAll();
     LoyaltyCard findOne(int id);
     int save(int points, int userId, boolean activated);
-    int update(int loyaltyCardId, int points);
+    int update(int loyaltyCardId, int points, String casee);
     int delete(int loyaltyCardId);
     void saveJunction(LoyaltyCard loyaltyCard, int addPoints);
     void deleteJunction(int loyaltyCardId);

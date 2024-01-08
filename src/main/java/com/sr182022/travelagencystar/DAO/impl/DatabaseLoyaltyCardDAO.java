@@ -3,6 +3,7 @@ package com.sr182022.travelagencystar.DAO.impl;
 import com.sr182022.travelagencystar.DAO.ILoyaltyCardDAO;
 import com.sr182022.travelagencystar.model.LoyaltyCard;
 import com.sr182022.travelagencystar.model.LoyaltyCardJunction;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -69,6 +70,7 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
         }
     }
 
+    @Transactional
     @Override
     public int save(int points, int userId, boolean activated) {
         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
@@ -92,17 +94,24 @@ public class DatabaseLoyaltyCardDAO implements ILoyaltyCardDAO {
         return keyHolder.getKey().intValue();
     }
 
-
+    @Transactional
     @Override
-    public int update(int loyaltyCardId, int points) {
-        String sql =
-                "UPDATE loyalty_card lc " +
-                        "SET lc.points = ?, lc.activated = 1 WHERE id_loyalty_card = ?";
+    public int update(int loyaltyCardId, int points, String casee) {
+        String sql = "";
+        switch(casee) {
+            case "updateInitOrReduce":
+                sql = "UPDATE loyalty_card lc SET lc.points = ?, lc.activated = 1 WHERE id_loyalty_card = ?";
+                break;
+            case "updateAdd":
+                sql = "UPDATE loyalty_card lc SET lc.points = lc.points + ?, lc.activated = 1 WHERE id_loyalty_card = ?";
+                break;
+        }
 
         jdbcTemplate.update(sql, points, loyaltyCardId);
         return loyaltyCardId;
     }
 
+    @Transactional
     @Override
     public int delete(int loyaltyCardId) {
         String sql =
