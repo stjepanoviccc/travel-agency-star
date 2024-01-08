@@ -6,6 +6,7 @@ import * as usersFunctions from "./users.js";
 import * as loyaltyCardFunctions from "./loyalty-card.js";
 import * as cartFunctions from "./cart.js";
 import * as couponFunctions from "./coupon.js";
+import * as reviewFunctions from "./reviews.js";
 
 $(document).ready(() => {
 
@@ -208,4 +209,11 @@ $(document).ready(() => {
         couponFunctions.addCoupon(discount, startDate, couponFunctions.getFilterValues().endDate, selectedCategories, selectedTravelIDs);
         couponFunctions.resetToDefaultValues();
     });
+
+    // reviews filtering
+    $("#reviewSubmitFilterBtn").on('click', event => {
+        event.preventDefault();
+        const accommodationUnitId = reviewFunctions.getFilterValues().accommodationUnitId;
+        reviewFunctions.filterReview(accommodationUnitId);
+    })
 });

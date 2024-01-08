@@ -12,7 +12,6 @@ public class AccommodationUnit {
     private boolean bathroom;
     private boolean tv;
     private boolean conditioner;
-    private List<Review> reviews = new ArrayList<>();
 
     public AccommodationUnit() {}
     public AccommodationUnit(int id, String name, int capacity, AccommodationType accommodationType,
@@ -28,8 +27,6 @@ public class AccommodationUnit {
         this.conditioner = conditioner;
         this.destination = destination;
     }
-
-    public AccommodationUnit(List<Review> reviews) { this.reviews = reviews; }
 
     public int getId() {
         return id;
@@ -61,14 +58,6 @@ public class AccommodationUnit {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
     }
 
     public Destination getDestination() {

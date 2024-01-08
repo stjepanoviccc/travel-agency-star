@@ -24,6 +24,11 @@ public class ReviewService implements IReviewService {
     }
 
     @Override
+    public List<Review> findAll(int accUnitId) {
+        return databaseReviewDAO.findAll(accUnitId);
+    }
+
+    @Override
     public List<Review> findAllReviewsForSpecificAccommodationUnit(int accommodationUnitId) {
         return databaseReviewDAO.findAllReviewsForSpecificAccommodationUnit(accommodationUnitId);
     }

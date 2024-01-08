@@ -59,6 +59,10 @@ public class InternationalizationController {
         msgList.put("textPrice", msgSource.getMessage("textPrice", null, currentLocale));
         msgList.put("textAddToWishlist", msgSource.getMessage("textAddToWishlist", null, currentLocale));
         msgList.put("cartPageTotalPrice", msgSource.getMessage("cartPageTotalPrice", null, currentLocale));
+        msgList.put("textStars", msgSource.getMessage("textStars", null, currentLocale));
+        msgList.put("textUsername", msgSource.getMessage("textUsername", null, currentLocale));
+        msgList.put("textMessage", msgSource.getMessage("textMessage", null, currentLocale));
+        msgList.put("textNoContentToShow", msgSource.getMessage("textNoContentToShow", null, currentLocale));
 
         return msgList;
     }

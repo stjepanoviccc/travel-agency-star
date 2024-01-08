@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IReviewService {
     List<Review> findAll();
+    List<Review> findAll(int accUnitId);
     List<Review> findAllReviewsForSpecificAccommodationUnit(int accommodationUnitId);
     List<Review> findAllReviewsForSpecificUser(int userId);
     Review findOne(int reviewId);

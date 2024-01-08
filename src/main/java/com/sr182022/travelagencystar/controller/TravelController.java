@@ -61,6 +61,7 @@ public class TravelController {
 
             model.addAttribute("travel", travel);
             model.addAttribute("allTravels", travels);
+            model.addAttribute("trs", trs);
             return "/viewPages/travel-details";
         } catch (Exception e) {
             System.out.println(e);

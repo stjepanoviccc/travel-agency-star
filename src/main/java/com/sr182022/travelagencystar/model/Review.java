@@ -5,17 +5,24 @@ public class Review {
     private int id;
     private String message;
     private int stars;
-    private int userId;
-    private int accommodationUnitId;
+    private User user;
+    private AccommodationUnit accommodationUnit;
 
     public Review() {}
 
-    public Review(int id, String message, int stars, int userId, int accommodationUnitId ) {
+    public Review(int id, String message, int stars, User user, AccommodationUnit accommodationUnit ) {
         this.id = id;
         this.message = message;
         this.stars = stars;
-        this.userId = userId;
-        this.accommodationUnitId = accommodationUnitId;
+        this.user = user;
+        this.accommodationUnit = accommodationUnit;
+    }
+
+    public Review(String message, int stars, User user, AccommodationUnit accommodationUnit) {
+        this.message = message;
+        this.stars = stars;
+        this.user = user;
+        this.accommodationUnit = accommodationUnit;
     }
 
     public int getId() { return id; }
@@ -24,16 +31,16 @@ public class Review {
         this.id = id;
     }
 
-    public int getAccommodationUnitId() { return accommodationUnitId; }
+    public AccommodationUnit getAccommodationUnit() { return accommodationUnit; }
 
-    public void setAccommodationUnitId(int accommodationUnitId) { this.accommodationUnitId = accommodationUnitId; }
+    public void setAccommodationUnitId(AccommodationUnit accommodationUnit) { this.accommodationUnit = accommodationUnit; }
 
-    public int getCreator() {
-        return userId;
+    public User getCreator() {
+        return user;
     }
 
-    public void setCreator(int userId) {
-        this.userId = userId;
+    public void setCreator(User user) {
+        this.user = user;
     }
 
     public String getMessage() {

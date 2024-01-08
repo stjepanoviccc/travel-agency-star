@@ -1,15 +1,20 @@
 package com.sr182022.travelagencystar.DAO.impl;
 
 import com.sr182022.travelagencystar.DAO.IReviewDAO;
+import com.sr182022.travelagencystar.model.AccommodationUnit;
+import com.sr182022.travelagencystar.model.Destination;
 import com.sr182022.travelagencystar.model.Review;
+import com.sr182022.travelagencystar.model.User;
+import com.sr182022.travelagencystar.service.IAccommodationUnitService;
+import com.sr182022.travelagencystar.service.IUserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,6 +25,13 @@ public class DatabaseReviewDAO implements IReviewDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    private final IUserService userService;
+    private final IAccommodationUnitService accommodationUnitService;
+
+    public DatabaseReviewDAO(IUserService userService, IAccommodationUnitService accommodationUnitService) {
+        this.userService = userService;
+        this.accommodationUnitService = accommodationUnitService;
+    }
 
     private class ReviewRowCallBackHandler implements RowCallbackHandler {
 
@@ -32,11 +44,14 @@ public class DatabaseReviewDAO implements IReviewDAO {
             String review_message = resultSet.getString(index++);
             int review_stars = resultSet.getInt(index++);
             int id_user = resultSet.getInt(index++);
-            int id_destination = resultSet.getInt(index++);
+            int id_accommodation_unit = resultSet.getInt(index++);
 
+            User u = userService.findOne(id_user);
+            AccommodationUnit ac = accommodationUnitService.findOne(id_accommodation_unit);
             Review review = reviews.get(id_review);
+
             if (review == null) {
-                review = new Review(id_review, review_message, review_stars, id_user, id_destination);
+                review = new Review(id_review, review_message, review_stars, u, ac);
                 reviews.put(review.getId(), review);
             }
         }
@@ -49,7 +64,7 @@ public class DatabaseReviewDAO implements IReviewDAO {
     @Override
     public List<Review> findAll() {
         String sql =
-                "SELECT r.id_review, r.review_message, r.review_start, r.id_user, r.id_accommodation_unit " +
+                "SELECT r.id_review, r.review_message, r.review_stars, r.id_user, r.id_accommodation_unit " +
                         "FROM review r ORDER BY r.id_review";
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
@@ -58,25 +73,51 @@ public class DatabaseReviewDAO implements IReviewDAO {
     }
 
     @Override
+    public List<Review> findAll(int accUnitId) {
+        String sql =
+                "SELECT r.id_review, r.review_message, r.review_stars, r.id_user, r.id_accommodation_unit " +
+                        "FROM review r WHERE r.id_accommodation_unit = ? ORDER BY r.id_review";
+
+        ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
+        jdbcTemplate.query(sql, rowCallBackHandler, accUnitId);
+        List<Review> reviewsList = rowCallBackHandler.getReviews();
+        if(!reviewsList.isEmpty()) {
+            return reviewsList;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public List<Review> findAllReviewsForSpecificAccommodationUnit(int accommodationUnitId) {
         String sql =
-                "SELECT r.id_review, r.review_message, r.review_start, r.id_user, r.id_accommodation_unit " +
+                "SELECT r.id_review, r.review_message, r.review_stars, r.id_user, r.id_accommodation_unit " +
                         "FROM review r WHERE r.id_accommodation_unit = ? ";
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, accommodationUnitId);
-        return rowCallBackHandler.getReviews();
+        List<Review> reviewsList = rowCallBackHandler.getReviews();
+        if(!reviewsList.isEmpty()) {
+            return reviewsList;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public List<Review> findAllReviewsForSpecificUser(int userId) {
         String sql =
-                "SELECT r.id_review, r.review_message, r.review_start, r.id_user, r.id_accommodation_unit " +
+                "SELECT r.id_review, r.review_message, r.review_stars, r.id_user, r.id_accommodation_unit " +
                         "FROM review r WHERE r.id_user = ? ";
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, userId);
-        return rowCallBackHandler.getReviews();
+        List<Review> reviewsList = rowCallBackHandler.getReviews();
+        if(!reviewsList.isEmpty()) {
+            return reviewsList;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -87,13 +128,35 @@ public class DatabaseReviewDAO implements IReviewDAO {
 
         ReviewRowCallBackHandler rowCallBackHandler = new ReviewRowCallBackHandler();
         jdbcTemplate.query(sql, rowCallBackHandler, reviewId);
-        return rowCallBackHandler.getReviews().get(0);
+        List<Review> reviewsList = rowCallBackHandler.getReviews();
+        if(!reviewsList.isEmpty()) {
+            return reviewsList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Transactional
     @Override
     public void save(Review newReview) {
-        //
+        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                String sql = "INSERT INTO review (review_message, review_stars, id_user, id_accommodation_unit) " +
+                        "VALUES (?, ?, ?, ?)";
+
+                PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                int index = 1;
+                preparedStatement.setString(index++, newReview.getMessage());
+                preparedStatement.setInt(index++, newReview.getStars());
+                preparedStatement.setInt(index++, newReview.getCreator().getId());
+                preparedStatement.setInt(index++, newReview.getAccommodationUnit().getId());
+
+                return preparedStatement;
+            }
+        };
+
+        jdbcTemplate.update(preparedStatementCreator);
     }
 
     @Transactional

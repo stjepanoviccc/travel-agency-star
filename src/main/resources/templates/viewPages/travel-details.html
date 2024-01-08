@@ -24,6 +24,14 @@
                     class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + #{textNotChosenYet}"></p>
             <p th:if="${travel.accommodationUnit != null}"
                     class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${travel?.accommodationUnit.name}"></p>
+
+            <div class="flex w-full justify-center items-center">
+                <p class="block font-medium text-xl mt-3 mr-2" th:text="#{textAvailableSpace} + ': ' ">
+                </p>
+                <p class="block font-medium text-xl mt-3" th:text="${#lists.contains(trs.![travel.id], travel.id) ? trs.![availableSpace]
+                 :travel.accommodationUnit.capacity}"></p>
+            </div>
+
             <p class="block font-medium text-xl mt-3" th:text="#{textStartDate} + ': ' + ${#temporals.format(travel.startDate, 'dd.MM.yyyy')}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${#temporals.format(travel.endDate, 'dd.MM.yyyy')}"></p>
             <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${travel?.numberOfNights}"></p>
@@ -71,6 +79,12 @@
                     <p class="block font-medium text-xl" th:text="#{textDestination} + ': ' + ${t.destination}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageVehicleTypeDestinationDesc} + ' ' + ${t.vehicle}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{travelDetailsPageName} + ' ' + ${t.accommodationUnit.name}"></p>
+                    <div class="flex w-full justify-center items-center">
+                        <p class="block font-medium text-xl mt-3 mr-2" th:text="#{textAvailableSpace} + ': ' ">
+                        </p>
+                        <p class="block font-medium text-xl mt-3" th:text="${#lists.contains(trs.![travel.id], t.id) ? trs.![availableSpace]
+                 :t.accommodationUnit.capacity}"></p>
+                    </div>
                     <p class="block font-medium text-xl mt-3" th:text="#{textStartDate} + ': ' + ${#temporals.format(t.startDate, 'dd.MM.yyyy')}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{textEndDate} + ': ' + ${#temporals.format(t.endDate, 'dd.MM.yyyy')}"></p>
                     <p class="block font-medium text-xl mt-3" th:text="#{textNumberOfNights} + ': ' + ${t.numberOfNights}"></p>
