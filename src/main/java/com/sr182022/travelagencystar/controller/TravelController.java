@@ -46,12 +46,11 @@ public class TravelController {
     public String travelDetailsPage(HttpSession session, @RequestParam int id, Model model) {
         try {
             Travel travel = travelService.findOne(id);
-            List<Coupon> allCoupons = couponService.findAll();
-            travel = travelService.checkForCoupons(travel, allCoupons);
             if(travel == null) {
                 return ErrorController.routeErrorReturn;
             }
-
+            List<Coupon> allCoupons = couponService.findAll();
+            travel = travelService.checkForCoupons(travel, allCoupons);
             int destinationId = travel.getDestination().getId();
             List<Travel> travels = travelService.findAll(destinationId);
             if(travels != null) {

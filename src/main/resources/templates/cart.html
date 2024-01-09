@@ -38,11 +38,25 @@
 
     <div th:if="${cart != null}" class="pt-6 lg:pt-8 text-center lg:text-left overflow-auto">
         <h3 th:if="${totalPrice == null}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + '0.0 din'"></h3>
+
+        <div th:each="item : ${cart}" th:if="${user.loyaltyCard != null}">
+            <div th:if="${item?.travel?.onDiscount == true}">
+                <h3 th:unless="${saleMessageRendered}" class="text-lg lg:text-xl font-bold text-red-600" th:text="#{textYouCantUsePoints}">
+                    <th:block th:with="saleMessageRendered=true"></th:block>
+                </h3>
+            </div>
+        </div>
+
         <h3 th:if="${totalPrice != null && totalPrice>0}" class="text-lg lg:text-xl font-bold" th:text="#{cartPageTotalPrice} + ' ' + ${totalPrice} + ' din'" id="totalPrice"></h3>
         <h3 th:if="${session.user.loyaltyCard != null}" class="text-lg lg:text-xl font-bold" th:text="#{textAvailablePoints} + ': ' + ${session.user.loyaltyCard.points}"></h3>
         <h3 th:if="${session.user.loyaltyCard != null}" class="text-lg lg:text-xl font-bold" th:text="#{textMaxUsablePoints} + ':  10'"></h3>
-        <div th:replace="~{fragments/forms/reservations/createReservation :: createReservationForm}"></div>
-    </div>
+
+        <div th:if="${isAnyItemOnSale == true}">
+            <div  th:replace="~{fragments/forms/reservations/createReservationIfAnythingOnSale :: createReservationForm}"></div>
+        </div>
+        <div th:if="${isAnyItemOnSale == false}">
+            <div  th:replace="~{fragments/forms/reservations/createReservation :: createReservationForm}"></div>
+        </div>
 
     <div th:if="${cart == null || (cart!=null && totalPrice==0)}">
         <p class="pt-4 text-center">No items to show.</p>

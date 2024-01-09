@@ -84,4 +84,17 @@ public class CartService implements ICartService {
         Float tp = (Float) session.getAttribute("totalPrice");
         return tp.toString();
     }
+
+    @Override
+    public boolean isAnyItemOnSale(List<CartItem> cartItems) {
+        if(cartItems == null) {
+            return false;
+        }
+        for (CartItem ci : cartItems) {
+            if(ci.getTravel().isOnDiscount() == true) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

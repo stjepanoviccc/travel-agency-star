@@ -1,10 +1,8 @@
 package com.sr182022.travelagencystar.controller;
 
-import com.sr182022.travelagencystar.model.CartItem;
-import com.sr182022.travelagencystar.model.Role;
-import com.sr182022.travelagencystar.model.Travel;
-import com.sr182022.travelagencystar.model.User;
+import com.sr182022.travelagencystar.model.*;
 import com.sr182022.travelagencystar.service.ICartService;
+import com.sr182022.travelagencystar.service.ICouponService;
 import com.sr182022.travelagencystar.service.ITravelService;
 import com.sr182022.travelagencystar.utils.CheckRoleUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,11 +24,13 @@ import java.util.Map;
 public class CartController {
     private final ITravelService travelService;
     private final ICartService cartService;
+    private final ICouponService couponService;
 
     @Autowired
-    public CartController(ITravelService travelService, ICartService cartService) {
+    public CartController(ITravelService travelService, ICartService cartService, ICouponService couponService) {
         this.travelService = travelService;
         this.cartService = cartService;
+        this.couponService = couponService;
     }
 
     @GetMapping
@@ -41,7 +41,8 @@ public class CartController {
             }
             User u = (User) session.getAttribute("user");
             List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-
+            boolean isAnyItemOnSale = cartService.isAnyItemOnSale(cart);
+            model.addAttribute("isAnyItemOnSale", isAnyItemOnSale);
             model.addAttribute("user", u);
             model.addAttribute("cart", cart);
             if(session.getAttribute("totalPrice") != null) {
@@ -59,6 +60,11 @@ public class CartController {
     public String addToCart(HttpSession session, @RequestParam int id) {
         try {
             Travel newTravel = travelService.findOne(id);
+            if(newTravel == null) {
+                return ErrorController.routeErrorReturn;
+            }
+            List<Coupon> allCoupons = couponService.findAll();
+            newTravel = travelService.checkForCoupons(newTravel, allCoupons);
             User user = (User) session.getAttribute("user");
             if(user == null || user.getRole().equals(Role.Administrator) || user.getRole().equals(Role.Organizer)) {
                 return ErrorController.permissionErrorReturn;
