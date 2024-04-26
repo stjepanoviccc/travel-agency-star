@@ -1,4 +1,4 @@
-# Urban Hunt
+# Travel Agency Star
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-black?logo=springboot)
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-black?logo=intellijidea)
 ![MySQL](https://img.shields.io/badge/MySQL-red?logo=mySQL&logoColor=black)
