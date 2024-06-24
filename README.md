@@ -10,6 +10,5 @@ Travel Agency Star is a project with one purpose: Learn MVC architecture pattern
 Main technologies which are used in this project are **Spring Boot** and **Thymeleaf** and also **TailwindCSS*
 
 ## Author
-Andrej Stjepanović  
-Student at the **Faculty of Technical Sciences** in Novi Sad  
-Undergraduate of Software Engineering
+Andrej Stjepanović,  
+Software Developer
